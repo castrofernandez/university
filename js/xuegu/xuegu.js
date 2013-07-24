@@ -1,0 +1,1 @@
+var xuegu = new Object();

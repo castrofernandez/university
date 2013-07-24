@@ -1,0 +1,45 @@
+internacionalizacion.etiquetas = {
+	es : {
+		titulo1: "Circo",
+		titulo2: "neuronal",
+		presentacion: "Universidad de Oviedo presenta",
+		descubre: "Descubre tu destreza mental",
+		comenzar: "COMENZAR",
+		creado: "creado por",
+		img_gratis: 'img/gratis.png',
+		img_3minutos: 'img/3minutos.png',
+		instrucciones_numeros: 'Pulse sobre cada uno de los patos en el orden que marcan los números del 1 al 20.',
+		titulo_prueba_1: 'P r u e b a  1',
+		nombre_prueba_1: 'C i f r a s  v e l o c e s',
+		continuar: "Continuar",
+		pulsaCirculo: "Pulsa un círculo",
+		paraContinuar: "para continuar",
+		pulsaDiana: "Pulsa una diana",
+		acrobata1: "Ayuda a los acróbatas a cruzar al otro lado.",
+		acrobata2: "Gira el tablón central para completar la pista.",
+		aceptar: "Aceptar",
+		pruebaFinalizada: "Prueba finalizada"
+	},
+	
+	en : {
+		titulo1: "Neuronal",
+		titulo2: "circus",
+		presentacion: "University of Oviedo presents",
+		descubre: "Discover your mental skills",
+		comenzar: "START",
+		creado: "created by",
+		img_gratis: 'img/free.png',
+		img_3minutos: 'img/only.png',
+		instrucciones_numeros: 'Click on each duck in order from 1 to 20.',
+		titulo_prueba_1: 'T e s t  #1',
+		nombre_prueba_1: 'Q u i c k  N u m b e r s',
+		continuar: "Continue",
+		pulsaCirculo: "Click on one circle",
+		paraContinuar: "to continue",
+		pulsaDiana: "Click on one target",
+		acrobata1: "Help the acrobats to reach the other side.",
+		acrobata2: "Spin around the central board to complete the track.",
+		aceptar: "Aceptar",
+		pruebaFinalizada: "Test Over"
+	}	
+};

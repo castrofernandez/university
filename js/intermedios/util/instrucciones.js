@@ -1,0 +1,108 @@
+circo.intermedios.util.Instrucciones = function(titulo, subtitulo, texto, imagen)
+{		
+	var dimensionesImagen = null;
+	var margen;
+	var lienzo = null;
+	var pulsado = false;
+
+	(function() {
+		lienzo = xuegu.Utilidades.dimensionesJuego();	
+	})();
+
+	function botonPulsado()
+	{
+		pulsado = true;
+	}
+
+	this.iniciar = function(partida)
+	{
+		margen = lienzo.ancho / 12;
+		dimensionesImagen = { ancho: lienzo.ancho - 2 * margen, alto: lienzo.ancho - 2 * margen };
+	
+		var img = partida.graficos()[imagen];
+		
+		if (img.width > img.height)
+			dimensionesImagen.alto = dimensionesImagen.alto * (img.height / img.width);	
+		else
+			dimensionesImagen.ancho = dimensionesImagen.ancho * (img.width / img.height);
+	
+		// Creamos el fondo
+		partida.crearElemento(0, 0, lienzo.ancho, lienzo.alto, 
+										{ dibujar: dibujarFondo });
+		
+		// Creamos los botones
+		
+		var ancho = lienzo.ancho - 2 * margen;
+		var alto = lienzo.alto / 10;
+		
+		var texto = partida.idioma.texto("comenzar");
+		
+		var opciones = { x: margen, y: lienzo.alto - alto - 5, tipo: "redondeado", 
+							partida: partida, ancho: ancho, alto: alto, relleno: '#c40038', 
+							contorno: false, grosor: 3, texto: texto, colorTexto: '#fff', sombra: '#800226' };
+		
+		opciones.onclick = botonPulsado;
+			
+		new circo.intermedios.util.Boton(opciones);		
+	}
+		
+	this.avanzar = function(partida)
+	{	
+
+	}
+	
+	this.dibujar =  function(contexto, ancho, alto, graficos)
+	{	
+		// Título
+		contexto.font = "56px Conv_Carnevalee Freakshow";
+		contexto.fillStyle = '#c40037';
+		escribirTexto(contexto, dimensionesImagen.ancho, alto, titulo, ancho / 2, margen * 1.5);
+		contexto.font = "26px Conv_Carnevalee Freakshow";
+		contexto.fillStyle = '#333';
+		escribirTexto(contexto, dimensionesImagen.ancho, alto, subtitulo, ancho / 2, margen * 2.5);
+		
+		// Imagen
+		contexto.drawImage(graficos[imagen], margen, margen * 3, dimensionesImagen.ancho, dimensionesImagen.alto);
+		
+		// Descripción
+		contexto.fillStyle = '#646464';
+	    contexto.font = '14px Verdana';
+		escribirTexto(contexto, dimensionesImagen.ancho, alto, texto, ancho / 2, dimensionesImagen.alto + margen * 3.5);
+	}
+	
+	this.finalizado = function()
+	{
+		return pulsado;
+	}
+	
+	function dibujarFondo(contexto, ancho, alto, graficos)
+	{
+
+	}
+	
+	function escribirTexto(contexto, ancho, alto, texto, x, y)
+	{	 
+	    var indice = 0; 
+	    var lineaActual = 0; 
+	    
+	    var alturaLinea = 20;
+	    var aux;
+	    
+	    texto = texto.replace(/^\s+|\s+$/g, '');
+	    var palabras = texto.split(' ');
+
+	    while (indice < palabras.length)
+	    {
+	    	aux = palabras[indice];
+	    	indice++;
+
+	        while (indice < palabras.length && (contexto.measureText(aux + palabras[indice]).width < ancho))
+	        {
+	        	aux += (aux == "" ? "" : " ") + palabras[indice];
+		        indice++;
+	        }
+	        
+	        contexto.fillText(aux, x, y + (alturaLinea * lineaActual++));
+	    }
+	}
+}
