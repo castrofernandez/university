@@ -2,12 +2,9 @@ circo.intermedios.util.Instrucciones = function(titulo, subtitulo, texto, imagen
 {		
 	var dimensionesImagen = null;
 	var margen;
-	var lienzo = null;
+	var fila;
+	var lienzo = xuegu.Utilidades.dimensionesJuego();
 	var pulsado = false;
-
-	(function() {
-		lienzo = xuegu.Utilidades.dimensionesJuego();	
-	})();
 
 	function botonPulsado()
 	{
@@ -16,8 +13,9 @@ circo.intermedios.util.Instrucciones = function(titulo, subtitulo, texto, imagen
 
 	this.iniciar = function(partida)
 	{
+		fila = lienzo.alto / 5;
 		margen = lienzo.ancho / 12;
-		dimensionesImagen = { ancho: lienzo.ancho - 2 * margen, alto: lienzo.ancho - 2 * margen };
+		dimensionesImagen = { ancho: 3 * fila, alto: 3 * fila };
 	
 		var img = partida.graficos()[imagen];
 		
@@ -26,18 +24,21 @@ circo.intermedios.util.Instrucciones = function(titulo, subtitulo, texto, imagen
 		else
 			dimensionesImagen.ancho = dimensionesImagen.ancho * (img.width / img.height);
 	
+		dimensionesImagen.x = lienzo.ancho / 2 - dimensionesImagen.ancho / 2;
+		dimensionesImagen.y = fila;
+	
 		// Creamos el fondo
 		partida.crearElemento(0, 0, lienzo.ancho, lienzo.alto, 
 										{ dibujar: dibujarFondo });
 		
 		// Creamos los botones
 		
-		var ancho = lienzo.ancho - 2 * margen;
+		var ancho = lienzo.ancho * 2 / 3;
 		var alto = lienzo.alto / 10;
 		
 		var texto = partida.idioma.texto("comenzar");
 		
-		var opciones = { x: margen, y: lienzo.alto - alto - 5, tipo: "redondeado", 
+		var opciones = { x: lienzo.ancho / 2 - ancho / 2, y: lienzo.alto - alto - 5, tipo: "redondeado", 
 							partida: partida, ancho: ancho, alto: alto, relleno: '#c40038', 
 							contorno: false, grosor: 3, texto: texto, colorTexto: '#fff', sombra: '#800226' };
 		
@@ -62,12 +63,13 @@ circo.intermedios.util.Instrucciones = function(titulo, subtitulo, texto, imagen
 		escribirTexto(contexto, dimensionesImagen.ancho, alto, subtitulo, ancho / 2, margen * 2.5);
 		
 		// Imagen
-		contexto.drawImage(graficos[imagen], margen, margen * 3, dimensionesImagen.ancho, dimensionesImagen.alto);
+		contexto.drawImage(graficos[imagen], dimensionesImagen.x, dimensionesImagen.y, 
+				dimensionesImagen.ancho, dimensionesImagen.alto);
 		
 		// Descripción
 		contexto.fillStyle = '#646464';
 	    contexto.font = '14px Verdana';
-		escribirTexto(contexto, dimensionesImagen.ancho, alto, texto, ancho / 2, dimensionesImagen.alto + margen * 3.5);
+		escribirTexto(contexto, dimensionesImagen.ancho, alto, texto, ancho / 2, fila * 4);
 	}
 	
 	this.finalizado = function()

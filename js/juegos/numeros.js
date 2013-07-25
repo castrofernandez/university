@@ -1,11 +1,11 @@
 circo.juegos.Numeros = function()
 {
-	var ancho_alto_pato = 80;
+	var ancho_alto_pato = null;;
 	
-	var ancho_gancho = 30;
-	var alto_gancho = 250;
+	var gancho = { };
 	
 	var angulo_oscilacion = 0.05;
+	var lienzo = xuegu.Utilidades.dimensionesJuego();
 	
 	this.imagenes = ['img/numeros/pato1.png', 'img/numeros/pato2.png', 'img/numeros/pato3.png', 
 					'img/numeros/pato4.png', 'img/numeros/pato5.png', 'img/numeros/pato6.png', 'img/numeros/gancho.png'];
@@ -32,46 +32,66 @@ circo.juegos.Numeros = function()
 	
 	this.iniciar = function(partida)	
 	{
+		ancho_alto_pato = lienzo.ancho / 5;
+		gancho.alto = lienzo.alto / 2;
+		gancho.ancho = 30 / 250 * gancho.alto;
+	
+		var posicionesPatos = [];
+		
+		var contador = 0;
+		
+		var columna = lienzo.ancho / 4;
+		var margen_columna = (lienzo.ancho / 4 - lienzo.ancho / 5) / 2;
+		
+		var fila = lienzo.alto / 5;
+		var margen_fila = (lienzo.alto / 5 - ancho_alto_pato) / 2;
+		
+		for (var i = 0; i < 5; i++)
+			for (var j = 0; j < 4; j++) {
+				posicionesPatos[contador] = { x : columna * j + margen_columna, y : fila * i + margen_fila };
+				contador++;
+			}
+	
 		this.elementos = patos = 	[
-			new xuegu.Elemento(partida, 110, 33, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[0].x, posicionesPatos[0].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato1.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 10, 13, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[1].x, posicionesPatos[1].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato3.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 300, 10, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[2].x, posicionesPatos[2].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato6.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 210, 10, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[3].x, posicionesPatos[3].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato2.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 300, 110, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[4].x, posicionesPatos[4].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato4.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 50, 110, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[5].x, posicionesPatos[5].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato2.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 110, 190, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[6].x, posicionesPatos[6].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato5.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 200, 100, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[7].x, posicionesPatos[7].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato3.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 20, 200, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[8].x, posicionesPatos[8].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato1.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 20, 290, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[9].x, posicionesPatos[9].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato4.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 200, 200, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[10].x, posicionesPatos[10].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato2.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 310, 300, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[11].x, posicionesPatos[11].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato3.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 300, 200, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[12].x, posicionesPatos[12].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato5.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 100, 300, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[13].x, posicionesPatos[13].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato6.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 90, 400, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[14].x, posicionesPatos[14].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato4.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 230, 365, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[15].x, posicionesPatos[15].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato1.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 210, 280, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[16].x, posicionesPatos[16].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato6.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 180, 410, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[17].x, posicionesPatos[17].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato5.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 310, 410, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[18].x, posicionesPatos[18].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato4.png', oscilacion: +0, avance_oscilacion: true, activo: true, dibujar: dibujarPato, onclick: patoOnClick}),
-			new xuegu.Elemento(partida, 10, 400, ancho_alto_pato, ancho_alto_pato, 
+			new xuegu.Elemento(partida, posicionesPatos[19].x, posicionesPatos[19].y, ancho_alto_pato, ancho_alto_pato, 
 				{imagen : 'img/numeros/pato2.png', oscilacion: +0, avance_oscilacion: false, activo: true, dibujar: dibujarPato, onclick: patoOnClick})
 			];	
 	}
@@ -132,6 +152,6 @@ circo.juegos.Numeros = function()
 		
 		// Gancho
 		
-		contexto.drawImage(graficos['img/numeros/gancho.png'], 180, -50, ancho_gancho, alto_gancho);
+		contexto.drawImage(graficos['img/numeros/gancho.png'], lienzo.ancho / 2 - gancho.ancho / 2, -50, gancho.ancho, gancho.alto);
 	}
 }

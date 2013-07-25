@@ -1,0 +1,285 @@
+@font-face {
+	font-family:'Conv_Carnevalee Freakshow';
+	src:url('fonts/Carnevalee Freakshow.eot');
+	src:local(☺),url('fonts/Carnevalee Freakshow.woff') format("woff"),url('fonts/Carnevalee Freakshow.ttf') format("truetype"),url('fonts/Carnevalee Freakshow.svg') format("svg");
+	font-weight:400;
+	font-style:normal;
+}
+
+body {
+	background:url(../img/fondo.png);
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	width: 100%;
+}
+
+#marco {
+	width: 100%;
+	background-image: url(../img/fondo.jpg);
+}
+
+#celo_1 {
+	display: none;
+}
+
+#celo_2 {
+	display: none;
+}
+
+#celo_3 {
+	display: none;
+}
+
+#celo_4 {
+	display: none;
+}
+
+#celo_5 {
+	display: none;
+}
+
+#celo_6 {
+	display: none;
+}
+
+#contenido {
+	width: 90%;
+	margin: 0 auto;
+	border: 10px solid #383838;
+	border-radius:7px;
+	text-align:center;
+}
+
+h1 {
+	font-family:'Conv_Carnevalee Freakshow',Helvetica,Arial;
+	text-align:center;
+	font-size:4em;
+	line-height:.8em;
+	padding:0;
+	margin:0;
+	color:#c40037;
+	letter-spacing:18px;
+/* Safari */
+	-webkit-transform:rotate(-1deg);
+/* Firefox */
+	-moz-transform:rotate(-1deg);
+/* IE */
+	-ms-transform:rotate(-1deg);
+/* Opera */
+	-o-transform:rotate(-1deg);
+/* Standard */
+	transform:rotate(-1deg);
+}
+
+h2 {
+	font-family:'Conv_Carnevalee Freakshow',Helvetica,Arial;
+	text-align:center;
+	font-size:1.5em;
+	padding:0;
+	margin:10px;
+	color:#333;
+	letter-spacing:10px;
+	font-weight:400;
+/* Safari */
+	-webkit-transform:rotate(0.5deg);
+/* Firefox */
+	-moz-transform:rotate(0.5deg);
+/* IE */
+	-ms-transform:rotate(0.5deg);
+/* Opera */
+	-o-transform:rotate(0.5deg);
+/* Standard */
+	transform:rotate(0.5deg);
+}
+
+h3 {
+	font-family:'Conv_Carnevalee Freakshow',Helvetica,Arial;
+	text-align:center;
+	font-size:1em;
+	padding:0;
+	margin:10px 0 0;
+	color:#333;
+	letter-spacing:6px;
+	font-weight:400;
+}
+/*
+#comenzar {
+	background-color:#bd1743;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	display:inline-block;
+	color:#fff;
+	font-family:Verdana;
+	font-size:1.8em;
+	padding:20px 24px;
+	text-decoration:none;
+	letter-spacing:8px;
+	width:550px;
+	height:35px;
+}
+
+#comenzar:hover {
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0.05,#c40038),color-stop(1,#c40038));
+	background:-moz-linear-gradient(center top,#c40038 5%,#c40038 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c40038',endColorstr='#c40038');
+	background-color:#c40038;
+}
+
+#comenzar:active {
+	position:relative;
+	top:1px;
+}*/
+
+#comenzar {
+	width: 90%;
+	height:65px;
+	text-decoration: none;
+    padding: 15px 15px;
+    background: #bd1743;
+    color: #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: solid 1px #650d25;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    font-family:Verdana;
+	font-size:1.8em;
+}
+
+#comenzar:hover {
+    background: #931e3d;
+    border: solid 1px #500f20;
+    text-decoration: none;
+}
+
+#comenzar:active {
+    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    background: #650d25;
+    border: solid 1px #500f20;
+}
+
+#icono {
+	float: left;
+	width: 50%;
+}
+
+#contenido p {
+	font-family:Helvetica,Arial;
+	margin-right:50px;
+	font-size:1em;
+	line-height:2.5em;
+	letter-spacing:1px;
+	text-align:right;
+}
+
+footer {
+	margin:30px 0 10px;
+	height:110px;
+}
+
+#html-css {
+	float:right;
+	margin:0 55px 0 0;
+}
+
+#compartir {
+	float:right;
+	margin:20px 40px 0 0;
+	text-align:right;
+}
+
+#facebook {
+	margin-left:20px;
+}
+
+#presentacion {
+	float:left;
+	margin:15px 0 0 30px;
+}
+
+#descubre {
+	font-family:'Conv_Carnevalee Freakshow',Helvetica,Arial;
+}
+
+#firma {
+	float:left;
+	text-align:left;
+	margin-left:50px;
+	font-family:Arial;
+}
+
+#licencia {
+	padding-top:10px;
+	clear:both;
+	font-size:.7em;
+	font-family:Arial;
+	margin:0 50px;
+}
+
+#commons {
+	float:left;
+}
+
+h1.izquierda {
+	font-size: 2em;
+	text-align:left;
+	margin-left:30px;
+}
+
+h1.prueba
+{
+	font-size: 6em;
+}
+
+.derecha {
+	font-size:4em;
+	text-align:right;
+	margin-right:30px;
+	color:#203d71;
+}
+
+#globos {
+	width: 50%;
+	float: right;
+	text-align:center;
+}
+
+#img_gratis {
+	border: none;
+	width: 200px;
+	height: 200px;
+	visibility: hidden;
+}
+
+#img_3minutos {
+	border: none;
+	width: 190px;
+	height: 202px;
+	visibility: hidden;
+}
+
+.globo {
+	width: 100%;
+}
+
+.grande {
+	font-size: 2.5em;
+}
+
+#juego {
+	display: none;
+}

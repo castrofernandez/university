@@ -20,6 +20,13 @@ importame.cargarSecuencialmente(["xuegu/xuegu.js",
 					"intermedios/instrucciones.js",
 					"juegos/numeros.js"], cargaCompletada);
 */
+
+yepnope({
+  test: categorizr.isMobile,
+  yep: 'css/movil.css',
+  nope: 'css/estilo.css'
+});
+
 yepnope({
   load: ["js/xuegu/xuegu.js", 
 		"js/xuegu/manejadores.js",
