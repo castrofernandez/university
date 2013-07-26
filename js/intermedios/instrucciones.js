@@ -1,4 +1,4 @@
-circo.intermedios.Instrucciones = function()
+circo.intermedios.Instrucciones = function(canvas)
 {		
 	this.imagenes = ['img/instrucciones/numeros.png'];
 
@@ -19,7 +19,7 @@ circo.intermedios.Instrucciones = function()
 		var titulo = idioma.texto("titulo_prueba_1");
 		var nombre = idioma.texto("nombre_prueba_1");
 	
-		nivel = new circo.intermedios.util.Instrucciones(titulo, nombre, texto, 
+		nivel = new circo.intermedios.util.Instrucciones(canvas, titulo, nombre, texto, 
 														'img/instrucciones/numeros.png');
 		nivel.iniciar(partida);
 	}

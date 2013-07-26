@@ -1,4 +1,4 @@
-circo.intermedios.Botones1 = function()
+circo.intermedios.Botones1 = function(canvas)
 {		
 	this.imagenes = [];
 
@@ -10,7 +10,7 @@ circo.intermedios.Botones1 = function()
 	var posiciones = [];
 
 	(function() {
-		lienzo = xuegu.Utilidades.dimensionesJuego();
+		lienzo = xuegu.Utilidades.dimensionesJuego(canvas);
 	
 		dimensionesBoton = { ancho: (lienzo.ancho / 3), alto: (lienzo.ancho / 6) };
 		margen = dimensionesBoton.alto / 2;
@@ -39,7 +39,7 @@ circo.intermedios.Botones1 = function()
 			botones.push(opciones);
 		}
 		
-		nivel = new circo.intermedios.util.Botones(botones);
+		nivel = new circo.intermedios.util.Botones(canvas, botones);
 		nivel.iniciar(partida);
 	}
 		

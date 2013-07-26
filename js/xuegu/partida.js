@@ -1,8 +1,8 @@
 xuegu.Partida = function(canvas, nivel, idioma, accionFinal)
 {
 	var contexto = null;
-	var ancho = xuegu.Utilidades.dimensionesJuego().ancho;
-	var alto = xuegu.Utilidades.dimensionesJuego().alto;
+	var ancho = canvas.width;
+	var alto = canvas.height;
 	
 	var velocidad = 30;
 	

@@ -1,4 +1,4 @@
-circo.intermedios.Fin = function()
+circo.intermedios.Fin = function(canvas)
 {		
 	this.imagenes = [];
 

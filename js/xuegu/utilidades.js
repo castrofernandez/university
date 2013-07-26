@@ -1,10 +1,25 @@
 xuegu.Utilidades = new function()
 {
-	var ancho = 600;
-	var alto = 700;
+	this.dimensionesJuego = function(canvas) {
+		return { ancho: canvas.width, alto: canvas.height };
+	}
+
+	this.dimensionesPagina = function() 
+	{
+		var anchura, altura;
+		
+		if (self.innerHeight) // Todos menos Explorer
+		{
+			anchura = self.innerWidth;
+			altura = self.innerHeight;
+		}
+		else if (document.body)
+		{
+			anchura = document.body.clientWidth;
+			altura = document.body.clientHeight;
+		}
 	
-	this.dimensionesJuego = function() {
-		return { ancho: ancho, alto: alto };
+		return { ancho : anchura, alto : altura };
 	}
 
 	this.obtenerCoordenadasEvento = function(evento, elemento)

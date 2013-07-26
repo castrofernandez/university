@@ -1,9 +1,9 @@
-circo.intermedios.Acrobatas = function()
+circo.intermedios.Acrobatas = function(canvas)
 {
 	this.velocidad = 150;
 	
 	var dimension_acrobata = { ancho : 145, alto : 200};
-	var lienzo = xuegu.Utilidades.dimensionesJuego();
+	var lienzo = xuegu.Utilidades.dimensionesJuego(canvas);
 	
 	var lado_triangulo = lienzo.ancho / 4;
 	var lado_cuadrado = lienzo.ancho / 2;

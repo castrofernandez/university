@@ -1,4 +1,4 @@
-circo.intermedios.Puntuacion = function(anterior)
+circo.intermedios.Puntuacion = function(canvas, anterior)
 {		
 	this.imagenes = [];
 
@@ -23,7 +23,7 @@ circo.intermedios.Puntuacion = function(anterior)
 	{				
 		var texto = partida.idioma.texto("aceptar");
 		
-		lienzo = xuegu.Utilidades.dimensionesJuego();
+		lienzo = xuegu.Utilidades.dimensionesJuego(canvas);
 	
 		margen = lienzo.ancho / 6;;
 		dimensionesBoton = { ancho: (lienzo.ancho - 2 * margen), alto: (lienzo.ancho / 6) };

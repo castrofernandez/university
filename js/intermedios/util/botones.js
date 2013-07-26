@@ -1,11 +1,11 @@
-circo.intermedios.util.Botones = function(botones, fondo)
+circo.intermedios.util.Botones = function(canvas, botones, fondo)
 {		
 	var lienzo = null;
 	var pulsado = false;
 	var fondo = fondo ? fondo : ['#e25470', '#f1f1f3'];
 
 	(function() {
-		lienzo = xuegu.Utilidades.dimensionesJuego();	
+		lienzo = xuegu.Utilidades.dimensionesJuego(canvas);	
 	})();
 
 	function botonPulsado()

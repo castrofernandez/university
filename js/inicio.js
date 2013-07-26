@@ -21,11 +21,40 @@ importame.cargarSecuencialmente(["xuegu/xuegu.js",
 					"juegos/numeros.js"], cargaCompletada);
 */
 
+/*
 yepnope({
   test: categorizr.isMobile,
   yep: 'css/movil.css',
   nope: 'css/estilo.css'
 });
+*/
+
+window.onload = checkOrientation;
+
+function checkOrientation(){
+      var currMode = "";
+ 
+      switch(window.orientation){
+ 
+           case 0:
+           currMode = "portrait";
+           break;
+ 
+           case -90:
+           currMode = "landscape";
+           break;
+ 
+           case 90:
+           currMode = "landscape";
+           break;
+ 
+           case 180:
+           currMode = "landscape";
+           break;
+     }
+     
+     alert(currMode)
+}
 
 yepnope({
   load: ["js/xuegu/xuegu.js", 
@@ -96,8 +125,21 @@ function comenzar()
 {
 	while (!LISTO_PARA_EJECUCION);
 
-	document.getElementById("inicio").style.display = "none";
-	document.getElementById("juego").style.display = "block";
+	canvas = document.getElementById('canvas-juego');
+
+	if ((categorizr.isMobile || categorizr.isTablet) ){
+    	if (window.innerWidth > window.innerHeight)
+    		alert("Please use portrait!");
+    		
+    	document.getElementById('pie').style.display = 'none';
+    	
+    	document.body.innerHTML = '';
+    	document.body.appendChild(canvas);
+    }
+    else {
+		document.getElementById("inicio").style.display = 'none';
+		document.getElementById("juego").style.display = 'block';
+	}
 
 	iniciarCirco();
 }
@@ -105,22 +147,29 @@ function comenzar()
 function iniciarCirco()
 {
 	var anterior = null;
+	
+	if (categorizr.isMobile)
+	{
+		var dimensiones = xuegu.Utilidades.dimensionesPagina();
+
+		canvas.width = dimensiones.ancho;
+		canvas.height = dimensiones.alto;
+	}
 
 	secuencia = [
-					new circo.intermedios.Instrucciones(),
-					anterior = new circo.juegos.Numeros(),
-					new circo.intermedios.Puntuacion(anterior),
-					new circo.intermedios.Botones5(),
-					new circo.intermedios.Botones6(),
-					new circo.intermedios.Botones1(),
-					new circo.intermedios.Botones2(),
-					new circo.intermedios.Botones3(),
-					new circo.intermedios.Botones4(),
-					new circo.intermedios.Acrobatas(),
-					new circo.intermedios.Fin()
+					new circo.intermedios.Instrucciones(canvas),
+					anterior = new circo.juegos.Numeros(canvas),
+					new circo.intermedios.Puntuacion(canvas, anterior),
+					new circo.intermedios.Botones5(canvas),
+					new circo.intermedios.Botones6(canvas),
+					new circo.intermedios.Botones1(canvas),
+					new circo.intermedios.Botones2(canvas),
+					new circo.intermedios.Botones3(canvas),
+					new circo.intermedios.Botones4(canvas),
+					new circo.intermedios.Acrobatas(canvas),
+					new circo.intermedios.Fin(canvas)
 				];
 
-	canvas = document.getElementById('canvas-juego');
 	cambiarJuego();
 }
 

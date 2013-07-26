@@ -1,9 +1,9 @@
-circo.intermedios.util.Instrucciones = function(titulo, subtitulo, texto, imagen)
+circo.intermedios.util.Instrucciones = function(canvas, titulo, subtitulo, texto, imagen)
 {		
 	var dimensionesImagen = null;
 	var margen;
 	var fila;
-	var lienzo = xuegu.Utilidades.dimensionesJuego();
+	var lienzo = xuegu.Utilidades.dimensionesJuego(canvas);
 	var pulsado = false;
 
 	function botonPulsado()

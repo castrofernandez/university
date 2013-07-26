@@ -1,11 +1,11 @@
-circo.juegos.Numeros = function()
+circo.juegos.Numeros = function(canvas)
 {
 	var ancho_alto_pato = null;;
 	
 	var gancho = { };
-	
+
 	var angulo_oscilacion = 0.05;
-	var lienzo = xuegu.Utilidades.dimensionesJuego();
+	var lienzo = xuegu.Utilidades.dimensionesJuego(canvas);
 	
 	this.imagenes = ['img/numeros/pato1.png', 'img/numeros/pato2.png', 'img/numeros/pato3.png', 
 					'img/numeros/pato4.png', 'img/numeros/pato5.png', 'img/numeros/pato6.png', 'img/numeros/gancho.png'];
