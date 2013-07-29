@@ -29,33 +29,6 @@ yepnope({
 });
 */
 
-window.onload = checkOrientation;
-
-function checkOrientation(){
-      var currMode = "";
- 
-      switch(window.orientation){
- 
-           case 0:
-           currMode = "portrait";
-           break;
- 
-           case -90:
-           currMode = "landscape";
-           break;
- 
-           case 90:
-           currMode = "landscape";
-           break;
- 
-           case 180:
-           currMode = "landscape";
-           break;
-     }
-     
-     alert(currMode)
-}
-
 yepnope({
   load: ["js/xuegu/xuegu.js", 
 		"js/xuegu/manejadores.js",
@@ -115,6 +88,8 @@ function establecerEtiquetas() {
 	var solo = document.getElementById("img_3minutos")
 	solo.src = idioma.texto("img_3minutos");
 	solo.style.visibility = "visible";
+	
+	document.title = idioma.texto("titulo");
 }
 
 function esteblecerEtiqueta(elemento, contenido) {
@@ -127,9 +102,12 @@ function comenzar()
 
 	canvas = document.getElementById('canvas-juego');
 
-	if ((categorizr.isMobile || categorizr.isTablet) ){
-    	if (window.innerWidth > window.innerHeight)
-    		alert("Please use portrait!");
+	if (categorizr.isMobile || categorizr.isTablet){
+    	
+    	var dimensiones = xuegu.Utilidades.dimensionesPagina();
+
+		canvas.width = dimensiones.ancho;
+		canvas.height = dimensiones.alto;
     		
     	document.getElementById('pie').style.display = 'none';
     	
@@ -141,20 +119,41 @@ function comenzar()
 		document.getElementById("juego").style.display = 'block';
 	}
 
-	iniciarCirco();
+	if ((categorizr.isMobile || categorizr.isTablet) && window.innerWidth > window.innerHeight)
+	{
+		window.addEventListener("orientationchange", orientacion);
+		
+		var contexto = canvas.getContext('2d');
+		
+		contexto.textAlign = 'center';
+		contexto.font = "16px Conv_Carnevalee Freakshow";
+		contexto.fillStyle = '#333';
+		contexto.fillText(idioma.texto("girar_dispositivo"), window.innerWidth / 2, window.innerHeight / 2);
+	}
+	else
+		iniciarCirco();
+}
+
+function orientacion() 
+{
+	if (window.innerHeight > window.innerWidth) 
+	{
+		window.removeEventListener("orientationchange", orientacion);
+		
+		iniciarCirco();
+	}
 }
 
 function iniciarCirco()
 {
-	var anterior = null;
-	
-	if (categorizr.isMobile)
+	if (categorizr.isMobile || categorizr.isTablet)
 	{
 		var dimensiones = xuegu.Utilidades.dimensionesPagina();
-
 		canvas.width = dimensiones.ancho;
 		canvas.height = dimensiones.alto;
 	}
+	
+	var anterior = null;
 
 	secuencia = [
 					new circo.intermedios.Instrucciones(canvas),

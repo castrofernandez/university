@@ -309,7 +309,5 @@ h1.prueba
 
 #canvas-juego {
 	position: absolute;
-	top: -2%;
-	left: -2%;
 	background-image: url(../img/fondo.jpg);
 }
