@@ -50,7 +50,8 @@ yepnope({
 		"js/intermedios/instrucciones.js",
 		"js/intermedios/fin.js",
 		"js/intermedios/puntuacion.js",
-		"js/juegos/numeros.js"],
+		"js/juegos/numeros.js",
+		"js/juegos/topos.js"],
   callback: cargaCompletada
 });
 
@@ -152,14 +153,24 @@ function iniciarCirco()
 		canvas.width = dimensiones.ancho;
 		canvas.height = dimensiones.alto;
 	}
-	
-	var anterior = null;
 
 	secuencia = [
-					new circo.intermedios.Instrucciones(canvas),
-					anterior = new circo.juegos.Numeros(canvas),
-					new circo.intermedios.Puntuacion(canvas, anterior),
+					new circo.intermedios.Instrucciones(canvas, "titulo_prueba_1", 
+																"nombre_prueba_1", 
+																"instrucciones_numeros", 
+																"img/instrucciones/numeros.png"),
+					new circo.juegos.Numeros(canvas),
+					new circo.intermedios.Puntuacion(canvas),
+					
 					new circo.intermedios.Botones5(canvas),
+					
+					new circo.intermedios.Instrucciones(canvas, "titulo_prueba_2", 
+																"nombre_prueba_2", 
+																"instrucciones_topos", 
+																"img/instrucciones/topos.png"),
+					new circo.juegos.Topos(canvas),
+					new circo.intermedios.Puntuacion(canvas),
+					
 					new circo.intermedios.Botones6(canvas),
 					new circo.intermedios.Botones1(canvas),
 					new circo.intermedios.Botones2(canvas),
@@ -172,6 +183,8 @@ function iniciarCirco()
 	cambiarJuego();
 }
 
+var anterior = null;
+
 function cambiarJuego()
 {
 	indice++;
@@ -180,8 +193,10 @@ function cambiarJuego()
 	{
 		var juego = secuencia[indice];
 
-		var partida = new xuegu.Partida(canvas, juego, idioma, cambiarJuego);
+		var partida = new xuegu.Partida(canvas, juego, idioma, cambiarJuego, anterior);
 		partida.iniciar();
+		
+		anterior = partida;
 	}
 }
 

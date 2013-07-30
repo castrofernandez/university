@@ -1,6 +1,6 @@
-circo.intermedios.Instrucciones = function(canvas)
+circo.intermedios.Instrucciones = function(canvas, titulo, nombre, descripcion, imagen)
 {		
-	this.imagenes = ['img/instrucciones/numeros.png'];
+	this.imagenes = [imagen];
 
 	var dimensionesBoton = null;	
 	var margen = null;
@@ -15,12 +15,11 @@ circo.intermedios.Instrucciones = function(canvas)
 	this.iniciar = function(partida)
 	{				
 		var idioma = partida.idioma;
-		var texto = idioma.texto("instrucciones_numeros");
-		var titulo = idioma.texto("titulo_prueba_1");
-		var nombre = idioma.texto("nombre_prueba_1");
-	
-		nivel = new circo.intermedios.util.Instrucciones(canvas, titulo, nombre, texto, 
-														'img/instrucciones/numeros.png');
+		var texto = idioma.texto(descripcion);
+		var texto_titulo = idioma.texto(titulo);
+		var texto_nombre = idioma.texto(nombre);
+
+		nivel = new circo.intermedios.util.Instrucciones(canvas, texto_titulo, texto_nombre, texto, imagen);
 		nivel.iniciar(partida);
 	}
 		

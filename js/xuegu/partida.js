@@ -1,4 +1,4 @@
-xuegu.Partida = function(canvas, nivel, idioma, accionFinal)
+xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior)
 {
 	var contexto = null;
 	var ancho = canvas.width;
@@ -6,7 +6,7 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal)
 	
 	var velocidad = 30;
 	
-	graficos = {};
+	var graficos = {};
 	
 	this.manejadores = new xuegu.Manejadores(canvas);
 	this.idioma = idioma;
@@ -66,7 +66,7 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal)
 	function iniciarNivel()
 	{
 		if (nivel.iniciar)
-			nivel.iniciar(partida);
+			nivel.iniciar(partida, partidaAnterior);
 		
 		intervalo = setInterval(bucleJuego, velocidad);
 	}
@@ -83,7 +83,9 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal)
 	this.dibujar = function()
 	{
 		for (var i = 0; i < this.elementos.length; i++)
-			this.elementos[i].dibujar(contexto, ancho, alto, graficos, idioma);
+			this.elementos[i].dibujar(contexto, ancho, alto, graficos, idioma, partidaAnterior);
+			
+		nivel.dibujar(contexto, ancho, alto, graficos, idioma, partidaAnterior);
 	}
 	
 	function bucleJuego()
@@ -94,7 +96,6 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal)
 		contexto.clearRect(0, 0, ancho, alto);
 		
 		partida.dibujar();
-		nivel.dibujar(contexto, ancho, alto, graficos, idioma);
 		
 		if (nivel.finalizado())
 		{

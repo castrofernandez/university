@@ -9,9 +9,6 @@ circo.intermedios.Puntuacion = function(canvas, anterior)
 	var boton = null;
 	var pulsado = false;
 	
-	if (anterior && anterior.imagenes)
-		this.imagenes = this.imagenes.concat(this.imagenes, anterior.imagenes);
-	
 	var textoPuntuacion = null;
 	
 	function botonPulsado()
@@ -19,7 +16,7 @@ circo.intermedios.Puntuacion = function(canvas, anterior)
 		pulsado = true;
 	}
 
-	this.iniciar = function(partida)
+	this.iniciar = function(partida, partidaAnterior)
 	{				
 		var texto = partida.idioma.texto("aceptar");
 		
@@ -44,10 +41,14 @@ circo.intermedios.Puntuacion = function(canvas, anterior)
 
 	}
 	
-	this.dibujar =  function(contexto, ancho, alto, graficos)
+	this.dibujar =  function(contexto, ancho, alto, graficos, idioma, partidaAnterior)
 	{
-		if (anterior && anterior.dibujar)
-			anterior.dibujar(contexto, ancho, alto, graficos);
+		if (partidaAnterior)
+			for (var i = 0; i < partidaAnterior.elementos.length; i++)
+				partidaAnterior.elementos[i].dibujar(contexto, ancho, alto, partidaAnterior.graficos(), idioma);
+	
+		if (partidaAnterior && partidaAnterior.dibujar)
+			partidaAnterior.dibujar(contexto, ancho, alto, partidaAnterior.graficos(), idioma);
 		
 		// Fondo
 		contexto.globalAlpha = 0.8;

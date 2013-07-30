@@ -23,7 +23,7 @@ circo.intermedios.util.Instrucciones = function(canvas, titulo, subtitulo, texto
 			dimensionesImagen.alto = dimensionesImagen.alto * (img.height / img.width);	
 		else
 			dimensionesImagen.ancho = dimensionesImagen.ancho * (img.width / img.height);
-	
+
 		dimensionesImagen.x = lienzo.ancho / 2 - dimensionesImagen.ancho / 2;
 		dimensionesImagen.y = fila;
 	
