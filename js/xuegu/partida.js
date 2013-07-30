@@ -101,6 +101,9 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior)
 		{
 			clearInterval(intervalo);
 			
+			if (nivel.finalizar)
+				nivel.finalizar(partida);
+			
 			accionFinal();
 		}
 	}

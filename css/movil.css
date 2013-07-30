@@ -308,6 +308,20 @@ h1.prueba
 }
 
 #canvas-juego {
-	position: absolute;
 	background-image: url(../img/fondo.jpg);
+}
+
+#input {
+	position: relative;
+}
+
+#canvas-input {
+	display: none;
+	position: absolute;
+	width: 90%;
+	bottom: 2%;
+	left: 0px;
+	padding: 0 5%;
+	font-size: 2em;
+	border: none;
 }

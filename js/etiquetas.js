@@ -15,6 +15,9 @@ internacionalizacion.etiquetas = {
 		instrucciones_topos: 'Pulsa sobre cada topo según vayan saliendo de su madriguera.',
 		titulo_prueba_2: 'P r u e b a  2',
 		nombre_prueba_2: 'G o l p e a  a l  t o p o',
+		instrucciones_palabras: 'Escribe las palabras que contienen los patos.',
+		titulo_prueba_3: 'P r u e b a  3',
+		nombre_prueba_3: 'T i r o  a l  p a t o',
 		continuar: "Continuar",
 		pulsaCirculo: "Pulsa un círculo",
 		paraContinuar: "para continuar",
@@ -23,7 +26,8 @@ internacionalizacion.etiquetas = {
 		acrobata2: "Gira el tablón central para completar la pista.",
 		aceptar: "Aceptar",
 		pruebaFinalizada: "Prueba finalizada",
-		girar_dispositivo: "Orienta el dispositivo en posición vertical."
+		girar_dispositivo: "Orienta el dispositivo en posición vertical.",
+		escribe: "Escribe aquí"
 	},
 	
 	en : {
@@ -42,6 +46,9 @@ internacionalizacion.etiquetas = {
 		instrucciones_topos: 'Click on the moles as they emerge from their holes.',
 		titulo_prueba_2: 'T e s t  #2',
 		nombre_prueba_2: 'W h a c k   a  M o l e',
+		instrucciones_palabras: 'Write the words contained in the ducks.',
+		titulo_prueba_3: 'T e s t  #3',
+		nombre_prueba_3: 'D u c k  S h o o t',
 		continuar: "Continue",
 		pulsaCirculo: "Click on one circle",
 		paraContinuar: "to continue",
@@ -50,6 +57,7 @@ internacionalizacion.etiquetas = {
 		acrobata2: "Spin around the central board to complete the track.",
 		aceptar: "Aceptar",
 		pruebaFinalizada: "Test Over",
-		girar_dispositivo: "Locate the device in vertical position."
+		girar_dispositivo: "Locate the device in vertical position.",
+		escribe: "Write in here"
 	}	
 };

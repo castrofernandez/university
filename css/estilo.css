@@ -298,3 +298,16 @@ h1.prueba
 	display: none;
 	padding-top: 25px;
 }
+
+#input {
+	position: relative;
+}
+
+#canvas-input {
+	display: none;
+	position: absolute;
+	width: 80%;
+	bottom: 2%;
+	left: 10%;
+	font-size: 2em;
+}

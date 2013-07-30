@@ -19,6 +19,7 @@
 		<script src="js/categorizr.js/categorizr.js"></script>
 		<script src="js/categorizr.js/copyright.js"></script>
 		<script src="js/inicio.js"></script>
+		<script src="js/hide-address-bar.js"></script>
 	</head>
 	<body>
 		<div id='marco'>
@@ -57,8 +58,11 @@
 					<br />
 				</div>
 				<div id="juego">
-					<canvas id='canvas-juego' width='600px' height='700px'>
-					</canvas>
+					<div id="input">
+						<canvas id='canvas-juego' width='600px' height='700px'>
+						</canvas>
+						<input type="text" id="canvas-input" />
+					</div>
 				</div>
 				<footer id="pie">
 					<img id='html-css' src='img/html-css.png' />

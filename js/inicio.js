@@ -51,7 +51,8 @@ yepnope({
 		"js/intermedios/fin.js",
 		"js/intermedios/puntuacion.js",
 		"js/juegos/numeros.js",
-		"js/juegos/topos.js"],
+		"js/juegos/topos.js",
+		"js/juegos/palabras.js"],
   callback: cargaCompletada
 });
 
@@ -112,8 +113,11 @@ function comenzar()
     		
     	document.getElementById('pie').style.display = 'none';
     	
+    	var input = document.getElementById('input');
+    	
     	document.body.innerHTML = '';
-    	document.body.appendChild(canvas);
+    	document.body.appendChild(input);
+    	document.body.style.backgroundImage = 'url(../img/fondo.jpg)';
     }
     else {
 		document.getElementById("inicio").style.display = 'none';
@@ -154,7 +158,7 @@ function iniciarCirco()
 		canvas.height = dimensiones.alto;
 	}
 
-	secuencia = [
+	secuencia = [	
 					new circo.intermedios.Instrucciones(canvas, "titulo_prueba_1", 
 																"nombre_prueba_1", 
 																"instrucciones_numeros", 
@@ -172,6 +176,14 @@ function iniciarCirco()
 					new circo.intermedios.Puntuacion(canvas),
 					
 					new circo.intermedios.Botones6(canvas),
+					
+					new circo.intermedios.Instrucciones(canvas, "titulo_prueba_3", 
+																"nombre_prueba_3", 
+																"instrucciones_palabras", 
+																"img/instrucciones/pato.png"),
+					new circo.juegos.Palabras(canvas),
+					new circo.intermedios.Puntuacion(canvas),
+					
 					new circo.intermedios.Botones1(canvas),
 					new circo.intermedios.Botones2(canvas),
 					new circo.intermedios.Botones3(canvas),

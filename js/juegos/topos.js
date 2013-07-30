@@ -155,6 +155,8 @@ circo.juegos.Topos = function(canvas)
 			var digito1 = parseInt(puntuacion / 10);
 			var digito2 = puntuacion % 10;
 			
+			digito1 = digito1 == 0 ? -1 : digito1;
+			
 			dibujarDigito(contexto, graficos, x_marcador + margen_digito_x, y + margen + margen_digito_y, 
 								ancho_digito, alto_digito, digito(digito1));
 			dibujarDigito(contexto, graficos, x_marcador + margen_digito_x * 3 + ancho_digito, y + margen + margen_digito_y, 
@@ -169,37 +171,39 @@ circo.juegos.Topos = function(canvas)
 			var margen_y = alto * 0.1;
 			
 			var color_marcado = '#f4f0a7';
-			var color_desmarcado = '#a05e67';
+			var color_desmarcado = '#712731';
 			
 			// Línea superior
 			xuegu.Graficos.linea(contexto, x + margen_x, y, x + margen_x + ancho_digito, y, 
-									d[0] ? color_marcado : color_desmarcado, 6, 'round');
+									d[0] ? color_marcado : color_desmarcado, 7, 'round');
 			
 			// Línea medio
 			xuegu.Graficos.linea(contexto, x + margen_x, y + alto / 2, x + margen_x + ancho_digito, y + alto / 2, 
-									d[1] ? color_marcado : color_desmarcado, 6, 'round');
+									d[1] ? color_marcado : color_desmarcado, 7, 'round');
 			
 			// Línea inferior
 			xuegu.Graficos.linea(contexto, x + margen_x, y + alto, x + margen_x + ancho_digito, y + alto, 
-									d[2] ? color_marcado : color_desmarcado, 6, 'round');
+									d[2] ? color_marcado : color_desmarcado, 7, 'round');
 			
 			// Líneas izquierda
-			xuegu.Graficos.linea(contexto, x, y, x, y + alto_digito,  d[3] ? color_marcado : color_desmarcado, 4, 'round');
+			xuegu.Graficos.linea(contexto, x, y, x, y + alto_digito,  d[3] ? color_marcado : color_desmarcado, 7, 'round');
 			xuegu.Graficos.linea(contexto, x, y + margen_y * 2 + alto_digito, x, y + margen_y * 2 + alto_digito * 2,  
-									d[4] ? color_marcado : color_desmarcado, 6, 'round');
+									d[4] ? color_marcado : color_desmarcado, 7, 'round');
 			
 			// Líneas derecha
 			xuegu.Graficos.linea(contexto, x + margen_x * 2 + ancho_digito, y, x + margen_x * 2 + ancho_digito, y + alto_digito,  
-									d[5] ? color_marcado : color_desmarcado, 6, 'round');
+									d[5] ? color_marcado : color_desmarcado, 7, 'round');
 			xuegu.Graficos.linea(contexto, x + margen_x * 2 + ancho_digito, y + margen_y * 2 + alto_digito, x + margen_x * 2 + 
 									ancho_digito, y + margen_y * 2 + alto_digito * 2,  
-									d[6] ? color_marcado : color_desmarcado, 6, 'round');
+									d[6] ? color_marcado : color_desmarcado, 7, 'round');
 		}
 		
 		function digito(numero)
 		{
 			switch(numero)
 			{
+				case -1:
+					return [false, false, false, false, false, false, false];
 				case 0:
 					return [true, false, true, true, true, true, true];
 				case 1:
