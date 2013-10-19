@@ -49,6 +49,7 @@ yepnope({
 		"js/intermedios/acrobatas.js",
 		"js/intermedios/instrucciones.js",
 		"js/intermedios/fin.js",
+		"js/intermedios/resultado.js",
 		"js/intermedios/puntuacion.js",
 		"js/juegos/numeros.js",
 		"js/juegos/topos.js",
@@ -159,7 +160,7 @@ function iniciarCirco()
 	}
 
 	secuencia = [	
-					new circo.intermedios.Instrucciones(canvas, "titulo_prueba_1", 
+				/*	new circo.intermedios.Instrucciones(canvas, "titulo_prueba_1", 
 																"nombre_prueba_1", 
 																"instrucciones_numeros", 
 																"img/instrucciones/numeros.png"),
@@ -188,7 +189,8 @@ function iniciarCirco()
 					new circo.intermedios.Botones2(canvas),
 					new circo.intermedios.Botones3(canvas),
 					new circo.intermedios.Botones4(canvas),
-					new circo.intermedios.Acrobatas(canvas),
+					new circo.intermedios.Acrobatas(canvas),*/
+					new circo.intermedios.Resultado(canvas),
 					new circo.intermedios.Fin(canvas)
 				];
 

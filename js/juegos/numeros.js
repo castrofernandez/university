@@ -1,6 +1,6 @@
 circo.juegos.Numeros = function(canvas)
 {
-	var ancho_alto_pato = null;;
+	var ancho_alto_pato = null;
 	
 	var gancho = { };
 
