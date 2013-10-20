@@ -27,7 +27,13 @@ internacionalizacion.etiquetas = {
 		aceptar: "Aceptar",
 		pruebaFinalizada: "Prueba finalizada",
 		girar_dispositivo: "Orienta el dispositivo en posición vertical.",
-		escribe: "Escribe aquí"
+		escribe: "Escribe aquí",
+		tu_edad_mental: "Tu edad mental es",
+		pulsa_finalizar: "Pulsa para finalizar",
+		gracias: "Gracias por participar",
+		comparte: "Comparte esto",
+		descubre_en: "Descubre tu destreza mental en ",
+		es_gratis: ". Es GRATIS."
 	},
 	
 	en : {
@@ -58,6 +64,12 @@ internacionalizacion.etiquetas = {
 		aceptar: "Aceptar",
 		pruebaFinalizada: "Test Over",
 		girar_dispositivo: "Locate the device in vertical position.",
-		escribe: "Write in here"
+		escribe: "Write in here",
+		tu_edad_mental: "Your mental age is",
+		pulsa_finalizar: "Click to finish",
+		gracias: "Thank you for participating",
+		comparte: "Share this",
+		descubre_en: "Discover your mental skills in ",
+		es_gratis: ". It's FREE."
 	}	
 };

@@ -1,6 +1,10 @@
-circo.intermedios.Resultado = function(canvas)
+circo.intermedios.Resultado1 = function(canvas)
 {		
-	this.imagenes = ['img/intermedios/resultado/fondo_cabina.png', 'img/intermedios/resultado/adivino1.png', 'img/intermedios/resultado/adivino2.png', 'img/intermedios/resultado/adivino3.png'];
+	this.imagenes = ['img/intermedios/resultado/fondo_cabina.png', 
+					'img/intermedios/resultado/adivino1.png', 
+					'img/intermedios/resultado/adivino2.png', 
+					'img/intermedios/resultado/adivino3.png'];
+					
 	this.velocidad = 150;
 	
 	var dimensiones_fondo = {
@@ -55,6 +59,11 @@ circo.intermedios.Resultado = function(canvas)
 		
 		// Crear adivino
 		adivino = new Adivino();
+		
+		// Etiquetas
+		
+		tu_edad_mental = partida.idioma.texto("tu_edad_mental");
+		pulsa_finalizar = partida.idioma.texto("pulsa_finalizar");
 	}
 		
 	this.avanzar = function(partida)
@@ -65,8 +74,9 @@ circo.intermedios.Resultado = function(canvas)
 	this.dibujar =  function(contexto, ancho, alto, graficos)
 	{
 		// Fondo
-		contexto.drawImage(graficos['img/intermedios/resultado/fondo_cabina.png'], dimensiones_fondo.x, 0, dimensiones_fondo.ancho, dimensiones_fondo.alto);
-		
+		contexto.drawImage(graficos['img/intermedios/resultado/fondo_cabina.png'], 
+			dimensiones_fondo.x, 0, dimensiones_fondo.ancho, dimensiones_fondo.alto);
+			
 		// Adivino
 		adivino.dibujar(contexto, ancho, alto, graficos);
 	}
@@ -88,10 +98,13 @@ circo.intermedios.Resultado = function(canvas)
 				var grafico = graficos['img/intermedios/resultado/adivino1.png'];
 			}
 			else {
-				var grafico = (contador % 5 == 0) ? graficos['img/intermedios/resultado/adivino2.png'] : graficos['img/intermedios/resultado/adivino3.png']	
+				var grafico = (contador % 5 == 0) ? 
+							graficos['img/intermedios/resultado/adivino2.png'] : 
+							graficos['img/intermedios/resultado/adivino3.png']	
 			}
 			
-			contexto.drawImage(grafico, dimensiones_adivino.x, dimensiones_adivino.y, dimensiones_adivino.ancho, dimensiones_adivino.alto);
+			contexto.drawImage(grafico, dimensiones_adivino.x, dimensiones_adivino.y, 
+					dimensiones_adivino.ancho, dimensiones_adivino.alto);
 		}
 	}
 }
