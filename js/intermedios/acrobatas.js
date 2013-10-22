@@ -1,5 +1,6 @@
 circo.intermedios.Acrobatas = function(canvas)
 {
+	this.identificador = "acrobatas";
 	this.velocidad = 150;
 	
 	var dimension_acrobata = { ancho : 145, alto : 200};

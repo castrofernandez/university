@@ -10,7 +10,15 @@ xuegu.Elemento = function(partida, x, y, ancho, alto, opciones)
 	{
 		return (this.x <= coordenada.x && this.x + this.ancho >= coordenada.x 
 				&& this.y <= coordenada.y && this.y + this.alto >= coordenada.y);
-	}	
+	}
+	
+	this.coordenadaEnElemento = function(coordenada)
+	{
+		return {
+			x: coordenada.x - this.x,
+			y: coordenada.y - this.y
+		}
+	}		
 	
 	this.dibujar = function()
 	{
@@ -82,25 +90,25 @@ xuegu.Elemento = function(partida, x, y, ancho, alto, opciones)
 	
 	this.registrarManejadores = function(manejadores)
 	{
-		if (this.onclick)
+	//	if (this.onclick)
 			this.registrarClick();
 			
-		if (this.ondblclick)
+	//	if (this.ondblclick)
 			this.registrarDblClick();
 		
-		if (this.onmousedown)
+	//	if (this.onmousedown)
 			this.registrarMouseDown();
 			
-		if (this.onmouseup)
+	//	if (this.onmouseup)
 			this.registrarMouseUp();						
 			
-		if (this.onmousemove)
+	//	if (this.onmousemove)
 			this.registrarMouseMove();
 			
-		if (this.onmouseover)
+	//	if (this.onmouseover)
 			this.registrarMouseOver();
 			
-		if (this.onmouseout)
+	//	if (this.onmouseout)
 			this.registrarMouseOut();
 	}
 	

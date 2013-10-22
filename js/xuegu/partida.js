@@ -1,4 +1,4 @@
-xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior)
+xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior, auditoriaUsuario)
 {
 	var contexto = null;
 	var ancho = canvas.width;
@@ -7,8 +7,12 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior)
 	var velocidad = 30;
 	
 	var graficos = {};
+
+	var registroAuditoria = new auditoria.Prueba(nivel.identificador);
+	this.auditoria = auditoriaUsuario;
 	
-	this.manejadores = new xuegu.Manejadores(canvas);
+	var manejadores = this.manejadores = new xuegu.Manejadores(canvas, registroAuditoria);
+	
 	this.idioma = idioma;
 	
 	this.elementos = [];
@@ -99,6 +103,10 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior)
 		
 		if (nivel.finalizado())
 		{
+			registroAuditoria.parar();
+			manejadores.parar();
+			auditoriaUsuario.incluirPrueba(registroAuditoria.datos);
+		
 			clearInterval(intervalo);
 			
 			if (nivel.finalizar)

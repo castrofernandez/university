@@ -1,5 +1,6 @@
 circo.intermedios.Puntuacion = function(canvas, anterior)
 {		
+	this.identificador = "puntuacion";
 	this.imagenes = [];
 
 	var dimensionesBoton = null;	
@@ -28,7 +29,7 @@ circo.intermedios.Puntuacion = function(canvas, anterior)
 		var y = lienzo.alto / 2 - dimensionesBoton.alto / 2;
 		
 		var opciones = { partida: partida, ancho: dimensionesBoton.ancho, alto: dimensionesBoton.alto, relleno: '#c40038', 
-						contorno: false, grosor: 3, texto: texto, colorTexto: '#fff', sombra: '#800226',
+						contorno: false, grosor: 3, texto: texto, colorTexto: '#fff', sombra: '#800226', identificador: "boton",
 						tipo: "redondeado", x: x, y: y, onclick: botonPulsado };
 							
 		boton = new circo.intermedios.util.Boton(opciones);

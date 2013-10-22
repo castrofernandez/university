@@ -1,5 +1,6 @@
 circo.juegos.Topos = function(canvas)
 {
+	this.identificador = "topos";
 	this.imagenes = ['img/topos/golpea.png', 
 					'img/topos/fondo_cuerpo.png', 
 					'img/topos/hoyo.png', 
@@ -86,7 +87,7 @@ circo.juegos.Topos = function(canvas)
 	
 	function Fondo(partida, x, y, ancho, alto)
 	{
-		var elemento = partida.crearElemento(x, y, ancho, alto); 
+		var elemento = partida.crearElemento(x, y, ancho, alto, { identificador: "fondo" }); 
 	
 		elemento.dibujar = function(contexto, ancho, alto, graficos, idioma)
 		{
@@ -262,33 +263,33 @@ circo.juegos.Topos = function(canvas)
 	    var margen_perspectiva = margen_x / 4;
 
 	    // Arriba-Izquierda
-	    topos[0] = new Topo(partida, x + margen_x, y + margen_y, ancho_topo, alto_topo);
+	    topos[0] = new Topo(partida, x + margen_x, y + margen_y, ancho_topo, alto_topo, "topo1");
 
 	    // Arriba-Derecha
 	    topos[1] = new Topo(partida, x + ancho - margen_x - ancho_topo, 
-	    	y + margen_y, ancho_topo, alto_topo);
+	    	y + margen_y, ancho_topo, alto_topo, "topo2");
 	    
 	    // Medio-Izquierda
 	    topos[2] = new Topo(partida, x + margen_x - margen_perspectiva, 
-	    	y + margen_y * 2 + alto_topo, ancho_topo, alto_topo);
+	    	y + margen_y * 2 + alto_topo, ancho_topo, alto_topo, "topo3");
 	    
 	    // Medio-Derecha
 	    topos[3] = new Topo(partida, x + ancho - margen_x - ancho_topo + margen_perspectiva, 
-	    	y + margen_y * 2 + alto_topo, ancho_topo, alto_topo);
+	    	y + margen_y * 2 + alto_topo, ancho_topo, alto_topo, "topo4");
 	    
 	    // Medio-Izquierda
 	    topos[4] = new Topo(partida, x + margen_x - margen_perspectiva * 2, y + margen_y * 3 + alto_topo * 2, 
-	    	ancho_topo, alto_topo);
+	    	ancho_topo, alto_topo, "topo5");
 	    
 	    // Medio-Derecha
 	    topos[5] = new Topo(partida, x + ancho - margen_x - ancho_topo + margen_perspectiva * 2, 
-	    	y + margen_y * 3 + alto_topo * 2, ancho_topo, alto_topo);
+	    	y + margen_y * 3 + alto_topo * 2, ancho_topo, alto_topo, "topo6");
     };
 
 	
-	function Topo(partida, x, y, ancho, alto)
+	function Topo(partida, x, y, ancho, alto, identificador)
 	{
-		var elemento = partida.crearElemento(x, y, ancho, alto, { onclick: topoOnClick }); 
+		var elemento = partida.crearElemento(x, y, ancho, alto, { onclick: topoOnClick, identificador: identificador }); 
 		//this.x = x;
 		//this.y = y;
 		//this.ancho = ancho;

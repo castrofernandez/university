@@ -1,5 +1,6 @@
 circo.intermedios.Botones4 = function(canvas)
 {		
+	this.identificador = "botones4";
 	this.imagenes = [];
 
 	var dimensionesBoton = null;	

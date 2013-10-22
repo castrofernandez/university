@@ -1,5 +1,6 @@
 circo.juegos.Palabras = function(canvas)
 {
+	this.identificador = "palabras";
 	var pato = null;
 	
 	var palabras = ['En', 'un', 'lugar', 'de', 'la', 'Mancha'];

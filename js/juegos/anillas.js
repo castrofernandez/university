@@ -1,5 +1,6 @@
 circo.juegos.Anillas = function()
 {
+	this.identificador = "anillas";
 	this.imagenes = ['img/anillas/fondo.png', 'img/anillas/esquina_izquierda.png', 'img/anillas/esquina_derecha.png',
 					'img/anillas/fondo_invertido.png', 'img/anillas/toldo_1.png', 'img/anillas/toldo_2.png', 
 					'img/anillas/botellas.png', 'img/anillas/cartel.png'];

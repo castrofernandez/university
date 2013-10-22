@@ -1,5 +1,6 @@
 circo.intermedios.Fin = function(canvas)
 {		
+	this.identificador = "fin";
 	this.imagenes = ['img/intermedios/fin/facebook.png',
 					'img/intermedios/fin/twitter.png'];
 

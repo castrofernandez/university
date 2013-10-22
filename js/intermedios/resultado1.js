@@ -1,5 +1,6 @@
 circo.intermedios.Resultado1 = function(canvas)
 {		
+	this.identificador = "resultado1";
 	this.imagenes = ['img/intermedios/resultado/fondo_cabina.png', 
 					'img/intermedios/resultado/adivino1.png', 
 					'img/intermedios/resultado/adivino2.png', 
@@ -64,6 +65,9 @@ circo.intermedios.Resultado1 = function(canvas)
 		
 		tu_edad_mental = partida.idioma.texto("tu_edad_mental");
 		pulsa_finalizar = partida.idioma.texto("pulsa_finalizar");
+		
+		// Enviar auditoría
+		enviarDatos(partida.auditoria);
 	}
 		
 	this.avanzar = function(partida)
@@ -106,5 +110,9 @@ circo.intermedios.Resultado1 = function(canvas)
 			contexto.drawImage(grafico, dimensiones_adivino.x, dimensiones_adivino.y, 
 					dimensiones_adivino.ancho, dimensiones_adivino.alto);
 		}
+	}
+	
+	function enviarDatos(auditoria) {
+		console.log(auditoria.datos)
 	}
 }

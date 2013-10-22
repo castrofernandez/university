@@ -29,7 +29,7 @@ circo.intermedios.util.Instrucciones = function(canvas, titulo, subtitulo, texto
 	
 		// Creamos el fondo
 		partida.crearElemento(0, 0, lienzo.ancho, lienzo.alto, 
-										{ dibujar: dibujarFondo });
+										{ dibujar: dibujarFondo, identificador: "fondo" });
 		
 		// Creamos los botones
 		
@@ -38,7 +38,7 @@ circo.intermedios.util.Instrucciones = function(canvas, titulo, subtitulo, texto
 		
 		var texto = partida.idioma.texto("comenzar");
 		
-		var opciones = { x: lienzo.ancho / 2 - ancho / 2, y: lienzo.alto - alto - 5, tipo: "redondeado", 
+		var opciones = { x: lienzo.ancho / 2 - ancho / 2, y: lienzo.alto - alto - 5, tipo: "redondeado", identificador: "boton",
 							partida: partida, ancho: ancho, alto: alto, relleno: '#c40038', 
 							contorno: false, grosor: 3, texto: texto, colorTexto: '#fff', sombra: '#800226' };
 		

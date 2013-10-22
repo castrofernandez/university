@@ -1,5 +1,6 @@
 circo.intermedios.Botones6 = function(canvas)
 {		
+	this.identificador = "botones6";
 	this.imagenes = ['img/intermedios/forma1.png', 
 					'img/intermedios/forma2.png', 
 					'img/intermedios/forma3.png'];

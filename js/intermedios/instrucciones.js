@@ -1,5 +1,6 @@
-circo.intermedios.Instrucciones = function(canvas, titulo, nombre, descripcion, imagen)
+circo.intermedios.Instrucciones = function(canvas, identificador, titulo, nombre, descripcion, imagen)
 {		
+	this.identificador = identificador ? identificador : "instrucciones";
 	this.imagenes = [imagen];
 
 	var dimensionesBoton = null;	

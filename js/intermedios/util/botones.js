@@ -17,7 +17,7 @@ circo.intermedios.util.Botones = function(canvas, botones, fondo)
 	{
 		// Creamos el fondo
 		partida.crearElemento(0, 0, lienzo.ancho, lienzo.alto, 
-										{ dibujar: dibujarFondo });
+										{ dibujar: dibujarFondo, identificador: "fondo" });
 		
 		// Creamos los botones
 		
@@ -25,6 +25,7 @@ circo.intermedios.util.Botones = function(canvas, botones, fondo)
 		{
 			var boton = botones[i];
 			boton.onclick = botonPulsado;
+			boton.identificador = "boton" + (i + 1);
 			
 			new circo.intermedios.util.Boton(boton);		
 		}

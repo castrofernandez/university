@@ -1,5 +1,6 @@
 circo.intermedios.Resultado2 = function(canvas)
 {		
+	this.identificador = "resultado2";
 	this.imagenes = [];
 					
 	this.velocidad = 150;
