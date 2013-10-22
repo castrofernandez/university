@@ -77,7 +77,10 @@ function cargaCompletada() {
 }
 
 DomReady.ready(function() {
-                    document.getElementById("comenzar").onclick = comenzar;
+                    var botonComenzar = document.getElementById("comenzar")
+                    
+                    if (botonComenzar)
+                    	botonComenzar.onclick = comenzar;
                     
                     idioma = new internacionalizacion.Idioma(internacionalizacion.etiquetas, "en", "en");
                     
@@ -91,20 +94,30 @@ function establecerEtiquetas() {
 	esteblecerEtiqueta("descubre-h", "descubre");
 	esteblecerEtiqueta("comenzar", "comenzar");
 	esteblecerEtiqueta("creado", "creado");
+	esteblecerEtiqueta("gracias", "gracias");
 	
 	var gratis = document.getElementById("img_gratis")
-	gratis.src = idioma.texto("img_gratis");
-	gratis.style.visibility = "visible";
+	
+	if (gratis) {
+		gratis.src = idioma.texto("img_gratis");
+		gratis.style.visibility = "visible";
+	}
 
 	var solo = document.getElementById("img_3minutos")
-	solo.src = idioma.texto("img_3minutos");
-	solo.style.visibility = "visible";
+	
+	if (solo) {
+		solo.src = idioma.texto("img_3minutos");
+		solo.style.visibility = "visible";
+	}
 	
 	document.title = idioma.texto("titulo");
 }
 
 function esteblecerEtiqueta(elemento, contenido) {
-	document.getElementById(elemento).innerHTML = idioma.texto(contenido);
+	var elementoDOM = document.getElementById(elemento)
+	
+	if (elementoDOM)
+		elementoDOM.innerHTML = idioma.texto(contenido);
 }
 
 function comenzar() 
