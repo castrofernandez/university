@@ -12,7 +12,7 @@ xuegu.Manejadores = function(elemento, auditoria)
 			elemento.addEventListener(evento, accion, false);
 	
 		function accion(evt)
-		{ 
+		{
 			var coordenada = xuegu.Utilidades.obtenerCoordenadasEvento(evt, elemento);
 			
 			valores.push(coordenada);
@@ -30,9 +30,13 @@ xuegu.Manejadores = function(elemento, auditoria)
 					
 					eventoRegistrado = true;	
 					
-					// Lanzamos manejador
-					if (e[nombreEvento])
-						e[nombreEvento](coordenada);
+					// Lanzamos manejadores (Es un array)
+					if (e[nombreEvento]) {
+						var acciones = e[nombreEvento];
+						
+						for (var i = 0; i < acciones.length; i++)
+							acciones[i].call(e, coordenada);
+					}
 					
 					return;	
 				}
@@ -76,14 +80,14 @@ xuegu.Manejadores = function(elemento, auditoria)
 				if (!auditoria.datos.observaciones)
 					auditoria.datos.observaciones = [];
 					
-				var observacione = {
+				var observacion = {
 					identificador: elemento.identificador ? elemento.identificador : elemento,
 					evento: evento,
 					coordenada: elemento.coordenadaEnElemento ? elemento.coordenadaEnElemento(coordenada) : coordenada,
 					instante: auditoria.instante()
-				}
+				};
 				
-				auditoria.datos.observaciones.push(observacione);
+				auditoria.datos.observaciones.push(observacion);
 			}
 		}
 	}
@@ -96,6 +100,14 @@ xuegu.Manejadores = function(elemento, auditoria)
 	this.mouseover = new Manejador(elemento, 'mouseover');
 	this.mouseout = new Manejador(elemento, 'mouseout');
 	
+	this.touchstart = new Manejador(elemento, 'touchstart');
+	this.touchmove = new Manejador(elemento, 'touchmove');
+	this.touchend = new Manejador(elemento, 'touchend');
+	
+	this.keydown = new Manejador(elemento, 'keydown'); 
+	this.keyup = new Manejador(elemento, 'keyup');
+	this.keypress = new Manejador(elemento, 'keypress');
+	
 	this.parar = function() {
 		this.click.parar();
 		this.dblclick.parar();
@@ -104,5 +116,9 @@ xuegu.Manejadores = function(elemento, auditoria)
 		this.mousemove.parar();
 		this.mouseover.parar(); 
 		this.mouseout.parar();
+		
+		this.touchstart.parar();
+		this.touchmove.parar();
+		this.touchend.parar();
 	}
 }

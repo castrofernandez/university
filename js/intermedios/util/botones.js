@@ -11,6 +11,8 @@ circo.intermedios.util.Botones = function(canvas, botones, fondo)
 	function botonPulsado()
 	{
 		pulsado = true;
+		
+		circo.audio.pop.play();
 	}
 
 	this.iniciar = function(partida)

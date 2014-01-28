@@ -13,9 +13,10 @@ circo.juegos.Numeros = function(canvas)
 					'img/numeros/pato1-inactivo.png', 'img/numeros/pato2-inactivo.png', 'img/numeros/pato3-inactivo.png', 
 					'img/numeros/pato4-inactivo.png', 'img/numeros/pato5-inactivo.png', 'img/numeros/pato6-inactivo.png'];
 				
+	var contador = 1;			
+				
 	var dibujarPato =  function(contexto, ancho, alto, graficos, idioma, partidaAnterior)
-	{
-	
+	{	
 		var mitad_ancho = Math.floor(this.ancho / 2);
 	    var mitad_alto = Math.floor(this.alto / 2);
 	
@@ -151,14 +152,32 @@ circo.juegos.Numeros = function(canvas)
 				oscilacion: +0, avance_oscilacion: false, activo: true, identificador: "pato20",
 					dibujar: dibujarPato, onclick: patoOnClick, numero: 20})
 			];	
+		
+		circo.audio.circo.volume = 0.05;	
+		circo.audio.circo.play();
+		
+		circo.audio.circo.addEventListener('ended', function() {
+		    this.currentTime = 0;
+		    this.play();
+		}, false);
 	}
 	
 	function patoOnClick(coordenada)
 	{
-		if (this.activo)
-			patosPulsados++;
-		
-		this.activo = false;
+		circo.audio.trompeta.pause();
+	
+		if (this.numero == contador) {
+			if (this.activo) {
+				patosPulsados++;
+				contador++;	
+				
+				circo.audio.pato.play();
+			}
+			
+			this.activo = false;
+		}
+		else
+			circo.audio.trompeta.play();
 	}	
 		
 	this.finalizado = function()

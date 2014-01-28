@@ -35,6 +35,8 @@ circo.intermedios.Puntuacion = function(canvas, anterior)
 		boton = new circo.intermedios.util.Boton(opciones);
 		
 		textoPuntuacion = partida.idioma.texto("pruebaFinalizada");
+		
+		circo.audio.casino.play();
 	}
 		
 	this.avanzar = function(partida)

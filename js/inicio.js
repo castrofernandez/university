@@ -30,13 +30,19 @@ yepnope({
 */
 
 yepnope({
-  load: ["js/xuegu/xuegu.js", 
+  load: ["js/auditoria/navegador.js",
+		"js/auditoria/movimiento.js",
+		"js/auditoria/prueba.js",
+		"js/auditoria/auditoria.js", 
+		"js/xuegu/xuegu.js", 
 		"js/xuegu/manejadores.js",
 		"js/xuegu/partida.js", 
-		"js/xuegu/elemento.js", 
+		"js/xuegu/elemento.js",
+		"js/xuegu/elementoRotable.js", 
 		"js/xuegu/utilidades.js",
 		"js/xuegu/graficos.js", 
 		"js/circo.js", 
+		"js/audio.js",
 		"js/intermedios/util/boton.js",
 		"js/intermedios/util/botones.js",
 		"js/intermedios/util/instrucciones.js",
@@ -55,11 +61,7 @@ yepnope({
 		"js/juegos/numeros.js",
 		"js/juegos/topos.js",
 		"js/juegos/palabras.js",
-		
-		"js/auditoria/navegador.js",
-		"js/auditoria/movimiento.js",
-		"js/auditoria/prueba.js",
-		"js/auditoria/auditoria.js"],
+		"js/juegos/fuego.js"],
   callback: cargaCompletada
 });
 
@@ -71,6 +73,15 @@ var idioma = null;
 var LISTO_PARA_EJECUCION = false;
 
 var auditoriaUsuario = null;
+
+var sonido = new Audio("audio/presentacion.mp3");
+
+sonido.addEventListener('ended', function() {
+   	this.currentTime = 0;
+   	this.play();
+}, false);
+
+sonido.play();
 
 function cargaCompletada() {
 	LISTO_PARA_EJECUCION = true;
@@ -85,7 +96,7 @@ DomReady.ready(function() {
                     idioma = new internacionalizacion.Idioma(internacionalizacion.etiquetas, "en", "en");
                     
                     establecerEtiquetas();
-                });
+});
 
 function establecerEtiquetas() {
 	esteblecerEtiqueta("presentacion-h", "presentacion");
@@ -174,6 +185,9 @@ function orientacion()
 
 function iniciarCirco()
 {
+	// Paramos sonido
+	sonido.pause();
+
 	if (categorizr.isMobile || categorizr.isTablet)
 	{
 		var dimensiones = xuegu.Utilidades.dimensionesPagina();
@@ -181,13 +195,13 @@ function iniciarCirco()
 		canvas.height = dimensiones.alto;
 	}
 
-	secuencia = [	
+	secuencia = [/*
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_1",
 																"titulo_prueba_1", 
 																"nombre_prueba_1", 
 																"instrucciones_numeros", 
 																"img/instrucciones/numeros.png"),
-				/*	new circo.juegos.Numeros(canvas),
+					new circo.juegos.Numeros(canvas),
 					new circo.intermedios.Puntuacion(canvas),
 					
 					new circo.intermedios.Botones5(canvas),
@@ -206,7 +220,7 @@ function iniciarCirco()
 																"titulo_prueba_3", 
 																"nombre_prueba_3", 
 																"instrucciones_palabras", 
-																"img/instrucciones/pato.png"),
+																"img/instrucciones/pato.png"),*/
 					new circo.juegos.Palabras(canvas),
 					new circo.intermedios.Puntuacion(canvas),
 					
@@ -214,7 +228,9 @@ function iniciarCirco()
 					new circo.intermedios.Botones2(canvas),
 					new circo.intermedios.Botones3(canvas),
 					new circo.intermedios.Botones4(canvas),
-					new circo.intermedios.Acrobatas(canvas),*/
+					new circo.intermedios.Acrobatas(canvas),
+				
+					new circo.juegos.Fuego(canvas),
 					new circo.intermedios.Resultado1(canvas),
 					new circo.intermedios.Resultado2(canvas),
 					new circo.intermedios.Fin(canvas)
@@ -227,6 +243,9 @@ var anterior = null;
 
 function cambiarJuego()
 {
+	if (circo.audio.circo)
+		circo.audio.circo.pause();
+
 	indice++;
 	
 	if (indice < secuencia.length)

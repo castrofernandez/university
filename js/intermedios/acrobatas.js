@@ -35,28 +35,7 @@ circo.intermedios.Acrobatas = function(canvas)
 					FINALIZADO : 'FINALIZADO'};
 					
 	var estado = estados.JUGANDO;
-	/*
-	function cargar_imagenes(imagenes)
-	{
-		var numero = imagenes.length;
-		
-		for (var i = 0; i < imagenes.length; i++)
-		{
-			var imagen = new Image();
-			
-			imagen.onload = function() {
-				numero--;
-				
-				if (numero == 0)
-					iniciar();
-			}
-			
-			imagen.src = imagenes[i];
-			
-			graficos[imagenes[i]] = imagen;
-		}
-	}
-	*/
+
 	this.iniciar = function(partida)
 	{
 		canvas.onmousedown = function(event)
@@ -91,8 +70,6 @@ circo.intermedios.Acrobatas = function(canvas)
 		    
 		    tablon.mousemove(x, y);
 		}
-	
-		//setInterval(bucle, 150);
 	}
 	
 	this.avanzar = function(partida)

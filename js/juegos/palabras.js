@@ -5,6 +5,8 @@ circo.juegos.Palabras = function(canvas)
 	
 	var palabras = ['En', 'un', 'lugar', 'de', 'la', 'Mancha'];
 	
+	var palabraEnCurso = 0;
+	
 	var lienzo = xuegu.Utilidades.dimensionesJuego(canvas);
 	
 	var patos = [];
@@ -21,13 +23,16 @@ circo.juegos.Palabras = function(canvas)
 					'img/palabras/ola_2.png', 'img/palabras/ola_3.png', 'img/palabras/ola_4.png', 
 					'img/palabras/diana.png', 'img/palabras/toldo_1.png', 'img/palabras/toldo_2.png'];
 	
+	var input = null;
+	var auditoria = null;
 	
 	(function ()
 	{
 		var ancho = lienzo.ancho;
 	
 		for (var i = 0; i < palabras.length; i++)
-			patos.push(ancho + ancho_alto_pato + ancho_alto_pato * 2 * i);
+			patos.push(ancho);
+			//patos.push(ancho + ancho_alto_pato + ancho_alto_pato * 2 * i);
 		
 		for (var i = 0; i < palabras.length * 2; i++)
 			patos_atras.push(0 - ancho_alto_pato - ancho_alto_pato * 2 * i);
@@ -35,9 +40,45 @@ circo.juegos.Palabras = function(canvas)
 	
 	this.iniciar = function(partida)
 	{
-		var input = document.getElementById('canvas-input');
+		input = document.getElementById('canvas-input');
 		input.placeholder = partida.idioma.texto('escribe');
 		input.style.display = 'block';
+		
+		//input.colision = function() { return true; };
+		
+		//if (partida && partida.manejadores)
+		//	partida.manejadores.keyup.registrarElemento(input);
+		
+		auditoria = partida.auditoriaPrueba;
+		
+		if (input.attachEvent)
+			input.attachEvent("keyup", teclaPulsada);
+		else
+			input.addEventListener("keyup", teclaPulsada, false);
+	}
+	
+	function teclaPulsada(tecla) {
+		var observacion = {
+			identificador: "texto-palabras",
+			evento: "keyup",
+			coordenada: tecla.keyCode,
+			instante: auditoria.instante()
+		};
+		
+		auditoria.datos.observaciones.push(observacion);
+		
+		// Se comprueba texto introducido
+		var palabra = palabras[palabraEnCurso < palabras.length ? palabraEnCurso : 0];
+		palabra = palabra.toLowerCase();
+		
+		var tecleado = input.value.toLowerCase();
+		tecleado = tecleado.replace(/^\s+|\s+$/gm, ''); // Eliminamos espacios en blanco
+		
+		if (palabra == tecleado) {
+			palabraEnCurso++;
+			
+			input.value = "";	
+		}
 	}
 	
 	this.finalizar = function(partida)
@@ -51,7 +92,8 @@ circo.juegos.Palabras = function(canvas)
 	
 	this.finalizado = function()
 	{
-		return patos[patos.length - 1] + ancho_alto_pato < 0;
+		return palabraEnCurso >= palabras.length;
+		//return patos[patos.length - 1] + ancho_alto_pato < 0;
 	}
 	
 	this.avanzar = function(coordenada)
@@ -61,8 +103,11 @@ circo.juegos.Palabras = function(canvas)
 			patos_atras[i]++;
 			
 		// Patos principales
-		for (var i = 0; i < patos.length; i++)
-			patos[i]--;
+		var medio = lienzo.ancho / 2 - ancho_alto_pato / 2;
+		
+		for (var i = 0; i <= palabraEnCurso && i < palabras.length; i++)
+			if (i < palabraEnCurso || patos[i] > medio)
+				patos[i]--;
 	}
 	
 	this.dibujar = function(contexto, ancho, alto, graficos)
@@ -145,15 +190,17 @@ circo.juegos.Palabras = function(canvas)
 			var incrementoTexto = 4 / 5 * ancho_alto_pato - incremento;
 			
 			// Patos principales
-			for (var i = 0; i < patos.length; i++)
+			/*for (var i = 0; i < patos.length; i++)
 			{
 				contexto.drawImage(graficos['img/palabras/pato_frente.png'], patos[i], y - incremento, 
 					ancho_alto_pato, ancho_alto_pato);
 				contexto.textAlign = 'center';
 				contexto.fillText(palabras[i], patos[i] + ancho_alto_pato / 2, y + incrementoTexto);
-			
-				//patos[i]--;
-			}
+			}*/
+			contexto.drawImage(graficos['img/palabras/pato_frente.png'], patos[palabraEnCurso], y - incremento, 
+				ancho_alto_pato, ancho_alto_pato);
+			contexto.textAlign = 'center';
+			contexto.fillText(palabras[palabraEnCurso], patos[palabraEnCurso] + ancho_alto_pato / 2, y + incrementoTexto);
 			
 			// Olas frontales
 			

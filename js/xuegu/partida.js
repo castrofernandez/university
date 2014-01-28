@@ -10,6 +10,7 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior, au
 
 	var registroAuditoria = new auditoria.Prueba(nivel.identificador);
 	this.auditoria = auditoriaUsuario;
+	this.auditoriaPrueba = registroAuditoria;
 	
 	var manejadores = this.manejadores = new xuegu.Manejadores(canvas, registroAuditoria);
 	
@@ -78,6 +79,15 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior, au
 	this.crearElemento = function(x, y, ancho, alto, opciones)
 	{
 		var elemento = new xuegu.Elemento(this, x, y, ancho, alto, opciones);
+		
+		this.elementos.push(elemento);
+		
+		return elemento;
+	}
+	
+	this.crearElementoRotable = function(x, y, ancho, alto, opciones)
+	{
+		var elemento = new xuegu.ElementoRotable(this, x, y, ancho, alto, opciones);
 		
 		this.elementos.push(elemento);
 		
