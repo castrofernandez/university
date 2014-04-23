@@ -4,8 +4,8 @@ xuegu.ElementoRotable = function(partida, x, y, ancho, alto, opciones)
 	this.base(partida, x, y, ancho, alto, opciones);
 	
 	this.anguloAnterior = 0;
-	this.angulo = 0;
-	this.rotacion = 0; // Ángulo acumulativo
+	this.angulo = opciones.rotacion ? opciones.rotacion : 0;
+	this.rotacion = opciones.rotacion ? opciones.rotacion : 0; // Ángulo acumulativo
 	
 	var moviendose = false;
 	
@@ -72,7 +72,7 @@ xuegu.ElementoRotable = function(partida, x, y, ancho, alto, opciones)
 	this.registrarTouchMove(mover);
 	
 	this.dibujar = function(contexto, ancho, alto, graficos, idioma, partidaAnterior) {
-		contexto.beginPath();
+/*		contexto.beginPath();
 		contexto.fillStyle = "#000";
 		
 		contexto.moveTo(vertices[0].x, vertices[0].y);
@@ -82,7 +82,7 @@ xuegu.ElementoRotable = function(partida, x, y, ancho, alto, opciones)
 		contexto.lineTo(vertices[0].x, vertices[0].y);
 	
 		contexto.stroke();
-
+*/
 		opciones.dibujar.call(this, contexto, ancho, alto, graficos, idioma, partidaAnterior);
 	}
 
@@ -121,6 +121,8 @@ xuegu.ElementoRotable = function(partida, x, y, ancho, alto, opciones)
 			vertices[i] = rotado;
 		}
 	};
+	
+	this.rotarVertices();
 	
 	this.reiniciar = function() {
 		this.anguloAnterior = 0;

@@ -33,7 +33,10 @@ internacionalizacion.etiquetas = {
 		gracias: "Gracias por participar",
 		comparte: "Comparte esto",
 		descubre_en: "Descubre tu destreza mental en ",
-		es_gratis: ". Es GRATIS."
+		es_gratis: ". Es GRATIS.",
+		titulo_prueba_4: 'P r u e b a  4',
+		nombre_prueba_4: 'A p a g a  f u e g o s',
+		instrucciones_fuego: 'Gira la manguera para apagar los fuegos que vayan apareciendo. Sonstén la manguera para que el chorro alcance una altura mayor.'
 	},
 	
 	en : {
@@ -70,6 +73,9 @@ internacionalizacion.etiquetas = {
 		gracias: "Thank you for participating",
 		comparte: "Share this",
 		descubre_en: "Discover your mental skills in ",
-		es_gratis: ". It's FREE."
+		es_gratis: ". It's FREE.",
+		titulo_prueba_4: 'T e s t  #4',
+		nombre_prueba_4: 'P u t  o u t  t h e  f i r e',
+		instrucciones_fuego: 'Turn the hose to put out the fires.'
 	}	
 };

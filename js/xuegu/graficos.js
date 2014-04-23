@@ -1,10 +1,24 @@
 xuegu.Graficos = new function()
 {
-	this.aplicarSombra = function(contexto)
+	this.aplicarSombra = function(contexto, color)
 	{
-		contexto.shadowColor   = '#666';
+		if (typeof color != 'string' && !(color instanceof String))
+			color = '#666';
+	
+		contexto.shadowColor   = color;
         contexto.shadowOffsetX = 3;
         contexto.shadowOffsetY = 3;
+        contexto.shadowBlur    = 6;
+	}
+	
+	this.aplicarSombraInterna = function(contexto, color)
+	{
+		if (typeof color != 'string' && !(color instanceof String))
+			color = '#666';	
+	
+		contexto.shadowColor   = color;
+        contexto.shadowOffsetX = 0;
+        contexto.shadowOffsetY = 0;
         contexto.shadowBlur    = 6;
 	}
 	
@@ -28,14 +42,17 @@ xuegu.Graficos = new function()
 	}
 	
 	// Dibujar rectángulo
-	this.rectangulo = function(contexto, x, y, ancho, alto, relleno, contorno, grosor, sombra)
+	this.rectangulo = function(contexto, x, y, ancho, alto, relleno, contorno, grosor, sombra, sombraInterna)
 	{
 		contexto.beginPath();
 	    contexto.rect(x, y, ancho, alto);
 	    contexto.fillStyle = relleno;
 	    
 	    if (!contorno && sombra)
-	    	this.aplicarSombra(contexto);
+	    	this.aplicarSombra(contexto, sombra);
+	    	
+		if (!contorno && sombraInterna)
+			this.aplicarSombraInterna(contexto, sombraInterna);	
 	    
 	    contexto.fill();
 	    
@@ -45,7 +62,10 @@ xuegu.Graficos = new function()
 			contexto.lineWidth = grosor ? grosor : 1;
 			
 			if (sombra)
-				this.aplicarSombra(contexto);
+				this.aplicarSombra(contexto, sombra);
+				
+			if (sombraInterna)
+				this.aplicarSombraInterna(contexto, sombraInterna);	
 				
 			contexto.stroke();
 		}
@@ -54,7 +74,7 @@ xuegu.Graficos = new function()
 	}
 	
 	// Dibujar rectángulo redondeado
-	this.rectanguloRedondeado = function(contexto, x, y, ancho, alto, radio, relleno, contorno, grosor, sombra) 
+	this.rectanguloRedondeado = function(contexto, x, y, ancho, alto, radio, relleno, contorno, grosor, sombra, sombraInterna) 
 	{
 		contexto.beginPath();
 		contexto.moveTo(x + radio, y);
@@ -73,7 +93,10 @@ xuegu.Graficos = new function()
 			contexto.fillStyle = relleno;
 			
 		    if (!contorno && sombra)
-		    	this.aplicarSombra(contexto);			
+		    	this.aplicarSombra(contexto, sombra);		
+		    	
+		    if (!contorno && sombraInterna)
+				this.aplicarSombraInterna(contexto, sombraInterna);	
 			
 			contexto.fill();  
 		}    
@@ -84,7 +107,10 @@ xuegu.Graficos = new function()
 			contexto.lineWidth = grosor ? grosor : 1;
 			
 			if (sombra)
-				this.aplicarSombra(contexto);
+				this.aplicarSombra(contexto, sombra);
+				
+			if (sombraInterna)
+				this.aplicarSombraInterna(contexto, sombraInterna);
 			
 			contexto.stroke();
 		}

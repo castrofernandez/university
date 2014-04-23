@@ -55,6 +55,14 @@ circo.juegos.Palabras = function(canvas)
 			input.attachEvent("keyup", teclaPulsada);
 		else
 			input.addEventListener("keyup", teclaPulsada, false);
+			
+		circo.audio.circo.volume = 0.05;	
+		circo.audio.circo.play();
+		
+		circo.audio.circo.addEventListener('ended', function() {
+		    this.currentTime = 0;
+		    this.play();
+		}, false);
 	}
 	
 	function teclaPulsada(tecla) {

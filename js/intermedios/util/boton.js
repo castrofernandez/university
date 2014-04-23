@@ -13,7 +13,7 @@ circo.intermedios.util.Boton = function(opciones)
 	function dibujarBotonRecto(contexto)
 	{
 		xuegu.Graficos.rectangulo(contexto, this.x, this.y, this.ancho, this.alto, 
-									this.pulsado ? this.sombra : this.relleno, this.contorno, this.grosor, true);
+									this.pulsado ? this.sombra : this.relleno, this.contorno, this.grosor, this.sombra, this.sombraInterna);
 		
 		escribirTexto(contexto, this);
 	}
@@ -21,7 +21,7 @@ circo.intermedios.util.Boton = function(opciones)
 	function dibujarBotonRedondeado(contexto)
 	{
 		xuegu.Graficos.rectanguloRedondeado(contexto, this.x, this.y, this.ancho, this.alto, this.alto / 3.5, 
-											this.pulsado ? this.sombra : this.relleno, this.contorno, this.grosor, true);
+											this.pulsado ? this.sombra : this.relleno, this.contorno, this.grosor, this.sombra, this.sombraInterna);
 		
 		escribirTexto(contexto, this);
 	}
@@ -39,7 +39,7 @@ circo.intermedios.util.Boton = function(opciones)
 	function escribirTexto(contexto, elemento)
 	{
 		contexto.fillStyle = elemento.colorTexto;
-		contexto.font = "26px Conv_Carnevalee Freakshow";
+		contexto.font = elemento.fuente ? elemento.fuente : "26px Conv_Carnevalee Freakshow";
 		contexto.fillText(elemento.texto, elemento.x + elemento.ancho / 2, elemento.y + elemento.alto / 1.8);
 	}
 	

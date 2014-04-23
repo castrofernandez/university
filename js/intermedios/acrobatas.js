@@ -27,7 +27,8 @@ circo.intermedios.Acrobatas = function(canvas)
 	
 	var acrobata1 = new Acrobata(lienzo.ancho - dimension_acrobata.ancho * 4 / 5, suelo_y - dimension_acrobata.alto + 10, dimension_acrobata.ancho, dimension_acrobata.alto, incremento_acrobata, recorrido, false, true);
 	var acrobata2 = new Acrobata(0 - incremento_acrobata, suelo_y - dimension_acrobata.alto + 10, dimension_acrobata.ancho, dimension_acrobata.alto, incremento_acrobata, recorrido, true, false);
-	var tablon = new Tablon(lienzo.ancho / 2, suelo_y + lado_triangulo, lienzo.ancho - 2 * lado_triangulo);
+	var _tablon = new Tablon(lienzo.ancho / 2, suelo_y + lado_triangulo, lienzo.ancho - 2 * lado_triangulo);
+	var tablon = null;
 	
 	var estados = {
 					JUGANDO : 'JUGANDO', 
@@ -37,7 +38,7 @@ circo.intermedios.Acrobatas = function(canvas)
 	var estado = estados.JUGANDO;
 
 	this.iniciar = function(partida)
-	{
+	{/*
 		canvas.onmousedown = function(event)
 		{
 			if (estado != estados.JUGANDO)
@@ -69,7 +70,39 @@ circo.intermedios.Acrobatas = function(canvas)
 		    var y = event.offsetY?(event.offsetY):event.pageY - canvas.offsetTop;
 		    
 		    tablon.mousemove(x, y);
-		}
+		}*/
+		
+		// Fondo
+		partida.crearElemento(0, 0, lienzo.ancho, lienzo.alto, { dibujar: dibujarFondo });
+		
+		var ancho = lienzo.ancho - 2 * lado_triangulo;
+		
+		tablon = partida.crearElementoRotable(lienzo.ancho / 2 - ancho / 2, suelo_y + lado_triangulo - ancho / 2, ancho, ancho, 
+				{ imagen : 'img/fuego/manguera.png', identificador: "manguera", chorro: 'img/fuego/chorro.png',
+					rotacion: 45 * (Math.PI / 180),
+					dibujar: _tablon.dibujar,
+ 
+					onmousedown: function(coordenada) {
+						_tablon.mousedown(coordenada.x, coordenada.y);
+					}, 
+					onmouseup: function(coordenada) {
+						_tablon.mouseup(coordenada.x, coordenada.y);
+					},
+					ontouchstart: function(coordenada) {
+						_tablon.mousedown(coordenada.x, coordenada.y);
+					}, 
+					ontouchend: function(coordenada) {
+						_tablon.mouseup(coordenada.x, coordenada.y);
+					} 
+				});
+		
+		circo.audio.acrobatas.addEventListener('ended', function() {
+		    this.currentTime = 0;
+		    this.play();
+		}, false);		
+		
+		circo.audio.acrobatas.volume = 0.15;
+		circo.audio.acrobatas.play();
 	}
 	
 	this.avanzar = function(partida)
@@ -79,10 +112,19 @@ circo.intermedios.Acrobatas = function(canvas)
 	
 	this.finalizado = function(partida)
 	{
-		return acrobata1.finalizado() && acrobata2.finalizado();
+		var acabado = acrobata1.finalizado() && acrobata2.finalizado();
+	
+		if (acabado)
+			circo.audio.acrobatas.pause();
+	
+		return acabado;
 	}
 	
-	this.dibujar = function(contexto, ancho, alto, graficos, idioma)
+	this.dibujar = function(contexto, ancho, alto, graficos, idioma) {
+		
+	}
+	
+	function dibujarFondo(contexto, ancho, alto, graficos, idioma)
 	{
 		// Limpiar canvas
 		//contexto.clearRect (0, 0, ancho, alto);
@@ -123,7 +165,7 @@ circo.intermedios.Acrobatas = function(canvas)
 		
 		// Tablón
 		
-		tablon.dibujar(contexto, ancho, alto, graficos);
+		//tablon.dibujar(contexto, ancho, alto, graficos);
 		
 		// Acróbatas
 		
@@ -144,10 +186,12 @@ circo.intermedios.Acrobatas = function(canvas)
 		
 		var umbral_colocacion = 3;
 		
-		this.dibujar = function(contexto, ancho, alto, graficos)
+		this.dibujar = function(contexto, ancho, alto, graficos, idioma, partidaAnterior)
 		{
+			angulo = this.rotacion * (180 / Math.PI) -45;
+
 			var puntos = obtener_vertices(angulo);
-			
+		
 			var punto_1 = puntos[0];
 			var punto_2 = puntos[1];
 			var punto_3 = puntos[2];
@@ -193,8 +237,11 @@ circo.intermedios.Acrobatas = function(canvas)
 		this.mouseup = function(x, y)
 		{
 			moviendose = false;
+			
+			if (cuadrado_colocado())
+				estado = estados.FINALIZANDO;
 		}
-		
+	/*	
 		this.mousemove = function(x, y)
 		{
 			if (!moviendose)
@@ -227,15 +274,24 @@ circo.intermedios.Acrobatas = function(canvas)
 			else
 				moviendose = false;
 		}
-		
+	*/	
 		function cuadrado_colocado()
 		{
-			var vertices = obtener_vertices(angulo);
-	
-			return	arista_horizontal_o_vertical(vertices[0], vertices[1]) &&
-					arista_horizontal_o_vertical(vertices[1], vertices[2]) &&
-					arista_horizontal_o_vertical(vertices[2], vertices[3]) &&
-					arista_horizontal_o_vertical(vertices[3], vertices[0]);
+			var _angulo = Math.abs(angulo);
+		
+			for (var i = _angulo - umbral_colocacion; i < _angulo + umbral_colocacion; i++) {console.log(i)
+				var vertices = obtener_vertices(i);
+		
+				var resultado =	arista_horizontal_o_vertical(vertices[0], vertices[1]) &&
+						arista_horizontal_o_vertical(vertices[1], vertices[2]) &&
+						arista_horizontal_o_vertical(vertices[2], vertices[3]) &&
+						arista_horizontal_o_vertical(vertices[3], vertices[0]);
+						
+				if (resultado)
+					return true;
+			}
+			
+			return false;
 		}
 		
 		function arista_horizontal_o_vertical(punto_1, punto_2)

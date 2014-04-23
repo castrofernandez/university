@@ -18,21 +18,38 @@ circo.juegos.Fuego = function(canvas)
 	
 	var instanteInicial = null;
 	var numFuegosActivos = 0;
+	var numFuegosApagados = 0;
 	
 	var subidas = 	[
 						{ fuego: 0, instante: 1000 },
-						{ fuego: 2, instante: 4000 },
-						{ fuego: 1, instante: 9000 },
-						{ fuego: 3, instante: 12000 },
-						{ fuego: 4, instante: 16000 },
-						{ fuego: 1, instante: 20000 },
-						{ fuego: 5, instante: 24000 },
-						{ fuego: 0, instante: 28000 },
-						{ fuego: 1, instante: 32000 },
-						{ fuego: 2, instante: 33000 },
-						{ fuego: 3, instante: 34000 },
-						{ fuego: 4, instante: 40000 },
-						{ fuego: 5, instante: 45000 },
+						{ fuego: 1, instante: 1000 },
+						
+						{ fuego: 4, instante: 3000 },
+						{ fuego: 5, instante: 3000 },
+						
+						{ fuego: 2, instante: 5000 },
+						
+						{ fuego: 1, instante: 7000 },
+						{ fuego: 5, instante: 7000 },
+						
+						{ fuego: 3, instante: 9000 },
+						
+						{ fuego: 0, instante: 11000 },
+						{ fuego: 4, instante: 11000 },
+						
+						{ fuego: 2, instante: 13000 },
+						{ fuego: 3, instante: 13000 },
+						
+						{ fuego: 1, instante: 15000 },
+						{ fuego: 5, instante: 15000 },
+						
+						{ fuego: 2, instante: 17000 },
+						{ fuego: 3, instante: 17000 },
+						
+						{ fuego: 0, instante: 19000 },
+						{ fuego: 1, instante: 19000 },
+						{ fuego: 4, instante: 19000 },
+						{ fuego: 5, instante: 19000 }
 					];
 					
 	var fuegos = new Array();
@@ -73,7 +90,7 @@ circo.juegos.Fuego = function(canvas)
 	};
 	
 	var manguera_dimensiones = {
-		ancho: lienzo.ancho / 10,
+		ancho: lienzo.ancho / 5,
 		alto: lienzo.alto / 2
 	};
 	
@@ -86,7 +103,7 @@ circo.juegos.Fuego = function(canvas)
 	
 	var chorro = {
 		ancho: lienzo.ancho / 4.8,
-		alto: lienzo.alto / 2	
+		alto: lienzo.alto / 1.4	
 	};
 	
 	var fuego = {
@@ -112,9 +129,9 @@ circo.juegos.Fuego = function(canvas)
 		fuegos[1] = partida.crearElemento(lienzo.ancho - fuego.ancho * 5 / 4, lienzo.alto / 10 + colina.alto - fuego.alto / 1.5, 
 				fuego.ancho, fuego.alto, { identificador: "fuego2", mostrando: false, mostrar: mostrarFuego });
 				
-		fuegos[2] = partida.crearElemento(fuego.ancho / 4, lienzo.alto / 2.5 - fuego.alto / 1.5, 
+		fuegos[2] = partida.crearElemento(fuego.ancho / 4, lienzo.alto / 2.5 - fuego.alto / 2, 
 				fuego.ancho, fuego.alto, { identificador: "fuego1", mostrando: false, mostrar: mostrarFuego });
-		fuegos[3] = partida.crearElemento(lienzo.ancho - fuego.ancho * 5 / 4, lienzo.alto / 2.5 - fuego.alto / 1.5, 
+		fuegos[3] = partida.crearElemento(lienzo.ancho - fuego.ancho * 5 / 4, lienzo.alto / 2.5 - fuego.alto / 2, 
 				fuego.ancho, fuego.alto, { identificador: "fuego2", mostrando: false, mostrar: mostrarFuego });
 				
 		fuegos[4] = partida.crearElemento(fuego.ancho / 4, lienzo.alto / 2.5 + casas3.alto - fuego.alto / 2, 
@@ -124,6 +141,13 @@ circo.juegos.Fuego = function(canvas)
 				
 		instanteInicial = new Date();
 		
+		circo.audio.circo.volume = 0.05;	
+		circo.audio.circo.play();
+		
+		circo.audio.circo.addEventListener('ended', function() {
+		    this.currentTime = 0;
+		    this.play();
+		}, false);
 	}	
 	
 	function mostrarFuego() {
@@ -178,7 +202,7 @@ circo.juegos.Fuego = function(canvas)
 		// Casas fondo 2
 		
 		var altura = lienzo.alto / 2.5 + casas3.alto;
-		contexto.drawImage(graficos['img/fuego/casas3.png'], 0, lienzo.alto / 2.5, casas3.ancho, casas3.alto);		
+		contexto.drawImage(graficos['img/fuego/casas3.png'], 0, lienzo.alto / 2.4, casas3.ancho, casas3.alto);		
 		xuegu.Graficos.rectangulo(contexto, 0, altura, lienzo.ancho, lienzo.alto - altura, '#d294b2');		
 		
 		// Fuegos
@@ -207,6 +231,14 @@ circo.juegos.Fuego = function(canvas)
 			var color = i % 2 == 0 ? '#e36076' : '#f0f1f3';
 			xuegu.Graficos.rectangulo(contexto, 0 + ancho * i, altura, ancho, alto, color);
 		}
+		
+		// Marcador
+		if (numFuegosApagados > 0) {
+			contexto.fillStyle = "#008ab8";
+			contexto.font = "30px Verdana";
+			contexto.textAlign = 'right';
+			contexto.fillText(numFuegosApagados, lienzo.ancho * 19 / 20, 30);
+		}
 	}
 		
 	this.finalizado = function()
@@ -225,7 +257,7 @@ circo.juegos.Fuego = function(canvas)
 		}
 	}
 	
-	this.dibujar =  function(contexto, ancho, alto, graficos)
+	this.dibujar = function(contexto, ancho, alto, graficos)
 	{
 		// Nivel de fuerza de agua
 		
@@ -238,7 +270,7 @@ circo.juegos.Fuego = function(canvas)
 			xuegu.Graficos.rectangulo(contexto, contador_agua.x, inicio, contador_agua.ancho, nivel, '#3cb1c3');
 		}
 		
-		xuegu.Graficos.circulo(contexto, impacto.x, impacto.y, 10, "#000")
+		//xuegu.Graficos.circulo(contexto, impacto.x, impacto.y, 10, "#000")
 	}
 	
 	function dibujarManguera(contexto, ancho, alto, graficos, idioma, partidaAnterior)
@@ -309,7 +341,8 @@ circo.juegos.Fuego = function(canvas)
 		
 		// Calcular punto de impacto del chorro
 		var alto_chorro = (fuerzaAgua / maxFuerzaAgua) * chorro.alto;
-		var hipotenusa = manguera_dimensiones.alto / 2 + alto_chorro;
+		// Restamos el ancho de la manguera por un espacio vacio que hay al final de la imagen
+		var hipotenusa = (manguera_dimensiones.alto - manguera_dimensiones.ancho) / 2 + alto_chorro;
 		
 		//var x = lienzo.ancho / 2 - Math.cos(manguera.rotacion) * hipotenusa;
 		//var y = lienzo.alto + Math.sin(manguera.rotacion) * hipotenusa;
@@ -324,5 +357,11 @@ circo.juegos.Fuego = function(canvas)
 		console.log(x + "," + y)
 		
 		this.impacto = { x: x, y: y };
+		
+		for (var i = 0; i < fuegos.length; i++)
+			if (fuegos[i].mostrando && fuegos[i].colision(this.impacto)) {
+				fuegos[i].mostrando = false;
+				numFuegosApagados++;
+			}
 	}
 }

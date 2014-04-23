@@ -24,7 +24,7 @@ circo.intermedios.Resultado1 = function(canvas)
 
 	var lienzo = xuegu.Utilidades.dimensionesJuego(canvas);
 
-	var resultadoRecibido = false;
+	var resultadoRecibido = true;
 
 	var adivino = null;
 

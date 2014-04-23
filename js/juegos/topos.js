@@ -21,20 +21,27 @@ circo.juegos.Topos = function(canvas)
 	
 	var puntuacion = 0;
 	
+	var duracionTopoVisto = 1000;
+	
 	var subidas = 	[
 						{ topo: 0, instante: 1000 },
-						{ topo: 2, instante: 2000 },
-						{ topo: 1, instante: 4000 },
-						{ topo: 3, instante: 6000 },
-						{ topo: 4, instante: 8000 },
-						{ topo: 1, instante: 8000 },
-						{ topo: 5, instante: 10000 },
-						{ topo: 0, instante: 12000 },
-						{ topo: 1, instante: 12000 },
-						{ topo: 2, instante: 14000 },
-						{ topo: 3, instante: 16000 },
-						{ topo: 4, instante: 17000 },
-						{ topo: 5, instante: 18000 },
+						{ topo: 1, instante: 1000 },
+						
+						{ topo: 3, instante: 3000 },
+						
+						{ topo: 0, instante: 5000 },
+						{ topo: 4, instante: 5000 },
+						
+						{ topo: 2, instante: 7000 },
+						
+						{ topo: 1, instante: 9000 },
+						{ topo: 5, instante: 9000 },
+						
+						{ topo: 4, instante: 11000 },
+						{ topo: 5, instante: 11000 },
+						
+						{ topo: 0, instante: 13000 },
+						{ topo: 1, instante: 13000 }
 					];
 	
 	this.iniciar = function(partida)
@@ -51,6 +58,14 @@ circo.juegos.Topos = function(canvas)
 		crearTopos(partida, lienzo.ancho, alto_cuerpo);
 		
 		instanteInicial = new Date();
+		
+		circo.audio.circo.volume = 0.05;	
+		circo.audio.circo.play();
+		
+		circo.audio.circo.addEventListener('ended', function() {
+		    this.currentTime = 0;
+		    this.play();
+		}, false);
 	}
 	
 	this.finalizado = function()
@@ -319,7 +334,7 @@ circo.juegos.Topos = function(canvas)
 						avance -= paso;
 					break;
 				case estados.ARRIBA: // El topo está arriba, pasará a estar bajando
-					if (new Date() - tiempo >= 2000)
+					if (new Date() - tiempo >= duracionTopoVisto)
 					{
 						estado = estados.BAJANDO;
 					}
