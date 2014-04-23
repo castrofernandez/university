@@ -43,14 +43,14 @@ circo.intermedios.Resultado2 = function(canvas)
 		
 		tu_edad_mental = partida.idioma.texto("tu_edad_mental");
 		pulsa_finalizar = partida.idioma.texto("pulsa_finalizar");
-		si = 'Sí';
-		no = 'No';
-		hombre = "HOMBRE";
-		mujer = "MUJER";
-		eres = "eres";
-		diestro = "DIESTRO";
-		zurdo = "ZURDO";
-		cualEsTuEdad = '¿Cuál es tu edad?';
+		si = partida.idioma.texto("si");
+		no = partida.idioma.texto("no");
+		hombre = partida.idioma.texto("hombre");
+		mujer = partida.idioma.texto("mujer");
+		eres = partida.idioma.texto("eres");
+		diestro = partida.idioma.texto("diestro");
+		zurdo = partida.idioma.texto("zurdo");
+		cualEsTuEdad = partida.idioma.texto("cual_es_tu_edad");
 		
 		// Papel
 		
@@ -99,7 +99,7 @@ circo.intermedios.Resultado2 = function(canvas)
 		var alto = lienzo.alto / 12;
 		var posY = papel.y + papel.alto / 9;
 		
-		var posX = papel.ancho - ancho / 2;
+		var posX = papel.ancho - ancho / 5;
 		
 		var opciones = { x: posX, y: posY, tipo: "redondeado", 
 							partida: partida, ancho: ancho, alto: alto, relleno: '#E7C185', 
@@ -130,7 +130,7 @@ circo.intermedios.Resultado2 = function(canvas)
 		var alto = lienzo.alto / 12;
 		var posY = papel.y + papel.alto / 2.7;
 		
-		var posX = papel.ancho - ancho / 2;
+		var posX = papel.ancho - ancho / 5;
 		
 		var opciones = { x: posX, y: posY, tipo: "redondeado", 
 							partida: partida, ancho: ancho, alto: alto, relleno: '#E7C185', 
@@ -161,7 +161,7 @@ circo.intermedios.Resultado2 = function(canvas)
 		var alto = lienzo.alto / 12;
 		var posY = papel.y + papel.alto / 1.6;
 		
-		var posX = papel.ancho - ancho / 2;
+		var posX = papel.ancho - ancho / 5;
 		
 		var opciones = { x: posX, y: posY, tipo: "redondeado", 
 							partida: partida, ancho: ancho, alto: alto, relleno: '#E7C185', 
@@ -227,14 +227,14 @@ circo.intermedios.Resultado2 = function(canvas)
 		contexto.font = "24px Verdana";
 		contexto.fillText(eres, ancho / 2, papel.y + papel.alto / 2.3);
 		
-		contexto.font = categorizr.isMobile ? "30px Conv_Carnevalee Freakshow" : "50px Conv_Carnevalee Freakshow";
+		contexto.font = categorizr.isMobile ? "28px Conv_Carnevalee Freakshow" : "50px Conv_Carnevalee Freakshow";
 		contexto.fillText(resultado.sexo == 0 ? hombre : mujer, ancho / 2, papel.y + papel.alto / 1.9);
 		
 		contexto.fillStyle = '#302a1b';
 		contexto.font = "24px Verdana";
 		contexto.fillText(eres, ancho / 2, papel.y + papel.alto / 1.5);
 		
-		contexto.font = categorizr.isMobile ? "30px Conv_Carnevalee Freakshow" : "50px Conv_Carnevalee Freakshow";
+		contexto.font = categorizr.isMobile ? "28px Conv_Carnevalee Freakshow" : "50px Conv_Carnevalee Freakshow";
 		contexto.fillText(resultado.lateralidad == 0 ? diestro : zurdo, ancho / 2, papel.y + papel.alto / 1.3);
 	}
 	

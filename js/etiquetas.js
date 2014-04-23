@@ -36,7 +36,15 @@ internacionalizacion.etiquetas = {
 		es_gratis: ". Es GRATIS.",
 		titulo_prueba_4: 'P r u e b a  4',
 		nombre_prueba_4: 'A p a g a  f u e g o s',
-		instrucciones_fuego: 'Gira la manguera para apagar los fuegos que vayan apareciendo. Sonstén la manguera para que el chorro alcance una altura mayor.'
+		instrucciones_fuego: 'Gira la manguera para apagar los fuegos que vayan apareciendo. Sonstén la manguera para que el chorro alcance una altura mayor.',
+		si: "Sí",
+		no: "No",
+		hombre: "HOMBRE",
+		mujer: "MUJER",
+		eres: "eres",
+		diestro: "DIESTRO",
+		zurdo: "ZURDO",
+		cual_es_tu_edad: "¿Cuál es tu edad?"
 	},
 	
 	en : {
@@ -64,11 +72,11 @@ internacionalizacion.etiquetas = {
 		pulsaDiana: "Click on one target",
 		acrobata1: "Help the acrobats to reach the other side.",
 		acrobata2: "Spin around the central board to complete the track.",
-		aceptar: "Aceptar",
+		aceptar: "OK",
 		pruebaFinalizada: "Test Over",
 		girar_dispositivo: "Locate the device in vertical position.",
 		escribe: "Write in here",
-		tu_edad_mental: "Your mental age is",
+		tu_edad_mental: "Your age is",
 		pulsa_finalizar: "Click to finish",
 		gracias: "Thank you for participating",
 		comparte: "Share this",
@@ -76,6 +84,14 @@ internacionalizacion.etiquetas = {
 		es_gratis: ". It's FREE.",
 		titulo_prueba_4: 'T e s t  #4',
 		nombre_prueba_4: 'P u t  o u t  t h e  f i r e',
-		instrucciones_fuego: 'Turn the hose to put out the fires.'
+		instrucciones_fuego: 'Turn the hose to put out the fires.',
+		si: "Yes",
+		no: "No",
+		hombre: "MAN",
+		mujer: "WOMAN",
+		eres: "you are",
+		diestro: "right-handed",
+		zurdo: "left-handed",
+		cual_es_tu_edad: "How old are you?"
 	}	
 };
