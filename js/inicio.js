@@ -195,7 +195,7 @@ function iniciarCirco()
 		canvas.height = dimensiones.alto;
 	}
 
-	secuencia = [	
+	secuencia = [
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_1",
 																"titulo_prueba_1", 
 																"nombre_prueba_1", 
@@ -210,7 +210,7 @@ function iniciarCirco()
 																"titulo_prueba_2", 
 																"nombre_prueba_2", 
 																"instrucciones_topos", 
-																"img/instrucciones/topos.png"),
+															"img/instrucciones/topos.png"),
 					new circo.juegos.Topos(canvas),
 					new circo.intermedios.Puntuacion(canvas),
 					
@@ -226,14 +226,14 @@ function iniciarCirco()
 					
 					new circo.intermedios.Botones4(canvas), 
 					new circo.intermedios.Acrobatas(canvas),
-					
+					/*
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_4",
 																"titulo_prueba_4", 
 																"nombre_prueba_4", 
 																"instrucciones_fuego", 
 																"img/instrucciones/fuego.png"),		
 				
-					new circo.juegos.Fuego(canvas), 
+					new circo.juegos.Fuego(canvas), */
 					new circo.intermedios.Resultado1(canvas),
 					new circo.intermedios.Resultado2(canvas), 
 					new circo.intermedios.Fin(canvas)

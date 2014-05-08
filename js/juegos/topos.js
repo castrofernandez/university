@@ -21,7 +21,7 @@ circo.juegos.Topos = function(canvas)
 	
 	var puntuacion = 0;
 	
-	var duracionTopoVisto = 1000;
+	var duracionTopoVisto = 400;
 	
 	var subidas = 	[
 						{ topo: 0, instante: 1000 },

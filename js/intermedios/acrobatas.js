@@ -93,7 +93,11 @@ circo.intermedios.Acrobatas = function(canvas)
 					}, 
 					ontouchend: function(coordenada) {
 						_tablon.mouseup(coordenada.x, coordenada.y);
-					} 
+					},
+					comprobacion: function() {
+						if (_tablon.move())
+							this.parar();
+					}
 				});
 		
 		circo.audio.acrobatas.addEventListener('ended', function() {
@@ -184,7 +188,7 @@ circo.intermedios.Acrobatas = function(canvas)
 		var punto_contacto = null;
 		var moviendose = false;
 		
-		var umbral_colocacion = 3;
+		var umbral_colocacion = 1;
 		
 		this.dibujar = function(contexto, ancho, alto, graficos, idioma, partidaAnterior)
 		{
@@ -241,6 +245,18 @@ circo.intermedios.Acrobatas = function(canvas)
 			if (cuadrado_colocado())
 				estado = estados.FINALIZANDO;
 		}
+		
+		this.move = function() {
+			var finalizado = cuadrado_colocado();
+		
+			if (finalizado) {
+				estado = estados.FINALIZANDO;
+				
+				moviendose = false;	
+			}
+			
+			return finalizado;
+		}
 	/*	
 		this.mousemove = function(x, y)
 		{
@@ -279,7 +295,7 @@ circo.intermedios.Acrobatas = function(canvas)
 		{
 			var _angulo = Math.abs(angulo);
 		
-			for (var i = _angulo - umbral_colocacion; i < _angulo + umbral_colocacion; i++) {console.log(i)
+			for (var i = _angulo - umbral_colocacion; i < _angulo + umbral_colocacion; i++) { console.log(i)
 				var vertices = obtener_vertices(i);
 		
 				var resultado =	arista_horizontal_o_vertical(vertices[0], vertices[1]) &&

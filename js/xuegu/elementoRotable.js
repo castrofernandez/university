@@ -7,6 +7,8 @@ xuegu.ElementoRotable = function(partida, x, y, ancho, alto, opciones)
 	this.angulo = opciones.rotacion ? opciones.rotacion : 0;
 	this.rotacion = opciones.rotacion ? opciones.rotacion : 0; // Ángulo acumulativo
 	
+	this.comprobacionDespuesRotar = opciones.comprobacion ? opciones.comprobacion : null
+	
 	var moviendose = false;
 	
 	var centro_x = x + ancho / 2;
@@ -66,6 +68,9 @@ xuegu.ElementoRotable = function(partida, x, y, ancho, alto, opciones)
 		punto_contacto = p2; // p2 es el nuevo punto de contacto, para que no sea acumulativo
 		
 		this.rotarVertices();
+		
+		if (this.comprobacionDespuesRotar)
+			this.comprobacionDespuesRotar();
 	};
 	
 	this.registrarMouseMove(mover);
@@ -131,6 +136,10 @@ xuegu.ElementoRotable = function(partida, x, y, ancho, alto, opciones)
 		vertices = clone(posicion_inicial); // Clone
 		
 		this.rotarVertices();
+	}
+	
+	this.parar = function() {
+		moviendose = false;
 	}
 	
 	function compruebaLado(x1, y1, x2, y2, x, y) {

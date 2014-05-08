@@ -3,7 +3,7 @@ circo.juegos.Palabras = function(canvas)
 	this.identificador = "palabras";
 	var pato = null;
 	
-	var palabras = ['En', 'un', 'lugar', 'de', 'la', 'Mancha'];
+	var palabras = ['cocodrilo', 'veloz', 'perro', 'kiwi'];
 	
 	var palabraEnCurso = 0;
 	

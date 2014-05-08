@@ -125,19 +125,19 @@ circo.juegos.Fuego = function(canvas)
 					
 		// Fuegos
 		fuegos[0] = partida.crearElemento(fuego.ancho / 4, lienzo.alto / 10 + colina.alto - fuego.alto / 1.5, 
-				fuego.ancho, fuego.alto, { identificador: "fuego1", mostrando: false, mostrar: mostrarFuego });
+				fuego.ancho, fuego.alto, { identificador: "fuego1", mostrando: false, mostrar: mostrarFuego, onclick: pulsarFuego });
 		fuegos[1] = partida.crearElemento(lienzo.ancho - fuego.ancho * 5 / 4, lienzo.alto / 10 + colina.alto - fuego.alto / 1.5, 
-				fuego.ancho, fuego.alto, { identificador: "fuego2", mostrando: false, mostrar: mostrarFuego });
+				fuego.ancho, fuego.alto, { identificador: "fuego2", mostrando: false, mostrar: mostrarFuego, onclick: pulsarFuego });
 				
 		fuegos[2] = partida.crearElemento(fuego.ancho / 4, lienzo.alto / 2.5 - fuego.alto / 2, 
-				fuego.ancho, fuego.alto, { identificador: "fuego1", mostrando: false, mostrar: mostrarFuego });
+				fuego.ancho, fuego.alto, { identificador: "fuego1", mostrando: false, mostrar: mostrarFuego, onclick: pulsarFuego });
 		fuegos[3] = partida.crearElemento(lienzo.ancho - fuego.ancho * 5 / 4, lienzo.alto / 2.5 - fuego.alto / 2, 
-				fuego.ancho, fuego.alto, { identificador: "fuego2", mostrando: false, mostrar: mostrarFuego });
+				fuego.ancho, fuego.alto, { identificador: "fuego2", mostrando: false, mostrar: mostrarFuego, onclick: pulsarFuego });
 				
 		fuegos[4] = partida.crearElemento(fuego.ancho / 4, lienzo.alto / 2.5 + casas3.alto - fuego.alto / 2, 
-				fuego.ancho, fuego.alto, { identificador: "fuego1", mostrando: false, mostrar: mostrarFuego });
+				fuego.ancho, fuego.alto, { identificador: "fuego1", mostrando: false, mostrar: mostrarFuego, onclick: pulsarFuego });
 		fuegos[5] = partida.crearElemento(lienzo.ancho - fuego.ancho * 5 / 4, lienzo.alto / 2.5 + casas3.alto - fuego.alto / 2, 
-				fuego.ancho, fuego.alto, { identificador: "fuego2", mostrando: false, mostrar: mostrarFuego });
+				fuego.ancho, fuego.alto, { identificador: "fuego2", mostrando: false, mostrar: mostrarFuego, onclick: pulsarFuego });
 				
 		instanteInicial = new Date();
 		
@@ -149,6 +149,11 @@ circo.juegos.Fuego = function(canvas)
 		    this.play();
 		}, false);
 	}	
+	
+	function pulsarFuego() {
+		this.mostrando = false;
+		numFuegosApagados++;
+	}
 	
 	function mostrarFuego() {
 		this.mostrando = true;
