@@ -29,7 +29,7 @@ auditoria.Prueba = function(identificador)
 	
 	for (clave in navigator)
 	{
-		this.datos.objeto_navigator[clave] = navigator[clave].toString();
+		this.datos.objeto_navigator[clave] = navigator[clave] ? navigator[clave].toString() : null;
 	}
 	
 	// A través del objeto Navegador (navegador.js) obtenemos las datos del navegador
