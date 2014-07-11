@@ -1,47 +1,17 @@
 
-/*
-importame.cargarSecuencialmente(["xuegu/xuegu.js", 
-					"xuegu/manejadores.js",
-					"xuegu/partida.js", 
-					"xuegu/elemento.js", 
-					"xuegu/utilidades.js",
-					"xuegu/graficos.js", 
-					"circo.js", 
-					"intermedios/util/boton.js",
-					"intermedios/util/botones.js",
-					"intermedios/util/instrucciones.js",
-					"intermedios/botones1.js",
-					"intermedios/botones2.js",
-					"intermedios/botones3.js",
-					"intermedios/botones4.js",
-					"intermedios/botones5.js",
-					"intermedios/botones6.js",
-					"intermedios/acrobatas.js",
-					"intermedios/instrucciones.js",
-					"juegos/numeros.js"], cargaCompletada);
-*/
-
-/*
-yepnope({
-  test: categorizr.isMobile,
-  yep: 'css/movil.css',
-  nope: 'css/estilo.css'
-});
-*/
-
 yepnope({
   load: ["js/auditoria/navegador.js",
 		"js/auditoria/movimiento.js",
 		"js/auditoria/prueba.js",
-		"js/auditoria/auditoria.js", 
-		"js/xuegu/xuegu.js", 
+		"js/auditoria/auditoria.js",
+		"js/xuegu/xuegu.js",
 		"js/xuegu/manejadores.js",
-		"js/xuegu/partida.js", 
+		"js/xuegu/partida.js",
 		"js/xuegu/elemento.js",
-		"js/xuegu/elementoRotable.js", 
+		"js/xuegu/elementoRotable.js",
 		"js/xuegu/utilidades.js",
-		"js/xuegu/graficos.js", 
-		"js/circo.js", 
+		"js/xuegu/graficos.js",
+		"js/circo.js",
 		"js/audio.js",
 		"js/intermedios/util/boton.js",
 		"js/intermedios/util/botones.js",
@@ -89,12 +59,12 @@ function cargaCompletada() {
 
 DomReady.ready(function() {
                     var botonComenzar = document.getElementById("comenzar")
-                    
+
                     if (botonComenzar)
                     	botonComenzar.onclick = comenzar;
-                    
+
                     idioma = new internacionalizacion.Idioma(internacionalizacion.etiquetas, "en", "en");
-                    
+
                     establecerEtiquetas();
 });
 
@@ -106,32 +76,32 @@ function establecerEtiquetas() {
 	esteblecerEtiqueta("comenzar", "comenzar");
 	esteblecerEtiqueta("creado", "creado");
 	esteblecerEtiqueta("gracias", "gracias");
-	
+
 	var gratis = document.getElementById("img_gratis")
-	
+
 	if (gratis) {
 		gratis.src = idioma.texto("img_gratis");
 		gratis.style.visibility = "visible";
 	}
 
 	var solo = document.getElementById("img_3minutos")
-	
+
 	if (solo) {
 		solo.src = idioma.texto("img_3minutos");
 		solo.style.visibility = "visible";
 	}
-	
+
 	document.title = idioma.texto("titulo");
 }
 
 function esteblecerEtiqueta(elemento, contenido) {
 	var elementoDOM = document.getElementById(elemento)
-	
+
 	if (elementoDOM)
 		elementoDOM.innerHTML = idioma.texto(contenido);
 }
 
-function comenzar() 
+function comenzar()
 {
 	while (!LISTO_PARA_EJECUCION);
 
@@ -139,16 +109,16 @@ function comenzar()
 	auditoriaUsuario = new auditoria.Auditoria(canvas);
 
 	if (categorizr.isMobile || categorizr.isTablet){
-    	
+
     	var dimensiones = xuegu.Utilidades.dimensionesPagina();
 
 		canvas.width = dimensiones.ancho;
 		canvas.height = dimensiones.alto;
-    		
+
     	document.getElementById('pie').style.display = 'none';
-    	
+
     	var input = document.getElementById('input');
-    	
+
     	document.body.innerHTML = '';
     	document.body.appendChild(input);
     	document.body.style.backgroundImage = 'url(../img/fondo.jpg)';
@@ -161,9 +131,9 @@ function comenzar()
 	if ((categorizr.isMobile || categorizr.isTablet) && window.innerWidth > window.innerHeight)
 	{
 		window.addEventListener("orientationchange", orientacion);
-		
+
 		var contexto = canvas.getContext('2d');
-		
+
 		contexto.textAlign = 'center';
 		contexto.font = "16px Conv_Carnevalee Freakshow";
 		contexto.fillStyle = '#333';
@@ -173,12 +143,12 @@ function comenzar()
 		iniciarCirco();
 }
 
-function orientacion() 
+function orientacion()
 {
-	if (window.innerHeight > window.innerWidth) 
+	if (window.innerHeight > window.innerWidth)
 	{
 		window.removeEventListener("orientationchange", orientacion);
-		
+
 		iniciarCirco();
 	}
 }
@@ -187,6 +157,7 @@ function iniciarCirco()
 {
 	// Paramos sonido
 	sonido.pause();
+
 
 	if (categorizr.isMobile || categorizr.isTablet)
 	{
@@ -197,45 +168,45 @@ function iniciarCirco()
 
 	secuencia = [
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_1",
-																"titulo_prueba_1", 
-																"nombre_prueba_1", 
-																"instrucciones_numeros", 
+																"titulo_prueba_1",
+																"nombre_prueba_1",
+																"instrucciones_numeros",
 																"img/instrucciones/numeros.png"),
 					new circo.juegos.Numeros(canvas),
 					new circo.intermedios.Puntuacion(canvas),
-					
+
 					new circo.intermedios.Botones4(canvas),
-					
+
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_2",
-																"titulo_prueba_2", 
-																"nombre_prueba_2", 
-																"instrucciones_topos", 
+																"titulo_prueba_2",
+																"nombre_prueba_2",
+																"instrucciones_topos",
 															"img/instrucciones/topos.png"),
 					new circo.juegos.Topos(canvas),
 					new circo.intermedios.Puntuacion(canvas),
-					
+
 					new circo.intermedios.Botones4(canvas),
-					
+
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_3",
-																"titulo_prueba_3", 
-																"nombre_prueba_3", 
-																"instrucciones_palabras", 
+																"titulo_prueba_3",
+																"nombre_prueba_3",
+																"instrucciones_palabras",
 																"img/instrucciones/pato.png"),
 					new circo.juegos.Palabras(canvas),
 					new circo.intermedios.Puntuacion(canvas),
-					
-					new circo.intermedios.Botones4(canvas), 
+
+					new circo.intermedios.Botones4(canvas),
 					new circo.intermedios.Acrobatas(canvas),
 					/*
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_4",
-																"titulo_prueba_4", 
-																"nombre_prueba_4", 
-																"instrucciones_fuego", 
-																"img/instrucciones/fuego.png"),		
-				
+																"titulo_prueba_4",
+																"nombre_prueba_4",
+																"instrucciones_fuego",
+																"img/instrucciones/fuego.png"),
+
 					new circo.juegos.Fuego(canvas), */
 					new circo.intermedios.Resultado1(canvas),
-					new circo.intermedios.Resultado2(canvas), 
+					new circo.intermedios.Resultado2(canvas),
 					new circo.intermedios.Fin(canvas)
 				];
 
@@ -250,29 +221,38 @@ function cambiarJuego()
 		circo.audio.circo.pause();
 
 	indice++;
-	
+
+  // Almacenar datos auditoria
+
+  if (indice > 0) {
+    var pruebas = auditoriaUsuario.data.tests;
+    var data = {
+      data: pruebas.length > 0 ? pruebas[0] : {}
+    };
+
+    data.user = auditoria.user;
+    data.audit = auditoria.audit;
+console.log(data)
+    wesCountry.ajax.load({
+      url: auditoria.host + "/observations",
+      parameters: JSON.stringify(data),
+      method: "POST",
+      content_type: "application/json",
+      callback: function(info) {
+
+      }
+    });
+
+    auditoriaUsuario.clear();
+  }
+
 	if (indice < secuencia.length)
 	{
 		var juego = secuencia[indice];
 
 		var partida = new xuegu.Partida(canvas, juego, idioma, cambiarJuego, anterior, auditoriaUsuario);
 		partida.iniciar();
-		
+
 		anterior = partida;
 	}
 }
-
-
-/*
-function iniciar_circo()
-{
-	var idioma = new xuegu.Idioma(circo.etiquetas, "en");
-	
-	var juego_numeros = new circo.juegos.Numeros();
-	var canvas = document.getElementById('canvas-juego');
-	var partida = new xuegu.Partida(canvas, juego_numeros);
-	
-	partida.iniciar();
-
-}
-*/

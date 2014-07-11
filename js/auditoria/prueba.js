@@ -3,13 +3,13 @@ if (!auditoria)
 
 auditoria.Prueba = function(identificador)
 {
-	this.datos = new Object();
-	
-	this.datos.identificador = identificador;
+	this.data = new Object();
+
+	this.data.identifier = identificador;
 
 	var tiempo = new Date();
-	this.datos.instante = tiempo;
-	
+	this.data.instant = tiempo;
+
 	this.instante = function()
 	{
 		var ahora = new Date();
@@ -17,27 +17,29 @@ auditoria.Prueba = function(identificador)
 
 		return Math.abs(dif);
 	};
-	
-	this.datos.acelerometro_disponible = window.DeviceMotionEvent != undefined ? 1 : 0;
-	this.datos.giroscopio_disponible = window.DeviceOrientationEvent != undefined ? 1 : 0;
-	
+
+	this.data.acelerometro_disponible = window.DeviceMotionEvent != undefined ? 1 : 0;
+	this.data.giroscopio_disponible = window.DeviceOrientationEvent != undefined ? 1 : 0;
+
 	var coordenadas_acelerometro = null;
 	var coordenadas_giroscopio = null;
-	
+
 	// Obtenemos los valores del objeto Navigator
-	this.datos.objeto_navigator = new Object();
-	
+	/*
+	this.data.objeto_navigator = new Object();
+
 	for (clave in navigator)
 	{
-		this.datos.objeto_navigator[clave] = navigator[clave] ? navigator[clave].toString() : null;
+		this.data.objeto_navigator[clave] = navigator[clave] ? navigator[clave].toString() : null;
 	}
-	
-	// A través del objeto Navegador (navegador.js) obtenemos las datos del navegador
+
+	// A travï¿½s del objeto Navegador (navegador.js) obtenemos las datos del navegador
 	auditoria.Navegador.iniciar();
-	this.datos.navegador = new Object();
-	this.datos.navegador.nombre = auditoria.Navegador.navegador;
-	this.datos.navegador.version = auditoria.Navegador.version;
-	this.datos.navegador.SO = auditoria.Navegador.SO;
+	this.data.navegador = new Object();
+	this.data.navegador.nombre = auditoria.Navegador.navegador;
+	this.data.navegador.version = auditoria.Navegador.version;
+	this.data.navegador.SO = auditoria.Navegador.SO;
+	*/
 	
 	auditoria.Movimiento.iniciar(
 		function(coordenadas)
@@ -46,11 +48,11 @@ auditoria.Prueba = function(identificador)
 			coordenadas_giroscopio = coordenadas.datos_giroscopio;
 		}
 	);
-	
+
 	this.parar = function() {
 		auditoria.Movimiento.parar();
-		
-		this.datos.coordenadas_acelerometro = coordenadas_acelerometro;
-		this.datos.coordenadas_giroscopio = coordenadas_giroscopio;
+
+		this.data.coordenadas_acelerometro = coordenadas_acelerometro;
+		this.data.coordenadas_giroscopio = coordenadas_giroscopio;
 	}
 }
