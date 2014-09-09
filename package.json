@@ -1,0 +1,15 @@
+{
+  "name": "CircoNeuronal",
+  "version": "0.0.1",
+  "description": "circoneuronal.org",
+  "dependencies": {
+  	"express": "*",
+    "express3-handlebars": "*",
+    "mysql": "*",
+    "body-parser": "*",
+    "cookie-parser": "*",
+    "express-session": "*",
+    "serve-favicon": "*"
+   },
+  "engine": "node >=0.6.x"
+}
