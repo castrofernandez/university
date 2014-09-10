@@ -1,0 +1,147 @@
+@font-face {
+  font-family: pixel;
+  src: url(../fonts/pixel_condensada.ttf);
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+body {
+  font-family: Helvetica, sans-serif;
+}
+
+main, header, footer, nav {
+  display: block;
+}
+
+main {
+  max-width: 70em;
+  margin: 0 auto;
+}
+
+/* HEADER */
+
+header.lab-header {
+  padding-bottom: 1em;
+  border-bottom: 0.3em solid #ccc;
+
+  max-width: 70em;
+  margin: 1em auto;
+}
+
+img.lab-logo {
+  float: left;
+  width: 3em;
+  margin-right: 1em;
+  margin-top: 0.8em;
+}
+
+h1, h2, h3 {
+  font-family: "pixel" sans-serif;
+  color: #444;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.3em;
+  color: #888;
+}
+
+h3 {
+  color: #aaa;
+  margin-bottom: 0.2em;
+}
+
+/* FORM */
+
+.selection {
+  overflow: auto;
+}
+
+.selection div {
+  margin-right: 0.5em;
+  margin-top: 1em;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.7em;
+}
+
+/* SELECT */
+
+select {
+  min-width: 20em;
+  margin: 0;
+}
+
+/* GRAPH */
+
+div.graph {
+  height: 12em;
+  overflow: hidden;
+}
+
+div.graph .wesCountry-panel {
+  overflow: hidden;
+}
+
+.graphs {
+  overflow: hidden;
+  border-bottom: 0.1em solid #ccc;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+}
+
+.graphs div.graph {
+  width: 50%;
+  float: left;
+}
+
+.wesCountry-title {
+  color: #666;
+}
+
+/* DATA */
+
+div.data {
+  margin-top: 1em;
+}
+
+div.data table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+div.data th {
+  text-align: left;
+  font-weight: normal;
+  color: #888;
+  border-bottom: 0.1em solid #888;
+}
+
+div.data tr.select th {
+  text-align: right;
+  border: none;
+  padding-bottom: 0.5em;
+}
+
+div.data-points {
+  text-align: center;
+  margin-top: 1em;
+}
+
+div.data-points svg {
+  background-color: #ddd;
+}

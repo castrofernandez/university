@@ -1,0 +1,51 @@
+{{! nothing here }}
+
+<div class="graphs">
+  <h3><i class="fa fa-area-chart"></i> Stats</h3>
+  <div id="browserGraph" class="graph"></div>
+  <div id="ossGraph" class="graph"></div>
+</div>
+
+<form class="selection">
+  <h3><i class="fa fa-users"></i> User events</h3>
+  <div class="float-left">
+    <label for="audits">Audit</label>
+    <select id="audit_select" name="audits">
+      {{#each audits}}
+        <option value="{{id}}">{{code}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="float-left">
+    <label for="subtests">Test</label>
+    <select id="subtest_select" name="subtests">
+      {{#each subtests}}
+        <option>{{this}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="float-left">
+    <label for="users">User</label>
+    <select id="user_select" name="users">
+      {{#each users}}
+        <option>{{id}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="float-left">
+    <label for="events">Event</label>
+    <select id="event_select" name="events">
+      {{#each events}}
+        <option>{{this}}</option>
+      {{/each}}
+    </select>
+  </div>
+</form>
+
+<div class="data">
+  <div id="data_table"></div>
+  <div id="data_points" class="data-points"></div>
+</div>
