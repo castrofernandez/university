@@ -67,14 +67,53 @@ userSelect.onchange = loadUserData;
 var eventSelect = document.getElementById("event_select");
 eventSelect.onchange = loadUserData;
 
+var refreshButton = document.getElementById("refresh");
+refreshButton.onclick = loadUserData;
+
+var pauseButton = document.getElementById("pause");
+pauseButton.onclick = pause;
+
+var playButton = document.getElementById("play");
+playButton.onclick = play;
+
 function loadUserData() {
-  var audit = auditSelect.value;
+  pause();
+
+  //var audit = auditSelect.value;
   var test = testSelect.value;
   var user = userSelect.value;
-  var eventName = eventSelect.value;
+  //var eventName = eventSelect.value;
+
+  var audits = "";
+
+  for (var i = 0; i < auditSelect.options.length; i++) {
+    var option = auditSelect.options[i];
+
+    if (!option.selected)
+      continue;
+
+    if (audits != "")
+      audits += ",";
+
+    audits += option.value;
+  }
+
+  var events = "";
+
+  for (var i = 0; i < eventSelect.options.length; i++) {
+    var option = eventSelect.options[i];
+
+    if (!option.selected)
+      continue;
+
+    if (events != "")
+      events += ",";
+
+    events += option.value;
+  }
 
   selectionLoader.load({
-    url: "/observations/" + audit + "/" + test + "/" + user + "/" + eventName
+    url: "/observations/" + audits + "/" + test + "/" + user + "/" + events
   });
 }
 
@@ -134,6 +173,11 @@ function showDataTable(data) {
 
 var data_points = document.getElementById("data_points");
 
+var playing = true;
+
+var screen = null;
+var userData = null;
+
 function showDataPoints(data) {
   var user = userSelect.value;
 
@@ -144,23 +188,39 @@ function showDataPoints(data) {
       var width = user.width;
       var height = user.height;
 
+      // Save user data
+      screen = {
+        width: width,
+        height: height
+      };
+
+      userData = data;
+
       processDataPoints(width, height, data)
     }
 	});
 }
 
-function processDataPoints(width, height, data) {
-  data_points.innerHTML = "";
+function processDataPoints(width, height, data, index) {
 
+  var svg = null;
   var svgNs = "http://www.w3.org/2000/svg";
-  var svg = document.createElementNS(svgNs, "svg");
-  svg.setAttribute('width', width);
-  svg.setAttribute('height', height);
-  svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-  data_points.appendChild(svg);
+  
+  if (!index) {
+    data_points.innerHTML = "";
+
+    var svg = document.createElementNS(svgNs, "svg");
+    svg.setAttribute('width', width);
+    svg.setAttribute('height', height);
+    svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+    data_points.appendChild(svg);
+  }
+  else
+    svg = data_points.querySelector("svg");
 
   drawElements(data, svg, svgNs);
-  drawPoint(0, data, svg, svgNs);
+  playing = true;
+  drawPoint(index ? index: 0, data, svg, svgNs);
 }
 
 function drawElements(data, svg, svgNs) {
@@ -213,11 +273,19 @@ function drawElements(data, svg, svgNs) {
   }
 }
 
+var timeout = null;
+var indexPos = null;
+
 function drawPoint(i, data, svg, svgNs) {
-  if (i >= data.length)
+  if (i >= data.length || !playing)
     return;
 
+  // Save pos
+  indexPos = i;
+
   var element = data[i];
+
+  var event = element["type"];
 
   // Element coordinates
   var x = element["x"];
@@ -235,17 +303,46 @@ function drawPoint(i, data, svg, svgNs) {
   var ox = sx - x;
   var oy = sy - y;
 
+  var colour = "";
+  var radius = 4;
+
+  switch(event) {
+    case "onclick":
+      colour = "rgba(217, 24, 24, 0.8)";
+      radius = 8;
+      break;
+    case "ondblclick":
+      colour = "rgba(49, 180, 4, 0.8)";
+      radius = 8;
+      break;
+    default:
+      colour = "rgba(32, 89, 143, 0.5)";
+      radius = 4;
+      break;
+  }
+
   if (sx != -1 && sy != -1) {
     // Event
     var circle = document.createElementNS(svgNs, "circle");
     circle.setAttributeNS(null, "cx", sx);
     circle.setAttributeNS(null, "cy", sy);
-    circle.setAttributeNS(null, "r",  4);
-    circle.setAttributeNS(null, "fill", "rgba(32, 89, 143, 0.5)");
+    circle.setAttributeNS(null, "r",  radius);
+    circle.setAttributeNS(null, "fill", colour);
     svg.appendChild(circle);
   }
 
-  setTimeout(function() {
+  timeout = setTimeout(function() {
     drawPoint(i + 1, data, svg, svgNs);
   }, 10);
+}
+
+function pause() {
+  if (timeout)
+    clearTimeout(timeout);
+
+  playing = false;
+}
+
+function play() {
+  processDataPoints(screen.width, screen.height, userData, indexPos);
 }

@@ -89,9 +89,25 @@ app.get('/lab', function(req, res){
   app.use(favicon(__dirname + '/public/img/lab_favicon.ico'));
 
   getAudits(function(error, audits) {
+
+    if (audits.length > 0)
+      audits[0].selected = "selected";
+
     getSubtests(function(error, subtests) {
+
+      if (subtests.length > 0)
+        subtests[0].selected = "selected";
+
       getUsers(null, function(error, users) {
+
+        if (users.length > 0)
+          users[0].selected = "selected";
+
         getEvents(function(error, events) {
+
+          if (events.length > 0)
+            events[0].selected = "selected";
+
           res.render('lab', {
             audits: audits,
             subtests: subtests,
@@ -117,10 +133,10 @@ app.get('/observations', function(req, res) {
   });
 });
 
-app.get('/observations/:audit', function(req, res) {
-  var audit = req.params.audit ? req.params.audit : null;
+app.get('/observations/:audits', function(req, res) {
+  var audits = req.params.audits ? req.params.audits : null;
 
-  getObservations(audit, null, null, null, function(success, data) {
+  getObservations(audits, null, null, null, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -128,11 +144,11 @@ app.get('/observations/:audit', function(req, res) {
   });
 });
 
-app.get('/observations/:audit/:test', function(req, res) {
-  var audit = req.params.audit ? req.params.audit : null;
+app.get('/observations/:audits/:test', function(req, res) {
+  var audits = req.params.audits ? req.params.audits : null;
   var test = req.params.test ? req.params.test : null;
 
-  getObservations(audit, test, null, null, function(success, data) {
+  getObservations(audits, test, null, null, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -140,26 +156,12 @@ app.get('/observations/:audit/:test', function(req, res) {
   });
 });
 
-app.get('/observations/:audit/:test/:user', function(req, res) {
-  var audit = req.params.audit ? req.params.audit : null;
-  var test = req.params.test ? req.params.test : null;
-  var user = req.params.user ? req.params.user : null;
-
-  getObservations(audit, test, user, null, function(success, data) {
-    if (!success)
-      res.send(data)
-    else
-      res.send(JSON.stringify(data));
-  });
-});
-
-app.get('/observations/:audit/:test/:user/:event', function(req, res) {
-  var audit = req.params.audit ? req.params.audit : null;
+app.get('/observations/:audits/:test/:user', function(req, res) {
+  var audits = req.params.audits ? req.params.audits : null;
   var test = req.params.test ? req.params.test : null;
   var user = req.params.user ? req.params.user : null;
-  var event = req.params.event ? req.params.event : null;
 
-  getObservations(audit, test, user, event, function(success, data) {
+  getObservations(audits, test, user, null, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -167,7 +169,21 @@ app.get('/observations/:audit/:test/:user/:event', function(req, res) {
   });
 });
 
-function getObservations(audit, test, user, eventName, callback) {
+app.get('/observations/:audits/:test/:user/:events', function(req, res) {
+  var audits = req.params.audits ? req.params.audits : null;
+  var test = req.params.test ? req.params.test : null;
+  var user = req.params.user ? req.params.user : null;
+  var events = req.params.events ? req.params.events : null;
+
+  getObservations(audits, test, user, events, function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  });
+});
+
+function getObservations(audits, test, user, events, callback) {
   var connection = getDBConnection();
 
   connection.connect(function(error){
@@ -181,8 +197,8 @@ function getObservations(audit, test, user, eventName, callback) {
   var queryStr = 'SELECT id, identifier, element, date, type, CONVERT(value USING utf8) AS value, width, height, x, y, sx, sy, instant, user_id, audit_id FROM observations';
   var where = " WHERE";
 
-  if (audit)
-    where += " audit_id = " + audit;
+  if (audits)
+    where += " audit_id IN (" + audits + ")";
   else
     where += " 1=1";
 
@@ -192,8 +208,10 @@ function getObservations(audit, test, user, eventName, callback) {
   if (user)
     where += ' AND user_id = ' + user;
 
-  if (eventName)
-    where += ' AND type = "' + eventName + '"';
+  if (events) {
+    events = events.replace(',', '", "')
+    where += ' AND type IN ("' + events + '")';
+  }
 
   queryStr += where;
   queryStr += " ORDER BY instant"
@@ -524,7 +542,9 @@ function getEvents(callback) {
           var results = [];
 
           for (var i = 0; i < result.length; i++) {
-            results.push(result[i]["type"]);
+            results.push({
+              event: result[i]["type"]
+            });
           }
 
           callback(true, results);
@@ -566,7 +586,9 @@ function getSubtests(callback) {
           var results = [];
 
           for (var i = 0; i < result.length; i++) {
-            results.push(result[i]["identifier"]);
+            results.push({
+              test: result[i]["identifier"]
+            });
           }
 
           callback(true, results);

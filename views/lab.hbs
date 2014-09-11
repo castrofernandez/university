@@ -10,36 +10,52 @@
   <h3><i class="fa fa-users"></i> User events</h3>
   <div class="float-left">
     <label for="audits">Audit</label>
-    <select id="audit_select" name="audits">
+    <select id="audit_select" name="audits" multiple="multiple">
       {{#each audits}}
-        <option value="{{id}}">{{code}}</option>
+        {{#if selected}}
+          <option value="{{id}}" selected>{{code}}</option>
+        {{else}}
+          <option value="{{id}}">{{code}}</option>
+        {{/if}}
       {{/each}}
     </select>
   </div>
 
   <div class="float-left">
     <label for="subtests">Test</label>
-    <select id="subtest_select" name="subtests">
+    <select id="subtest_select" name="subtests" multiple="multiple">
       {{#each subtests}}
-        <option>{{this}}</option>
+        {{#if selected}}
+          <option selected>{{test}}</option>
+        {{else}}
+          <option>{{test}}</option>
+        {{/if}}
       {{/each}}
     </select>
   </div>
 
   <div class="float-left">
     <label for="users">User</label>
-    <select id="user_select" name="users">
+    <select id="user_select" name="users" multiple="multiple">
       {{#each users}}
-        <option>{{id}}</option>
+        {{#if selected}}
+          <option selected>{{id}}</option>
+        {{else}}
+          <option>{{id}}</option>
+        {{/if}}
       {{/each}}
     </select>
   </div>
 
   <div class="float-left">
     <label for="events">Event</label>
-    <select id="event_select" name="events">
+    <select id="event_select" name="events" multiple="multiple">
       {{#each events}}
-        <option>{{this}}</option>
+        {{#if selected}}
+          <option selected>{{event}}</option>
+        {{else}}
+          <option>{{event}}</option>
+        {{/if}}
       {{/each}}
     </select>
   </div>
@@ -48,4 +64,7 @@
 <div class="data">
   <div id="data_table"></div>
   <div id="data_points" class="data-points"></div>
+  <button id="refresh" class="refresh"><i class="fa fa-refresh fa-3x"></i></button>
+  <button id="pause" class="pause"><i class="fa fa-pause fa-3x"></i></button>
+  <button id="play" class="play"><i class="fa fa-play fa-3x"></i></button>
 </div>
