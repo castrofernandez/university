@@ -1,6 +1,6 @@
 xuegu.Manejadores = function(elemento, auditoria)
 {
-	function Manejador(elemento, evento)
+	function Manejador(elemento, evento, disparador)
 	{
 		var valores = [];
 		var elementos = [];
@@ -10,6 +10,8 @@ xuegu.Manejadores = function(elemento, auditoria)
 			elemento.attachEvent(evento, accion);
 		else
 			elemento.addEventListener(evento, accion, false);
+
+		var manejador = this;
 
 		function accion(evt)
 		{
@@ -28,6 +30,9 @@ xuegu.Manejadores = function(elemento, auditoria)
 			for (var i = elementos.length - 1; i >= 0; i--)
 			{
 				var e = elementos[i];
+
+				if (disparador)
+					disparador.call(manejador, manejador, evt, coordenada)
 
 				if (e && e.colision && e.colision(coordenada))
 				{
@@ -113,6 +118,8 @@ xuegu.Manejadores = function(elemento, auditoria)
 				elementos.push(elemento);
 		}
 
+		this.registrarEvento = registrarEvento
+
 		function registrarEvento(elemento, evento, coordenada, value) {
 			if (auditoria) {
 				if (!auditoria.data)
@@ -138,9 +145,58 @@ xuegu.Manejadores = function(elemento, auditoria)
 	this.dblclick = new Manejador(elemento, 'dblclick');
 	this.mousedown = new Manejador(elemento, 'mousedown');
 	this.mouseup = new Manejador(elemento, 'mouseup');
-	this.mousemove = new Manejador(elemento, 'mousemove');
-	this.mouseover = new Manejador(elemento, 'mouseover');
-	this.mouseout = new Manejador(elemento, 'mouseout');
+
+	this.mousemove = new Manejador(elemento, 'mousemove', function(manejador, evt, coordenada) {
+		mouseover.accion(manejador, evt, coordenada);
+		mouseout.accion(manejador, evt, coordenada);
+	});
+
+	//this.mouseover = new Manejador(elemento, 'mouseover');
+	//this.mouseout = new Manejador(elemento, 'mouseout');
+
+	// Mouse over y mouse out se registran a través de mouse move
+
+	var mouseover = this.mouseover = new (function() {
+		var elementos = [];
+
+		this.registrarElemento = function(elemento) {
+			if (!(elemento in elementos))
+				elementos.push(elemento);
+		}
+
+		this.accion = function(manejador, evt, coordenada) {
+			for (var i = elementos.length - 1; i >= 0; i--)
+			{
+				var e = elementos[i];
+
+				if (e && e.colision && e.colision(coordenada) && !e.over) {
+					e.over = true;
+					manejador.registrarEvento(e, "onmouseover", coordenada, null);
+				}
+			}
+		}
+	})();
+
+	var mouseout = this.mouseout = new (function() {
+		var elementos = [];
+
+		this.registrarElemento = function(elemento) {
+			if (!(elemento in elementos))
+				elementos.push(elemento);
+		}
+
+		this.accion = function(manejador, evt, coordenada) {
+			for (var i = elementos.length - 1; i >= 0; i--)
+			{
+				var e = elementos[i];
+
+				if (e && e.colision && !e.colision(coordenada) && e.over) {
+					e.over = false;
+					manejador.registrarEvento(e, "onmouseout", coordenada, null);
+				}
+			}
+		}
+	})();
 
 	this.touchstart = new Manejador(elemento, 'touchstart');
 	this.touchmove = new Manejador(elemento, 'touchmove');
@@ -156,8 +212,9 @@ xuegu.Manejadores = function(elemento, auditoria)
 		this.mousedown.parar();
 		this.mouseup.parar();
 		this.mousemove.parar();
-		this.mouseover.parar();
-		this.mouseout.parar();
+
+		//this.mouseover.parar();
+		//this.mouseout.parar();
 
 		this.touchstart.parar();
 		this.touchmove.parar();

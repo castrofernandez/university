@@ -24,7 +24,9 @@ circo.intermedios.Resultado1 = function(canvas)
 
 	var lienzo = xuegu.Utilidades.dimensionesJuego(canvas);
 
-	var resultadoRecibido = true;
+	//var resultadoRecibido = true;
+	var tiempo_de_espera = 3000;
+	var inicio = null;
 
 	var adivino = null;
 
@@ -34,6 +36,8 @@ circo.intermedios.Resultado1 = function(canvas)
 
 	this.iniciar = function(partida)
 	{
+		inicio = new Date();
+
 		var alto = lienzo.alto * 9/10;
 
 		// Ajustar tamaño del fondo al tamaño del lienzo
@@ -87,7 +91,7 @@ circo.intermedios.Resultado1 = function(canvas)
 
 	this.finalizado = function()
 	{
-		return resultadoRecibido;
+		return new Date() - inicio >= tiempo_de_espera;
 	}
 
 	function Adivino() {
