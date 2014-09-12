@@ -351,7 +351,8 @@ function getUsers(user, callback) {
 
 app.post('/users', function(req, res) {
   var code = req.body.code ? req.body.code : "UNKNOWN";
-  var ip = req.connection.remoteAddress;
+  var ip = req.ip;
+
   var useragent = req.headers['user-agent'] ? req.headers['user-agent'] : "UNKNOWN";
   var acceptlanguage = req.headers['accept-language'] ? req.headers['accept-language'] : "UNKNOWN";
 
@@ -417,57 +418,6 @@ app.post('/users', function(req, res) {
     connection.end();
   });
 });
-
-/*
-app.get('/simple', function(req, res){
-  var data = {name: 'Gorilla'};
-  res.render('simple', data);
-});
-
-app.get('/complex', function(req, res){
-  var data = {
-    name: 'Gorilla',
-    address: {
-      streetName: 'Broadway',
-      streetNumber: '721',
-      floor: 4,
-      addressType: {
-        typeName: 'residential'
-      }
-    }
-  };
-  res.render('complex', data);
-});
-
-app.get('/loop', function(req, res){
-  var basketballPlayers = [
-    {name: 'Lebron James', team: 'the Heat'},
-    {name: 'Kevin Durant', team: 'the Thunder'},
-    {name: 'Kobe Jordan',  team: 'the Lakers'}
-  ];
-
-  var days = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-  ];
-
-  var data = {
-    basketballPlayers: basketballPlayers,
-    days: days
-  };
-
-  res.render('loop', data);
-});
-
-app.get('/logic', function(req, res){
-  var data = {
-    upIsUp: true,
-    downIsUp: false,
-    skyIsBlue: "yes"
-  };
-
-  res.render('logic', data);
-});
-*/
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                  AUDITS                                    //
@@ -668,7 +618,7 @@ function getOssSeriesByBrowser(callback) {
 
           for (var i = 0; i < result.length; i++) {
             var useragent = result[i]["useragent"];
-            var count = result[1]["count"];
+            var count = result[i]["count"];
 
             var browser = getBrowser(useragent);
 
@@ -725,7 +675,7 @@ function getOssSeriesByOS(callback) {
 
           for (var i = 0; i < result.length; i++) {
             var useragent = result[i]["useragent"];
-            var count = result[1]["count"];
+            var count = result[i]["count"];
 
             var os = getOS(useragent);
 
@@ -795,13 +745,13 @@ function getOS(useragent) {
     'Windows 98': /win98/i,
     'Windows 95': /win95/i,
     'Windows 3.11': /win16/i,
+    'iPhone': /iphone/i,
+    'iPod': /ipod/i,
+    'iPad': /ipad/i,
     'Mac OS X': /macintosh|mac os x/i,
     'Mac OS 9': /mac_powerpc/i,
     'Linux': /linux/i,
     'Ubuntu': /ubuntu/i,
-    'iPhone': /iphone/i,
-    'iPod': /ipod/i,
-    'iPad': /ipad/i,
     'Android': /android/i,
     'BlackBerry': /blackberry/i,
     'Mobile': /webos/i
@@ -816,5 +766,139 @@ function getOS(useragent) {
 
   return "unknown";
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//                                 QUESTIONS
+////////////////////////////////////////////////////////////////////////////////
+
+app.get('/questions', function(req, res) {
+  getQuestions(function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  });
+});
+
+function getQuestions(callback) {
+  var connection = getDBConnection();
+
+  connection.connect(function(error){
+     if(error){
+        callback(false, "Error: " + error);
+     }else{
+        console.log('Connection made');
+     }
+  });
+
+  var query = connection.query('SELECT element, CONVERT(value USING utf8) AS value, COUNT(1) AS count FROM observations WHERE type = "answer" GROUP BY element, CONVERT(value USING utf8) ORDER BY element', function(error, result){
+        if (error) {
+           callback(false, "Error: " + error);
+        } else {
+          var results = {};
+
+          for (var i = 0; i < result.length; i++) {
+            var element = result[i]["element"];
+            var value = result[i]["value"];
+            var count = result[i]["count"];
+
+            if (!results[element])
+              results[element] = [];
+
+            results[element].push({
+              name: value,
+              values: [ count ]
+            });
+          }
+
+          // Group age values
+          results["AGE_VALUE"] = sortAgeValues(results["AGE_VALUE"])
+
+          callback(true, results);
+        }
+     }
+  );
+
+  connection.end();
+}
+
+function sortAgeValues(data) {
+
+  if (!data)
+    return null;
+
+  var groups = [
+    {
+      min: 0,
+      max: 9
+    },
+    {
+      min: 10,
+      max: 14
+    },
+    {
+      min: 15,
+      max: 19
+    },
+    {
+      min: 20,
+      max: 29
+    },
+    {
+      min: 30,
+      max: 39
+    },
+    {
+      min: 40,
+      max: 49
+    },
+    {
+      min: 50,
+      max: 59
+    },
+    {
+      min: 60,
+      max: 100
+    }
+  ];
+
+  var results = {};
+
+  for (var i = 0; i < data.length; i++) {
+    var element = data[i];
+    var age = parseInt(element.name);
+    var count = element.values[0];
+
+    for (var j = 0; j < groups.length; j++) {
+      var group = groups[j];
+
+      if (age >= group.min && age <= group.max) {
+        var groupName = group.min + "-" + group.max;
+
+        if (!results[groupName])
+          results[groupName] = 0;
+
+        results[groupName] = results[groupName] + count;
+
+        break;
+      }
+    }
+  }
+
+  var processedResults = [];
+
+  for (var group in results) {
+    processedResults.push({
+      name: group,
+      values: [ results[group] ]
+    });
+  }
+
+  return processedResults;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//                              SERVER START
+////////////////////////////////////////////////////////////////////////////////
 
 var server = app.listen(3000);

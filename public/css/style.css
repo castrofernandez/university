@@ -117,6 +117,19 @@ div.graph .wesCountry-panel {
   color: #666;
 }
 
+.question_graphs {
+  overflow: hidden;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: 0.1em solid #ccc;
+}
+
+.question_graphs div {
+  width: 50%;
+  height: 12em;
+  float: left;
+}
+
 /* DATA */
 
 div.data {

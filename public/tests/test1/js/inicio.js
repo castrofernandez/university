@@ -122,27 +122,37 @@ function comenzar()
 	while (!LISTO_PARA_EJECUCION);
 
 	canvas = document.getElementById('canvas-juego');
-	auditoriaUsuario = new auditoria.Auditoria(canvas);
 
-	if (categorizr.isMobile || categorizr.isTablet){
+  var dimensiones = xuegu.Utilidades.dimensionesPagina();
 
-    	var dimensiones = xuegu.Utilidades.dimensionesPagina();
-
+	if (categorizr.isMobile || categorizr.isTablet) {
 		canvas.width = dimensiones.ancho;
 		canvas.height = dimensiones.alto;
 
-    	document.getElementById('pie').style.display = 'none';
+    document.getElementById('pie').style.display = 'none';
 
-    	var input = document.getElementById('input');
+    var input = document.getElementById('input');
 
-    	document.body.innerHTML = '';
-    	document.body.appendChild(input);
-    	document.body.style.backgroundImage = 'url(../img/fondo.jpg)';
-    }
-    else {
+    document.body.innerHTML = '';
+    document.body.appendChild(input);
+    document.body.style.backgroundImage = 'url(../img/fondo.jpg)';
+  }
+  else {
 		document.getElementById("inicio").style.display = 'none';
 		document.getElementById("juego").style.display = 'block';
+
+    // Ajustamos alto del canvas para evitar scroll
+
+    var top = findPos(canvas).top;
+
+    if (top + canvas.height > dimensiones.alto)
+      canvas.height = dimensiones.alto - top;
 	}
+
+  auditoriaUsuario = new auditoria.Auditoria(canvas);
+
+  // Scroll to top
+  scroll(0, 0);
 
 	if ((categorizr.isMobile || categorizr.isTablet) && window.innerWidth > window.innerHeight)
 	{
@@ -157,6 +167,23 @@ function comenzar()
 	}
 	else
 		iniciarCirco();
+}
+
+function findPos(obj) {
+	var curleft = curtop = 0;
+
+  if (obj.offsetParent) {
+    do {
+			curleft += obj.offsetLeft;
+			curtop += obj.offsetTop;
+    }
+    while (obj = obj.offsetParent);
+  }
+
+  return {
+      left: curleft,
+      top: curtop
+    };
 }
 
 function orientacion()
