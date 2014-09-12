@@ -186,7 +186,7 @@ circo.intermedios.Acrobatas = function(canvas)
 		var angulo = 0;
 
 		var punto_contacto = null;
-		var moviendose = false;
+		//var moviendose = false;
 
 		var umbral_colocacion = 1;
 
@@ -206,7 +206,7 @@ circo.intermedios.Acrobatas = function(canvas)
 			xuegu.Graficos.aplicarSombra(contexto);
 
 			contexto.beginPath();
-			contexto.fillStyle = "#00979d";
+			contexto.fillStyle = tablon.estaMoviendose() ? "#2FBFC4" : "#00979d";
 
 			contexto.moveTo(punto_1.x, punto_1.y);
 			contexto.lineTo(punto_2.x, punto_2.y);
@@ -234,13 +234,13 @@ circo.intermedios.Acrobatas = function(canvas)
 			if (esta_punto_en_poligono(vertices_poligono, punto))
 			{
 				punto_contacto = { x : x, y : y };
-				moviendose = true;
+				//moviendose = true;
 			}
 		}
 
 		this.mouseup = function(x, y)
 		{
-			moviendose = false;
+			//moviendose = false;
 
 			if (cuadrado_colocado())
 				estado = estados.FINALIZANDO;
@@ -252,7 +252,7 @@ circo.intermedios.Acrobatas = function(canvas)
 			if (finalizado) {
 				estado = estados.FINALIZANDO;
 
-				moviendose = false;
+				//moviendose = false;
 			}
 
 			return finalizado;
@@ -295,7 +295,7 @@ circo.intermedios.Acrobatas = function(canvas)
 		{
 			var _angulo = Math.abs(angulo);
 
-			for (var i = _angulo - umbral_colocacion; i < _angulo + umbral_colocacion; i++) { console.log(i)
+			for (var i = _angulo - umbral_colocacion; i < _angulo + umbral_colocacion; i++) {
 				var vertices = obtener_vertices(i);
 
 				var resultado =	arista_horizontal_o_vertical(vertices[0], vertices[1]) &&

@@ -43,6 +43,7 @@ xuegu.ElementoRotable = function(partida, x, y, ancho, alto, opciones)
 
 	this.registrarMouseUp(finalizarMovimiento);
 	this.registrarTouchEnd(finalizarMovimiento);
+	this.registrarMouseOut(finalizarMovimiento);
 
 	function mover(coordenada) {
 		if (!moviendose)
@@ -140,6 +141,10 @@ xuegu.ElementoRotable = function(partida, x, y, ancho, alto, opciones)
 
 	this.parar = function() {
 		moviendose = false;
+	}
+
+	this.estaMoviendose = function() {
+		return moviendose;
 	}
 
 	function compruebaLado(x1, y1, x2, y2, x, y) {

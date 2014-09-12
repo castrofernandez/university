@@ -159,6 +159,8 @@ xuegu.Manejadores = function(elemento, auditoria)
 	var mouseover = this.mouseover = new (function() {
 		var elementos = [];
 
+		var nombreEvento = "onmouseover";
+
 		this.registrarElemento = function(elemento) {
 			if (!(elemento in elementos))
 				elementos.push(elemento);
@@ -171,7 +173,15 @@ xuegu.Manejadores = function(elemento, auditoria)
 
 				if (e && e.colision && e.colision(coordenada) && !e.over) {
 					e.over = true;
-					manejador.registrarEvento(e, "onmouseover", coordenada, null);
+					manejador.registrarEvento(e, nombreEvento, coordenada, null);
+
+					// Lanzamos manejadores (Es un array)
+					if (e[nombreEvento]) {
+						var acciones = e[nombreEvento];
+
+						for (var i = 0; i < acciones.length; i++)
+							acciones[i].call(e, coordenada);
+					}
 				}
 			}
 		}
@@ -179,6 +189,8 @@ xuegu.Manejadores = function(elemento, auditoria)
 
 	var mouseout = this.mouseout = new (function() {
 		var elementos = [];
+
+		var nombreEvento = "onmouseout";
 
 		this.registrarElemento = function(elemento) {
 			if (!(elemento in elementos))
@@ -192,7 +204,15 @@ xuegu.Manejadores = function(elemento, auditoria)
 
 				if (e && e.colision && !e.colision(coordenada) && e.over) {
 					e.over = false;
-					manejador.registrarEvento(e, "onmouseout", coordenada, null);
+					manejador.registrarEvento(e, nombreEvento, coordenada, null);
+
+					// Lanzamos manejadores (Es un array)
+					if (e[nombreEvento]) {
+						var acciones = e[nombreEvento];
+
+						for (var i = 0; i < acciones.length; i++)
+							acciones[i].call(e, coordenada);
+					}
 				}
 			}
 		}
