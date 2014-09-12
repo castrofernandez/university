@@ -209,7 +209,7 @@ function iniciarCirco()
 		canvas.height = dimensiones.alto;
 	}
 
-	secuencia = [
+	secuencia = [/*
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_1",
 																"titulo_prueba_1",
 																"nombre_prueba_1",
@@ -234,7 +234,7 @@ function iniciarCirco()
 																"titulo_prueba_3",
 																"nombre_prueba_3",
 																"instrucciones_palabras",
-																"img/instrucciones/pato.png"),
+																"img/instrucciones/pato.png"),*/
 					new circo.juegos.Palabras(canvas),
 					new circo.intermedios.Puntuacion(canvas),
 

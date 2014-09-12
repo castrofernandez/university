@@ -43,7 +43,7 @@ circo.intermedios.Resultado4 = function(canvas)
 
 	this.iniciar = function(partida)
 	{
-		auditoria = partida.auditoriaPrueba
+		auditoria = partida.auditoriaPrueba;
 
 		// Etiquetas
 

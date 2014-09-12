@@ -3,6 +3,8 @@ circo.juegos.Palabras = function(canvas)
 	this.identificador = "palabras";
 	var pato = null;
 
+	var velocidad_pato = 30;
+
 	var palabras = ['cocodrilo', 'veloz', 'perro', 'kiwi'];
 
 	var palabraEnCurso = 0;
@@ -15,13 +17,15 @@ circo.juegos.Palabras = function(canvas)
 	var num_olas = 7;
 	var tam_ola = lienzo.ancho / num_olas;
 	var ancho_alto_pato = tam_ola * 1.5;
+	var ancho_alto_pato_delantero = categorizr.isMobile ? ancho_alto_pato * 2.5 : ancho_alto_pato * 1.5;
 
 	var y_atras = lienzo.alto / 5;
 	var y = lienzo.alto * 3 / 5;
 
-	this.imagenes = ['img/palabras/pato_frente.png', 'img/palabras/pato_atras.png', 'img/palabras/ola_1.png',
-					'img/palabras/ola_2.png', 'img/palabras/ola_3.png', 'img/palabras/ola_4.png',
-					'img/palabras/diana.png', 'img/palabras/toldo_1.png', 'img/palabras/toldo_2.png'];
+	this.imagenes = ['img/palabras/pato_frente.png', 'img/palabras/pato_atras.png',
+					'img/palabras/ola_1.png', 'img/palabras/ola_2.png', 'img/palabras/ola_3.png',
+					'img/palabras/ola_4.png', 'img/palabras/diana.png', 'img/palabras/diana_atras.png',
+					'img/palabras/toldo_1.png', 'img/palabras/toldo_2.png'];
 
 	var input = null;
 	var auditoria = null;
@@ -114,8 +118,12 @@ circo.juegos.Palabras = function(canvas)
 		var medio = lienzo.ancho / 2 - ancho_alto_pato / 2;
 
 		for (var i = 0; i <= palabraEnCurso && i < palabras.length; i++)
-			if (i < palabraEnCurso || patos[i] > medio)
-				patos[i]--;
+			if (i < palabraEnCurso || patos[i] > medio) {
+				patos[i] -= velocidad_pato;
+
+				if (patos[i] < medio)
+					patos[i] = medio;
+			}
 	}
 
 	this.dibujar = function(contexto, ancho, alto, graficos)
@@ -163,15 +171,15 @@ circo.juegos.Palabras = function(canvas)
 
 			// Z�calo
 
-		    xuegu.Graficos.rectangulo(contexto, 0, y_atras + tam_ola / 2 + tam_ola, ancho, tam_ola, '#405c9e');
+		    xuegu.Graficos.rectangulo(contexto, 0, y_atras + tam_ola / 2 + tam_ola, ancho, tam_ola, '#2D4172');
 
-		    xuegu.Graficos.rectangulo(contexto, 0, y_atras + tam_ola / 2 + tam_ola, ancho, tam_ola / 10, '#283961');
+		    xuegu.Graficos.rectangulo(contexto, 0, y_atras + tam_ola / 2 + tam_ola, ancho, tam_ola / 10, '#182544');
 
 		    // Dianas
 
 			for (var i = 0; i < num_olas; i++)
 				if (i % 2 == 0)
-					contexto.drawImage(graficos['img/palabras/diana.png'],
+					contexto.drawImage(graficos['img/palabras/diana_atras.png'],
 									tam_ola * i + tam_ola / 6, y_atras + tam_ola * 1.5 + tam_ola / 6, tam_ola / 1.5, tam_ola / 1.5);
 
 		/* Patos delanteros */
@@ -194,8 +202,8 @@ circo.juegos.Palabras = function(canvas)
 
 			contexto.fillStyle = "#555";
 
-			var incremento = ancho_alto_pato / 5;
-			var incrementoTexto = 4 / 5 * ancho_alto_pato - incremento;
+			var incremento = ancho_alto_pato_delantero / 2;
+			//var incrementoTexto = 4 / 5 * ancho_alto_pato_delantero - incremento;
 
 			// Patos principales
 			/*for (var i = 0; i < patos.length; i++)
@@ -206,9 +214,13 @@ circo.juegos.Palabras = function(canvas)
 				contexto.fillText(palabras[i], patos[i] + ancho_alto_pato / 2, y + incrementoTexto);
 			}*/
 			contexto.drawImage(graficos['img/palabras/pato_frente.png'], patos[palabraEnCurso], y - incremento,
-				ancho_alto_pato, ancho_alto_pato);
+				ancho_alto_pato_delantero, ancho_alto_pato_delantero);
+
+
+			// Texto
 			contexto.textAlign = 'center';
-			contexto.fillText(palabras[palabraEnCurso], patos[palabraEnCurso] + ancho_alto_pato / 2, y + incrementoTexto);
+			contexto.font = '26px Verdana';
+			contexto.fillText(palabras[palabraEnCurso], patos[palabraEnCurso] + ancho_alto_pato_delantero / 1.8, y + ancho_alto_pato_delantero / 6);
 
 			// Olas frontales
 
