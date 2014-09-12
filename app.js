@@ -12,6 +12,9 @@ var expressHbs = require('express3-handlebars');
 app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'main.hbs'}));
 app.set('view engine', 'hbs');
 
+// Express behind proxy (IP)
+app.enable('trust proxy');
+
 // Public folder
 app.use(express.static(__dirname + '/public'));
 
