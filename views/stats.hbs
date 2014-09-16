@@ -1,0 +1,23 @@
+{{! nothing here }}
+
+<table class="stats">
+  <thead></thead>
+  <tbody>
+    <tr>
+      <td>Number of users</td>
+      <td>{{count}}</td>
+    </tr>
+    <tr>
+      <td>Number of unfinished tests</td>
+      <td>{{unfinished}} - ({{unfinishedPercent}}%)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="graphs">
+  <h3><i class="fa fa-area-chart"></i> Stats</h3>
+  <div id="browserGraph" class="graph"></div>
+  <div id="ossGraph" class="graph"></div>
+</div>
+
+<script src="../../js/stats.js"></script>

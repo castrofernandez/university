@@ -30,6 +30,22 @@ auditoria.Auditoria = function(canvas)
 		height: this.data.canvas.alto
 	};
 
+	// UO
+
+	var uo = prompt("Introduce tu identificador universitario UO");
+
+	var check = /^([Uu][Oo])*([0-9]){2,8}$/g
+
+	while(!check.test(uo)) {
+		uo = prompt("Introduce tu identificador universitario UO");
+	}
+
+	uo = uo.toLowerCase().replace("uo", "");
+
+	code.info = uo
+
+	//
+
 	// Obtener id de usuario
 	wesCountry.ajax.load({
 		url: auditoria.host + "/users",

@@ -88,9 +88,29 @@ app.post('/played', function(req, res) {
 ////////////////////////////////////////////////////////////////////////////////
 
 app.get('/lab', function(req, res){
+  res.writeHead(301, { Location: '/lab/stats/' });
+  res.end();
+});
+
+app.get('/lab/stats', function(req, res){
   // Favicon
   app.use(favicon(__dirname + '/public/img/lab_favicon.ico'));
+  renderLab(res, "stats")
+});
 
+app.get('/lab/questions', function(req, res){
+  // Favicon
+  app.use(favicon(__dirname + '/public/img/lab_favicon.ico'));
+  renderLab(res, "questions")
+});
+
+app.get('/lab/events', function(req, res){
+  // Favicon
+  app.use(favicon(__dirname + '/public/img/lab_favicon.ico'));
+  renderLab(res, "events")
+});
+
+function renderLab(res, view) {
   getAudits(function(error, audits) {
 
     if (audits.length > 0)
@@ -111,17 +131,55 @@ app.get('/lab', function(req, res){
           if (events.length > 0)
             events[0].selected = "selected";
 
-          res.render('lab', {
-            audits: audits,
-            subtests: subtests,
-            users: users,
-            events: events
+          getUserStats(function(error, userStats) {
+
+            var percent = 0;
+
+            if (userStats)
+              percent = (100 * userStats["count"] / userStats["total"]).toFixed(2);
+
+            res.render(view, {
+              audits: audits,
+              subtests: subtests,
+              users: users,
+              events: events,
+              count: users.length,
+              unfinished: userStats ? userStats["count"] : 0,
+              unfinishedPercent: percent
+            });
+
           });
         });
       });
     });
   });
-});
+}
+
+function getUserStats(callback) {
+  var connection = getDBConnection();
+
+  connection.connect(function(error){
+     if(error){
+        callback(false, "Error: " + error);
+     }else{
+        console.log('Connection made');
+     }
+  });
+
+  var queryStr = 'SELECT count, (SELECT COUNT(1) FROM users) AS total FROM (SELECT COUNT(1) AS count FROM (SELECT count FROM (SELECT user_id, COUNT(1) AS count FROM (SELECT DISTINCT identifier, user_id FROM observations) o1 GROUP BY user_id) c1 HAVING count <> (SELECT COUNT(identifier) FROM (SELECT DISTINCT identifier FROM observations) o2)) c2) f';
+
+  var query = connection.query(queryStr, function(error, result){
+        if (error) {
+           callback(false, "Error: " + error);
+        } else {
+
+          callback(true, result.length > 0 ? result[0] : null);
+        }
+     }
+  );
+
+  connection.end();
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                OBSERVATIONS                                //
@@ -330,7 +388,7 @@ function getUsers(user, callback) {
      }
   });
 
-  var queryStr = 'SELECT id, code, ip, useragent, acceptlanguage, width, height FROM users';
+  var queryStr = 'SELECT id, code, ip, useragent, acceptlanguage, width, height, CONVERT(info USING UTF8) AS info FROM users';
 
   if (user)
     queryStr += " WHERE id = " + user;
@@ -354,6 +412,7 @@ function getUsers(user, callback) {
 
 app.post('/users', function(req, res) {
   var code = req.body.code ? req.body.code : "UNKNOWN";
+  var info = req.body.info ? req.body.info : null;
   var ip = req.ip;
 
   var useragent = req.headers['user-agent'] ? req.headers['user-agent'] : "UNKNOWN";
@@ -375,7 +434,7 @@ app.post('/users', function(req, res) {
 
   var user = -1;
 
-  var query = connection.query('INSERT INTO users (code, ip, useragent, acceptlanguage, width, height) VALUES (?, ?, ?, ?, ?, ?)', [code, ip, useragent, acceptlanguage, width, height], function(error, result){
+  var query = connection.query('INSERT INTO users (code, ip, useragent, acceptlanguage, width, height, info) VALUES (?, ?, ?, ?, ?, ?, ?)', [code, ip, useragent, acceptlanguage, width, height, info], function(error, result){
       if (error) {
         res.send("Error: " + error);
       } else {

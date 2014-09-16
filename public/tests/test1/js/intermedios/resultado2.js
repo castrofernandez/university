@@ -20,7 +20,7 @@ circo.intermedios.Resultado2 = function(canvas)
 	var cualEsTuEdad = null;
 	var acertado = null;
 
-	var edadOriginal = aleatorio(15, 55);
+	var edadOriginal = aleatorio(18, 21);
 
 	var resultado = {
 		edad: edadOriginal,

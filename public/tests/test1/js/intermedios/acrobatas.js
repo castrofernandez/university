@@ -37,40 +37,11 @@ circo.intermedios.Acrobatas = function(canvas)
 
 	var estado = estados.JUGANDO;
 
+	var auditoria = null;
+
 	this.iniciar = function(partida)
-	{/*
-		canvas.onmousedown = function(event)
-		{
-			if (estado != estados.JUGANDO)
-				return;
-
-			var x = event.offsetX?(event.offsetX):event.pageX - canvas.offsetLeft;
-		    var y = event.offsetY?(event.offsetY):event.pageY - canvas.offsetTop;
-
-		    tablon.mousedown(x, y);
-		}
-
-		canvas.onmouseup = function(event)
-		{
-			if (estado != estados.JUGANDO)
-				return;
-
-			var x = event.offsetX?(event.offsetX):event.pageX - canvas.offsetLeft;
-		    var y = event.offsetY?(event.offsetY):event.pageY - canvas.offsetTop;
-
-		    tablon.mouseup(x, y);
-		}
-
-		canvas.onmousemove = function(event)
-		{
-			if (estado != estados.JUGANDO)
-				return;
-
-			var x = event.offsetX?(event.offsetX):event.pageX - canvas.offsetLeft;
-		    var y = event.offsetY?(event.offsetY):event.pageY - canvas.offsetTop;
-
-		    tablon.mousemove(x, y);
-		}*/
+	{
+		auditoria = partida.auditoriaPrueba;
 
 		// Fondo
 		partida.crearElemento(0, 0, lienzo.ancho, lienzo.alto, { dibujar: dibujarFondo, identificador: "fondo" });
@@ -158,8 +129,15 @@ circo.intermedios.Acrobatas = function(canvas)
 		contexto.fillStyle = "#694806";
 		contexto.font = "14px Verdana";
 		contexto.textAlign = 'center';
-		contexto.fillText(idioma.texto("acrobata1"), ancho / 2, 20);
-		contexto.fillText(idioma.texto("acrobata2"), ancho / 2, 35);
+
+		if (estado == estados.JUGANDO) {
+			contexto.fillText(idioma.texto("acrobata1"), ancho / 2, 20);
+			contexto.fillText(idioma.texto("acrobata2"), ancho / 2, 35);
+		}
+		else {
+			contexto.font = "24px Verdana";
+			contexto.fillText(idioma.texto("bravo"), ancho / 2, 35);
+		}
 
 		// Triángulos
 
@@ -186,13 +164,12 @@ circo.intermedios.Acrobatas = function(canvas)
 		var angulo = 0;
 
 		var punto_contacto = null;
-		//var moviendose = false;
 
-		var umbral_colocacion = 1;
+		var umbral_colocacion = 20;
 
 		this.dibujar = function(contexto, ancho, alto, graficos, idioma, partidaAnterior)
 		{
-			angulo = this.rotacion * (180 / Math.PI) -45;
+			angulo = estado == estados.JUGANDO ? this.rotacion * (180 / Math.PI) -45 : -45;
 
 			var puntos = obtener_vertices(angulo);
 
@@ -234,16 +211,13 @@ circo.intermedios.Acrobatas = function(canvas)
 			if (esta_punto_en_poligono(vertices_poligono, punto))
 			{
 				punto_contacto = { x : x, y : y };
-				//moviendose = true;
 			}
 		}
 
 		this.mouseup = function(x, y)
 		{
-			//moviendose = false;
-
-			if (cuadrado_colocado())
-				estado = estados.FINALIZANDO;
+			//if (cuadrado_colocado())
+			//	estado = estados.FINALIZANDO;
 		}
 
 		this.move = function() {
@@ -251,46 +225,11 @@ circo.intermedios.Acrobatas = function(canvas)
 
 			if (finalizado) {
 				estado = estados.FINALIZANDO;
-
-				//moviendose = false;
 			}
 
 			return finalizado;
 		}
-	/*
-		this.mousemove = function(x, y)
-		{
-			if (!moviendose)
-				return;
 
-			var vertices_poligono = obtener_vertices(angulo);
-			var punto = { x : x, y : y };
-
-			if (esta_punto_en_poligono(vertices_poligono, punto))
-			{
-				var p1 = punto_contacto;
-				var p2 = {x: x, y: y};
-
-				// Calculamos el ángulos entre las 2 rectas
-				// 1º recta: centro - punto 1
-				// 2º recta: centro - punto 2
-				var angulo_1 = Math.atan2(centro_y - p1.y, centro_x - p1.x);
-				var angulo_2 = Math.atan2(centro_y - p2.y, centro_x - p2.x);
-
-		        var radianes = angulo_1 - angulo_2;
-		        var grados = radianes * 180 / Math.PI;
-
-		        // Incrementamos el ángulo entre los 2 puntos
-				angulo -= grados;
-				punto_contacto = p2; // p2 es el nuevo punto de contacto, para que no sea acumulativo
-
-				if (cuadrado_colocado())
-					estado = estados.FINALIZANDO;
-			}
-			else
-				moviendose = false;
-		}
-	*/
 		function cuadrado_colocado()
 		{
 			var _angulo = Math.abs(angulo);
@@ -303,8 +242,11 @@ circo.intermedios.Acrobatas = function(canvas)
 						arista_horizontal_o_vertical(vertices[2], vertices[3]) &&
 						arista_horizontal_o_vertical(vertices[3], vertices[0]);
 
-				if (resultado)
+				if (resultado) {
+					registrarDato();
+
 					return true;
+				}
 			}
 
 			return false;
@@ -421,5 +363,16 @@ circo.intermedios.Acrobatas = function(canvas)
 
 			return this;
 		}
+	}
+
+	function registrarDato(element) {
+		var observacion = {
+			element: "TABLON",
+			event: "check",
+			value: "HIT",
+			instant: auditoria.instante()
+		};
+
+		auditoria.data.observations.push(observacion);
 	}
 }

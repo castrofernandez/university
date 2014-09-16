@@ -29,9 +29,14 @@ main {
 header.lab-header {
   padding-bottom: 1em;
   border-bottom: 0.3em solid #ccc;
-
+  overflow: auto;
   max-width: 70em;
   margin: 1em auto;
+}
+
+header.lab-header section.logo {
+  float: left;
+  width: 15em;
 }
 
 img.lab-logo {
@@ -59,6 +64,27 @@ h2 {
 h3 {
   color: #aaa;
   margin-bottom: 0.2em;
+}
+
+/* NAV */
+
+header nav {
+  float: left;
+}
+
+header nav, header nav ul {
+  display: inline-block;
+}
+
+header nav ul {
+  padding: 0.5em 0 0 0;
+  overflow: auto;
+  list-style: none;
+}
+
+header nav li {
+  float: left;
+  margin-right: 1.5em;
 }
 
 /* FORM */
@@ -179,4 +205,11 @@ div.data-points svg {
 .data button:active {
   box-shadow: inset -0.1em -0.1em 0.2em #777;
   background-color: #999;
+}
+
+/* STATS */
+
+table.stats {
+  width: 100%;
+  margin-bottom: 1em;
 }

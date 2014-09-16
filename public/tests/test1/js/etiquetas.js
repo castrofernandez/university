@@ -28,7 +28,7 @@ internacionalizacion.etiquetas = {
 		pruebaFinalizada: "Prueba finalizada",
 		girar_dispositivo: "Orienta el dispositivo en posición vertical.",
 		escribe: "Escribe aquí",
-		tu_edad_mental: "Tu edad mental es",
+		tu_edad_mental: "Tu edad es",
 		pulsa_finalizar: "Pulsa para finalizar",
 		gracias: "Gracias por participar",
 		comparte: "Comparte esto",
@@ -45,7 +45,8 @@ internacionalizacion.etiquetas = {
 		diestro: "DIESTRO",
 		zurdo: "ZURDO",
 		cual_es_tu_edad: "¿Cuál es tu edad?",
-		acertado: "¿He acertado?"
+		acertado: "¿He acertado?",
+		bravo: "¡BRAVO!"
 	},
 
 	en : {
@@ -94,6 +95,7 @@ internacionalizacion.etiquetas = {
 		diestro: "right-handed",
 		zurdo: "left-handed",
 		cual_es_tu_edad: "How old are you?",
-		acertado: "Am I right?"
+		acertado: "Am I right?",
+		bravo: "BRAVO!"
 	}
 };

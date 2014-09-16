@@ -188,6 +188,9 @@ circo.intermedios.Resultado4 = function(canvas)
 
 	function aleatorio(min, max)
 	{
-    	return Math.floor(Math.random() * (max - min + 1) + min);
-    }
+		var min = 1;
+		var max = 10;
+		var a = Math.floor(Math.random() * (max - min + 1) + min);
+    return a == 1 ? 1 : 0;
+  }
 }
