@@ -50,3 +50,45 @@ var ossLoader = wesCountry.loader.renderChart({
     return options;
   },
 });
+
+/* Unfinished tests */
+
+var userStatsLoader = wesCountry.loader.renderChart({
+	url: "/users/stats",
+	chartType: "pie",
+	container: "#unfinished",
+	title: "",
+	xAxis: {
+		values: [""]
+	},
+	legend: {
+		show: false
+	},
+	barMargin: 0,
+	margins: [0, 0, 0, 0],
+	valueOnItem: {
+		show: false
+	},
+	serieColours: ["#ccc", "#E3493B"],
+	getChartData: function(options, data) {
+		var data = JSON.parse(data);
+
+		var unfinished = data["unfinished"] ? parseInt(data["unfinished"]) : 0;
+		var total = data["count"] ? parseInt(data["count"]) : 0;
+
+		var series = [
+			{
+				name: "finished",
+				values: [ total - unfinished ]
+			},
+			{
+				name: "unfinished",
+				values: [ unfinished ]
+			}
+		];
+
+		options.series = series;
+
+		return options;
+	},
+});

@@ -135,8 +135,8 @@ function renderLab(res, view) {
 
             var percent = 0;
 
-            if (userStats)
-              percent = (100 * userStats["count"] / userStats["total"]).toFixed(2);
+            if (userStats && userStats["unfinished"])
+              percent = users.length > 0 ? (100 * userStats["unfinished"] / users.length).toFixed(2) : 0;
 
             res.render(view, {
               audits: audits,
@@ -144,7 +144,7 @@ function renderLab(res, view) {
               users: users,
               events: events,
               count: users.length,
-              unfinished: userStats ? userStats["count"] : 0,
+              unfinished: userStats["unfinished"],
               unfinishedPercent: percent
             });
 
@@ -153,32 +153,6 @@ function renderLab(res, view) {
       });
     });
   });
-}
-
-function getUserStats(callback) {
-  var connection = getDBConnection();
-
-  connection.connect(function(error){
-     if(error){
-        callback(false, "Error: " + error);
-     }else{
-        console.log('Connection made');
-     }
-  });
-
-  var queryStr = 'SELECT count, (SELECT COUNT(1) FROM users) AS total FROM (SELECT COUNT(1) AS count FROM (SELECT count FROM (SELECT user_id, COUNT(1) AS count FROM (SELECT DISTINCT identifier, user_id FROM observations) o1 GROUP BY user_id) c1 HAVING count <> (SELECT COUNT(identifier) FROM (SELECT DISTINCT identifier FROM observations) o2)) c2) f';
-
-  var query = connection.query(queryStr, function(error, result){
-        if (error) {
-           callback(false, "Error: " + error);
-        } else {
-
-          callback(true, result.length > 0 ? result[0] : null);
-        }
-     }
-  );
-
-  connection.end();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -364,6 +338,15 @@ app.get('/users', function(req, res) {
   });
 });
 
+app.get('/users/stats', function(req, res) {
+  getUserStats(function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  });
+});
+
 app.get('/users/:user', function(req, res) {
   var user = req.params.user ? req.params.user : null;
 
@@ -376,6 +359,37 @@ app.get('/users/:user', function(req, res) {
     }
   });
 });
+
+function getUserStats(callback) {
+  var connection = getDBConnection();
+
+  connection.connect(function(error){
+     if(error){
+        callback(false, "Error: " + error);
+     }else{
+        console.log('Connection made');
+     }
+  });
+
+  var queryStr = 'SELECT count, (SELECT COUNT(1) FROM users) AS total FROM (SELECT COUNT(1) AS count FROM (SELECT count FROM (SELECT user_id, COUNT(1) AS count FROM (SELECT DISTINCT identifier, user_id FROM observations) o1 GROUP BY user_id) c1 HAVING count <> (SELECT COUNT(identifier) FROM (SELECT DISTINCT identifier FROM observations) o2)) c2) f';
+
+  var query = connection.query(queryStr, function(error, result){
+        if (error) {
+           callback(false, "Error: " + error);
+        } else {
+
+          var stats = {
+            "unfinished": result.length > 0 ? result[0]["count"] : 0,
+            "count": result.length > 0 ? result[0]["total"] : 0
+          };
+
+          callback(true, stats);
+        }
+     }
+  );
+
+  connection.end();
+}
 
 function getUsers(user, callback) {
   var connection = getDBConnection();

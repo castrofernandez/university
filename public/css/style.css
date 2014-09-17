@@ -123,7 +123,20 @@ div.graph {
   overflow: hidden;
 }
 
-div.graph .wesCountry-panel {
+div.small-graph {
+  width: 2.5em;
+  height: 2.5em;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  margin-left: 1em;
+}
+
+div.small-graph .signature {
+  display: none;
+}
+
+div.graph .wesCountry-panel, div.small-graph .wesCountry-panel {
   overflow: hidden;
 }
 
@@ -212,4 +225,5 @@ div.data-points svg {
 table.stats {
   width: 100%;
   margin-bottom: 1em;
+  border-bottom: 0.1em solid #ccc;
 }
