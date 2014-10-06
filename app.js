@@ -853,10 +853,21 @@ app.get('/questions', function(req, res) {
       res.send(data)
     else
       res.send(JSON.stringify(data));
-  });
+  }, null);
 });
 
-function getQuestions(callback) {
+app.get('/questions/:user', function(req, res) {
+  var user = req.params.user ? req.params.user : null;
+
+  getQuestions(function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  }, user);
+});
+
+function getQuestions(callback, user) {
   var connection = getDBConnection();
 
   connection.connect(function(error){
@@ -867,7 +878,17 @@ function getQuestions(callback) {
      }
   });
 
-  var query = connection.query('SELECT element, CONVERT(value USING utf8) AS value, COUNT(1) AS count FROM observations WHERE type = "answer" GROUP BY element, CONVERT(value USING utf8) ORDER BY element', function(error, result){
+  var queryStr = 'SELECT element, CONVERT(value USING utf8) AS value, COUNT(1) AS count FROM observations ';
+
+  queryStr += 'WHERE type = "answer" ';
+
+  if (user)
+    queryStr += 'AND user_id = ' + user;
+
+  queryStr += ' GROUP BY element, CONVERT(value USING utf8) ORDER BY element';
+
+
+  var query = connection.query(queryStr, function(error, result){
         if (error) {
            callback(false, "Error: " + error);
         } else {

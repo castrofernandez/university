@@ -68,9 +68,39 @@ function loadUserData() {
   selectionLoader.load({
     url: "/observations/" + audits + "/" + test + "/" + user + "/" + events
   });
+
+	wesCountry.ajax.load({
+		url: "/questions/" + user,
+		callback: getUserQuestions
+	})
 }
 
 loadUserData();
+
+/* User questions */
+
+function getUserQuestions(data) {
+	data = JSON.parse(data);
+
+	var table = document.querySelector("table#questions tbody");
+
+	table.innerHTML = "";
+
+	for (var question in data) {console.log(question);console.log(data[question])
+		var answer = data[question] && data[question].length && data[question].length > 0 ? data[question][0].name : "-";
+
+		var tr = document.createElement("tr");
+		table.appendChild(tr);
+
+		var td = document.createElement("td");
+		td.innerHTML = question;
+		tr.appendChild(td);
+
+		var td = document.createElement("td");
+		td.innerHTML = answer;
+		tr.appendChild(td);
+	}
+}
 
 /* Data table */
 

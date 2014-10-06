@@ -64,6 +64,7 @@ h2 {
 h3 {
   color: #aaa;
   margin-bottom: 0.2em;
+  margin-top: 1em;
 }
 
 /* NAV */
@@ -172,7 +173,7 @@ div.graph .wesCountry-panel, div.small-graph .wesCountry-panel {
 /* DATA */
 
 div.data {
-  margin-top: 1em;
+  margin-top: 2em;
   text-align: center;
 }
 
