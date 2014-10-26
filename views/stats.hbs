@@ -1,15 +1,25 @@
 {{! nothing here }}
 
+<form class="filter">
+  <label for="audits">Filter results by audit</label>
+  <select id="audit_select" name="audits">
+    <option></option>
+    {{#each audits}}
+        <option value="{{id}}">{{code}}</option>
+    {{/each}}
+  </select>
+</form>
+
 <table class="stats">
   <thead></thead>
   <tbody>
     <tr>
       <td>Number of users</td>
-      <td>{{count}}</td>
+      <td><span id="userCount">{{count}}</span></td>
     </tr>
     <tr>
       <td>Number of unfinished tests</td>
-      <td>{{unfinished}} - ({{unfinishedPercent}}%) <div id="unfinished" class="small-graph"></div></td>
+      <td><span id="userUnfinished">{{unfinished}}</span> - (<span id="userUnfinishedPercent">{{unfinishedPercent}}</span>%) <div id="unfinished" class="small-graph"></div></td>
     </tr>
   </tbody>
 </table>

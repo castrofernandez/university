@@ -1,0 +1,10 @@
+{
+  "host": "http://localhost:3000",
+  "url_all_observations": "{0}/observations",
+  "url_one_observation": "{0}/observations/{1}/{2}/{3}/{4}",
+  "url_observations_ids": "{0}/observations_ids",
+  "url_observations_by_id": "{0}/observations_by_id/{1}",
+  "url_users": "{0}/users",
+  "url_audits": "{0}/audits",
+  "event": "answer"
+}

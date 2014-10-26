@@ -34,6 +34,20 @@ app.use(favicon(__dirname + '/public/img/favicon.ico'));
 // Database
 var mysql = require('mysql');
 
+// Files
+var fs = require('fs');
+
+// String format
+String.format = function(pattern)
+{
+	for (var i = 1; i < arguments.length; i++)
+	{
+		var regex = new RegExp('\\{' + (i - 1) + '\\}', 'g');
+		pattern = pattern.replace(regex, arguments[i]);
+	}
+	return pattern;
+};
+
 function getDBConnection() {
   return mysql.createConnection({
      host: 'localhost',
@@ -131,7 +145,7 @@ function renderLab(res, view) {
           if (events.length > 0)
             events[0].selected = "selected";
 
-          getUserStats(function(error, userStats) {
+          getUserStats(null, function(error, userStats) {
 
             var percent = 0;
 
@@ -160,7 +174,27 @@ function renderLab(res, view) {
 ////////////////////////////////////////////////////////////////////////////////
 
 app.get('/observations', function(req, res) {
-  getObservations(null, null, null, null, function(success, data) {
+  getObservations(null, null, null, null, true, function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  });
+});
+
+app.get('/observations_ids', function(req, res) {
+  getObservations(null, null, null, null, false, function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  });
+});
+
+app.get('/observations_by_id/:id', function(req, res) {
+  var id = req.params.id ? req.params.id : null;
+
+  getObservationById(id, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -171,7 +205,7 @@ app.get('/observations', function(req, res) {
 app.get('/observations/:audits', function(req, res) {
   var audits = req.params.audits ? req.params.audits : null;
 
-  getObservations(audits, null, null, null, function(success, data) {
+  getObservations(audits, null, null, null, true, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -183,7 +217,7 @@ app.get('/observations/:audits/:test', function(req, res) {
   var audits = req.params.audits ? req.params.audits : null;
   var test = req.params.test ? req.params.test : null;
 
-  getObservations(audits, test, null, null, function(success, data) {
+  getObservations(audits, test, null, null, true, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -196,7 +230,7 @@ app.get('/observations/:audits/:test/:user', function(req, res) {
   var test = req.params.test ? req.params.test : null;
   var user = req.params.user ? req.params.user : null;
 
-  getObservations(audits, test, user, null, function(success, data) {
+  getObservations(audits, test, user, null, true, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -210,7 +244,7 @@ app.get('/observations/:audits/:test/:user/:events', function(req, res) {
   var user = req.params.user ? req.params.user : null;
   var events = req.params.events ? req.params.events : null;
 
-  getObservations(audits, test, user, events, function(success, data) {
+  getObservations(audits, test, user, events, true, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -218,7 +252,7 @@ app.get('/observations/:audits/:test/:user/:events', function(req, res) {
   });
 });
 
-function getObservations(audits, test, user, events, callback) {
+function getObservations(audits, test, user, events, allFields, callback) {
   var connection = getDBConnection();
 
   connection.connect(function(error){
@@ -229,7 +263,7 @@ function getObservations(audits, test, user, events, callback) {
      }
   });
 
-  var queryStr = 'SELECT id, identifier, element, date, type, CONVERT(value USING utf8) AS value, width, height, x, y, sx, sy, instant, user_id, audit_id FROM observations';
+  var queryStr = !allFields ? 'SELECT id FROM observations' : 'SELECT id, identifier, element, date, type, CONVERT(value USING utf8) AS value, width, height, x, y, sx, sy, instant, user_id, audit_id FROM observations';
   var where = " WHERE";
 
   if (audits)
@@ -256,11 +290,43 @@ function getObservations(audits, test, user, events, callback) {
            callback(false, "Error: " + error);
         } else {
           var results = [];
+          var length = result.length;
 
-          for (var i = 0; i < result.length; i++)
-            results.push(result[i]);
+          if (allFields)
+            for (var i = 0; i < length; i++)
+              results.push(result[i]);
+          else
+            for (var i = 0; i < length; i++)
+              results.push(result[i].id);
 
           callback(true, results);
+        }
+     }
+  );
+
+  connection.end();
+}
+
+function getObservationById(id, callback) {
+  var connection = getDBConnection();
+
+  connection.connect(function(error){
+     if(error){
+        callback(false, "Error: " + error);
+     }else{
+        console.log('Connection made');
+     }
+  });
+
+  var queryStr = 'SELECT id, identifier, element, date, type, CONVERT(value USING utf8) AS value, width, height, x, y, sx, sy, instant, user_id, audit_id FROM observations';
+  queryStr += " WHERE id = " + id;
+
+  var query = connection.query(queryStr, function(error, result){
+        if (error) {
+           callback(false, "Error: " + error);
+        } else {
+
+          callback(true, result);
         }
      }
   );
@@ -339,7 +405,18 @@ app.get('/users', function(req, res) {
 });
 
 app.get('/users/stats', function(req, res) {
-  getUserStats(function(success, data) {
+  getUserStats(null, function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  });
+});
+
+app.get('/users/stats/:audit', function(req, res) {
+  var audit = req.params.audit ? req.params.audit : null;
+
+  getUserStats(audit, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -360,27 +437,31 @@ app.get('/users/:user', function(req, res) {
   });
 });
 
-function getUserStats(callback) {
+function getUserStats(audit, callback) {
   var connection = getDBConnection();
 
   connection.connect(function(error){
-     if(error){
+     if (error){
         callback(false, "Error: " + error);
-     }else{
+     } else{
         console.log('Connection made');
      }
   });
 
-  var queryStr = 'SELECT count, (SELECT COUNT(1) FROM users) AS total FROM (SELECT COUNT(1) AS count FROM (SELECT count FROM (SELECT user_id, COUNT(1) AS count FROM (SELECT DISTINCT identifier, user_id FROM observations) o1 GROUP BY user_id) c1 HAVING count <> (SELECT COUNT(identifier) FROM (SELECT DISTINCT identifier FROM observations) o2)) c2) f';
+  var filter = audit ? String.format("audit_id = {0}", audit) : "1=1"
+  var queryStr = String.format(queries.finished, filter)
 
   var query = connection.query(queryStr, function(error, result){
         if (error) {
            callback(false, "Error: " + error);
         } else {
 
+          var count = result.length > 0 ? result[0]["total"] : 0;
+          var finished = result.length > 0 ? result[0]["count"] : 0;
+
           var stats = {
-            "unfinished": result.length > 0 ? result[0]["count"] : 0,
-            "count": result.length > 0 ? result[0]["total"] : 0
+            "unfinished": count - finished,
+            "count": count
           };
 
           callback(true, stats);
@@ -667,7 +748,7 @@ app.get('/oss', function(req, res) {
 });
 
 app.get('/oss/seriesByBrowser', function(req, res) {
-  getOssSeriesByBrowser(function(success, data) {
+  getOssSeriesByBrowser(null, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -675,7 +756,18 @@ app.get('/oss/seriesByBrowser', function(req, res) {
   });
 });
 
-function getOssSeriesByBrowser(callback) {
+app.get('/oss/seriesByBrowser/:audit', function(req, res) {
+  var audit = req.params.audit ? req.params.audit : null;
+
+  getOssSeriesByBrowser(audit, function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  });
+});
+
+function getOssSeriesByBrowser(audit, callback) {
   var connection = getDBConnection();
 
   connection.connect(function(error){
@@ -686,7 +778,10 @@ function getOssSeriesByBrowser(callback) {
      }
   });
 
-  var query = connection.query('SELECT useragent, COUNT(1) AS count FROM users GROUP BY useragent', function(error, result){
+  var filter = audit ? String.format("audit_id = {0}", audit) : null;
+  var queryStr = !audit ? queries.seriesByBrowser : String.format(queries.seriesByBrowserAndAudit, filter);
+
+  var query = connection.query(queryStr, function(error, result){
         if (error) {
            callback(false, "Error: " + error);
         } else {
@@ -724,7 +819,7 @@ function getOssSeriesByBrowser(callback) {
 }
 
 app.get('/oss/seriesByOS', function(req, res) {
-  getOssSeriesByOS(function(success, data) {
+  getOssSeriesByOS(null, function(success, data) {
     if (!success)
       res.send(data)
     else
@@ -732,7 +827,18 @@ app.get('/oss/seriesByOS', function(req, res) {
   });
 });
 
-function getOssSeriesByOS(callback) {
+app.get('/oss/seriesByOS/:audit', function(req, res) {
+  var audit = req.params.audit ? req.params.audit : null;
+
+  getOssSeriesByOS(audit, function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  });
+});
+
+function getOssSeriesByOS(audit, callback) {
   var connection = getDBConnection();
 
   connection.connect(function(error){
@@ -743,7 +849,10 @@ function getOssSeriesByOS(callback) {
      }
   });
 
-  var query = connection.query('SELECT useragent, COUNT(1) AS count FROM users GROUP BY useragent', function(error, result){
+  var filter = audit ? String.format("audit_id = {0}", audit) : null;
+  var queryStr = !audit ? queries.seriesByOS : String.format(queries.seriesByOSAndAudit, filter);
+
+  var query = connection.query(queryStr, function(error, result){
         if (error) {
            callback(false, "Error: " + error);
         } else {
@@ -848,26 +957,41 @@ function getOS(useragent) {
 ////////////////////////////////////////////////////////////////////////////////
 
 app.get('/questions', function(req, res) {
-  getQuestions(function(success, data) {
+  var queryStr = String.format(queries.questions, "1=1");
+
+  getQuestions(queryStr, function(success, data) {
     if (!success)
       res.send(data)
     else
       res.send(JSON.stringify(data));
-  }, null);
+  });
 });
 
 app.get('/questions/:user', function(req, res) {
   var user = req.params.user ? req.params.user : null;
+  var queryStr = String.format(queries.questions, String.format("user_id = {0}", user));
 
-  getQuestions(function(success, data) {
+  getQuestions(queryStr, function(success, data) {
     if (!success)
       res.send(data)
     else
       res.send(JSON.stringify(data));
-  }, user);
+  });
 });
 
-function getQuestions(callback, user) {
+app.get('/questionsByAudit/:audit', function(req, res) {
+  var audit = req.params.audit ? req.params.audit : null;
+  var queryStr = String.format(queries.questions, String.format("audit_id = {0}", audit));
+
+  getQuestions(queryStr, function(success, data) {
+    if (!success)
+      res.send(data)
+    else
+      res.send(JSON.stringify(data));
+  });
+});
+
+function getQuestions(queryStr, callback) {
   var connection = getDBConnection();
 
   connection.connect(function(error){
@@ -877,16 +1001,6 @@ function getQuestions(callback, user) {
         console.log('Connection made');
      }
   });
-
-  var queryStr = 'SELECT element, CONVERT(value USING utf8) AS value, COUNT(1) AS count FROM observations ';
-
-  queryStr += 'WHERE type = "answer" ';
-
-  if (user)
-    queryStr += 'AND user_id = ' + user;
-
-  queryStr += ' GROUP BY element, CONVERT(value USING utf8) ORDER BY element';
-
 
   var query = connection.query(queryStr, function(error, result){
         if (error) {
@@ -998,4 +1112,14 @@ function sortAgeValues(data) {
 //                              SERVER START
 ////////////////////////////////////////////////////////////////////////////////
 
-var server = app.listen(3000);
+var server = null;
+var queries = {};
+
+fs.readFile('queries.json', function (err, data) {
+  if (err) {
+    return console.log(err);
+  }
+
+  queries = JSON.parse(data);
+  server = app.listen(3000);
+});

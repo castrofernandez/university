@@ -1,0 +1,8 @@
+{
+  "finished": "SELECT COUNT(1) AS count, (SELECT COUNT(1) FROM (SELECT DISTINCT user_id FROM observations WHERE {0})h) AS total FROM ( SELECT DISTINCT user_id FROM observations WHERE element = 'LATERALITY_VALUE' AND {0}) h",
+  "seriesByBrowser": "SELECT useragent, COUNT(1) AS count FROM users GROUP BY useragent",
+  "seriesByBrowserAndAudit": "SELECT useragent, COUNT(1) AS count FROM users WHERE id in (SELECT DISTINCT user_id FROM observations WHERE {0}) GROUP BY useragent",
+  "seriesByOS": "SELECT useragent, COUNT(1) AS count FROM users GROUP BY useragent",
+  "seriesByOSAndAudit": "SELECT useragent, COUNT(1) AS count FROM users WHERE id in (SELECT DISTINCT user_id FROM observations WHERE {0}) GROUP BY useragent",
+  "questions": "SELECT element, CONVERT(value USING utf8) AS value, COUNT(1) AS count FROM observations WHERE type = 'answer' AND {0} GROUP BY element, CONVERT(value USING utf8) ORDER BY element"
+}

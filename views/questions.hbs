@@ -1,5 +1,15 @@
 {{! nothing here }}
 
+<form class="filter">
+  <label for="audits">Filter results by audit</label>
+  <select id="audit_select" name="audits">
+    <option></option>
+    {{#each audits}}
+        <option value="{{id}}">{{code}}</option>
+    {{/each}}
+  </select>
+</form>
+
 <h3><i class="fa fa-question"></i> User questions</h3>
 <div class="question_graphs"></div>
 

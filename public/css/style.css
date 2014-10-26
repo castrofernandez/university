@@ -120,7 +120,7 @@ select[multiple] {
 /* GRAPH */
 
 div.graph {
-  height: 12em;
+  height: 16em;
   overflow: hidden;
 }
 
@@ -227,4 +227,10 @@ table.stats {
   width: 100%;
   margin-bottom: 1em;
   border-bottom: 0.1em solid #ccc;
+}
+
+/* FILTER */
+
+form.filter {
+  text-align: right;
 }
