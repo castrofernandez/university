@@ -211,6 +211,8 @@ def _listFullUsers(distinct):
 
         listUserStatsByAnswer(code, questions, distinct)
 
+        print
+
 def listUserStatsByAnswer(audit, questions, distinct):
     for question in questions:
         print "\t" + question
