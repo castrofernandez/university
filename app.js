@@ -100,7 +100,7 @@ app.post('/played', function(req, res) {
 ////////////////////////////////////////////////////////////////////////////////
 //                                    LAB                                     //
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 app.get('/lab', function(req, res){
   res.writeHead(301, { Location: '/lab/stats/' });
   res.end();
@@ -168,11 +168,11 @@ function renderLab(res, view) {
     });
   });
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////////////
 //                                OBSERVATIONS                                //
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 app.get('/observations', function(req, res) {
   getObservations(null, null, null, null, true, function(success, data) {
     if (!success)
@@ -181,7 +181,8 @@ app.get('/observations', function(req, res) {
       res.send(JSON.stringify(data));
   });
 });
-
+*/
+/*
 app.get('/observations_ids', function(req, res) {
   getObservations(null, null, null, null, false, function(success, data) {
     if (!success)
@@ -333,7 +334,7 @@ function getObservationById(id, callback) {
 
   connection.end();
 }
-
+*/
 app.post('/observations', function(req, res) {
   var data = req.body.data ? req.body.data : {};
   var identifier = data.identifier ? data.identifier : "UNKNOWN";
@@ -394,7 +395,7 @@ app.post('/observations', function(req, res) {
 ////////////////////////////////////////////////////////////////////////////////
 //                                   USERS                                    //
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 app.get('/users', function(req, res) {
   getUsers(null, function(success, data) {
     if (!success)
@@ -504,7 +505,7 @@ function getUsers(user, callback) {
 
   connection.end();
 }
-
+*/
 app.post('/users', function(req, res) {
   var code = req.body.code ? req.body.code : "UNKNOWN";
   var info = req.body.info ? req.body.info : null;
@@ -579,7 +580,7 @@ app.post('/users', function(req, res) {
 ////////////////////////////////////////////////////////////////////////////////
 //                                  AUDITS                                    //
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 app.get('/audits', function(req, res) {
   getAudits(function(success, data) {
     if (!success)
@@ -617,11 +618,11 @@ function getAudits(callback) {
 
   connection.end();
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////////////
 //                                  EVENTS                                    //
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 app.get('/events', function(req, res) {
   getEvents(function(success, data) {
     if (!success)
@@ -661,11 +662,11 @@ function getEvents(callback) {
 
   connection.end();
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////////////
 //                                SUBTESTS                                    //
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 app.get('/subtests', function(req, res) {
   getSubtests(function(success, data) {
     if (!success)
@@ -705,11 +706,11 @@ function getSubtests(callback) {
 
   connection.end();
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////////////
 //                                    OSS                                     //
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 app.get('/oss', function(req, res) {
   var connection = getDBConnection();
 
@@ -951,11 +952,11 @@ function getOS(useragent) {
 
   return "unknown";
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////////////
 //                                 QUESTIONS
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 app.get('/questions', function(req, res) {
   var queryStr = String.format(queries.questions, "1=1");
 
@@ -1107,7 +1108,7 @@ function sortAgeValues(data) {
 
   return processedResults;
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////////////
 //                              SERVER START
 ////////////////////////////////////////////////////////////////////////////////
