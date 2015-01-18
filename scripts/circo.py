@@ -4,7 +4,17 @@ import urllib2
 import os
 import sys
 import time
+import math
 from pymongo import MongoClient
+import pymysql
+
+# Constants
+
+DOWNLOAD_IN_A_ROW = 2000
+PROCESS_IN_A_ROW = 10
+
+MODEL_WIDTH = 600
+MODEL_HEIGHT = 700
 
 # Read settings
 _json_data = open('settings.json')
@@ -16,97 +26,114 @@ _host = _settings["host"]
 mongo_client = MongoClient('localhost', 27017)
 db = mongo_client['circo']
 
+# MySQL
+conn = pymysql.connect(host='juancastro.es', port=3306, user='juancast_circo', passwd='neuronal_org_1', db='juancast_circo')
+cur = conn.cursor()
+
 ################################################################################
 #                                   FUNCTIONS                                  #
 ################################################################################
 
-def downloadFile(path, name):
-    print "Downloading '{0}' into 'data/{1}.json'".format(path, name)
+################################################################################
+#                              DOWNLOAD DATABASE
+################################################################################
 
-    response = urllib2.urlopen(path)
-    text = response.read()
+def download_database(cursor, name):
+    # Min and max MySQL ids
+    cursor.execute("SELECT MIN(id) AS min, MAX(id) AS max FROM %s" % name)
 
-    if not os.path.exists("data"):
-        os.makedirs("data")
+    mysql_min = 0
+    mysql_max = 0
 
-    file_ = open('data/{0}.json'.format(name), 'w')
-    file_.write(text)
-    file_.close()
+    for row in cursor:
+       mysql_min = row[0]
+       mysql_max = row[1]
 
-    return json.loads(text)
+    # Max MongoDB id
+    mongodb_max = db[name].find_one(sort=[("id", -1)])
 
-def loopObservations(observations):
-    for observation in observations:
-        print observation
+    if mongodb_max is None:
+        mongodb_max = 0
 
-def downloadData():
-    # Download audits
-    _url_audits = _settings["url_audits"].format(_host)
-    audits = downloadFile(_url_audits, "audits")
+    minimum = max(mongodb_max, mysql_min)
 
-    # Download users
-    _url_users = _settings["url_users"].format(_host)
-    users = downloadFile(_url_users, "users")
+    database_structure = None
 
-    # Download observations
-    #_url_all_observations = _settings["url_all_observations"].format(_host)
-    #observations = downloadFile(_url_all_observations, "observations")
+    while minimum < mysql_max:
+        maximum = minimum + DOWNLOAD_IN_A_ROW
 
-    # Download observations ids
-    _url_observations_ids = _settings["url_observations_ids"].format(_host)
-    ids = downloadFile(_url_observations_ids, "observation_ids")
+        if maximum > mysql_max:
+            maximum = mysql_max
 
-    # Download observations
-    print "Downloading {0} observations".format(len(ids))
-    _url_observations_by_id = _settings["url_observations_by_id"]
+        print "Downloading '%s' records from %i to %i out of %i" % (name, minimum, maximum, mysql_max)
 
-    observations = []
+        database_structure = download_database_records(cursor, name, database_structure, minimum, maximum)
 
-    count = 0
-    length = float(len(ids))
-    start = time.time()
+        minimum = minimum + DOWNLOAD_IN_A_ROW
 
-    for id in ids:
-        url = _url_observations_by_id.format(_host, id)
-        response = urllib2.urlopen(url)
-        observation = response.read()
+################################################################################
+#                              DOWNLOAD RECORDS
+################################################################################
 
-        observation = json.loads(observation)
-        observations.append(observation[0])
+def download_database_records(cursor, name, structure, minimum, maximum):
+    query = "SELECT * FROM %s WHERE id >= %i AND id <= %i" % (name, minimum, maximum)
+    cursor.execute(query)
 
-        count = count + 1
+    if structure is None:
+        structure = get_database_structure(cursor)
 
-        if count % 1000 == 0:
-            _time = time.time()
-            difference = _time - start
-            time_per_item = difference / count
-            remaind = length - count
-            time_to_finish = round(remaind * time_per_item / 60)
+    for row in cursor:
+        obj = {}
 
-            percent = round(count * 100 / length, 2)
-            print "{0}% Time to finish {1} minutes".format(percent, time_to_finish)
+        for i, value in enumerate(structure):
+            obj[value] = row[i]
 
-    file_ = open('data/observations.json', 'w')
-    file_.write(json.dumps(observations))
-    file_.close()
+        db[name].save(obj)
 
-def storeData():
-    # Audits
-    db.audits.drop()
-    audits = json.load(open('data/audits.json'))
-    db.audits.insert(audits)
+    return structure
 
-    # Users
-    db.users.drop()
-    users = json.load(open('data/users.json'))
-    db.users.insert(users)
+################################################################################
+#                              DATABASE STRUCTURE
+################################################################################
 
-    # Observations
-    db.observations.drop()
-    observations = json.load(open('data/observations.json'))
-    db.observations.insert(observations)
+def get_database_structure(cursor):
+    description = cursor.description
+    structure = []
 
-def decorateUsers():
+    for i in description:
+        structure.append(i[0])
+
+    return structure
+
+################################################################################
+#                              DOWNLOAD ALL DATA
+################################################################################
+
+def download_data():
+    # MySQL
+    conn = pymysql.connect(host='juancastro.es', port=3306, user='juancast_circo', passwd='neuronal_org_1', db='juancast_circo')
+    cursor = conn.cursor()
+
+    download_database(cursor, "users")
+    download_database(cursor, "audits")
+    download_database(cursor, "observations")
+
+    # Close MySQL connection
+    cursor.close()
+    conn.close()
+
+################################################################################
+#                              DECORATE USERS
+################################################################################
+
+def clear_user_results():
+    db.users.update({}, { "$unset": { "questions" : 1 } }, upsert = False, multi = True)
+    db.users.update({}, { "$unset": { "finished" : 1 } }, upsert = False, multi = True)
+    db.users.update({}, { "$unset": { "results" : 1 } }, upsert = False, multi = True)
+
+    db.users.update({}, { "$set": { "processed" : False } }, upsert = False, multi = True)
+
+def set_finished_users():
     observations = db.observations.find({ "type": "answer" })
 
     # Set user questions
@@ -118,6 +145,9 @@ def decorateUsers():
         answer = observation["value"]
 
         user = db.users.find_one({ "id" : user_id })
+
+        if user is None:
+            continue
 
         questions = user["questions"] if "questions" in user else {}
 
@@ -143,6 +173,124 @@ def decorateUsers():
             user["finished"] = True
 
         db.users.update({ "id" : user_id }, { "$set": user }, upsert = False)
+
+def get_test_time_length(observations):
+    return observations[-1]["instant"]
+
+def get_test_distance(observations, width, height):
+    distance = 0
+    previous_x = -1
+    previous_y = -1
+
+    for observation in observations:
+        type = observation["type"]
+
+        if type != "onmousemove":
+            continue
+
+        x = int(observation["sx"])
+        y = int(observation["sy"])
+
+        # Translate point to model coordinates
+        x = MODEL_WIDTH * x / width
+        y = MODEL_HEIGHT * x / height
+
+        if previous_x >= 0 and previous_y >= 0 and x >= 0 and y >= 0:
+            d = math.sqrt( math.pow(x - previous_x, 2) + math.pow(y - previous_y, 2) )
+            distance = distance + d
+
+        previous_x = x
+        previous_y = y
+
+    print distance
+    return round(distance)
+
+# Prevenir los casos de solapamiento
+def split_observations_into_tests(observations, identifier):
+    if identifier != "botones4" and identifier != "puntuacion":
+        return [ list(observations) ]
+
+    group = []
+    groups = [ group ]
+
+    previous_instant = -1;
+
+    for observation in observations:
+        instant = observation["instant"]
+
+        if (instant < previous_instant):
+            group = []
+            groups.append(group)
+
+        group.append(observation)
+
+        previous_instant = instant
+
+    return groups
+
+def split_user_results_into_tests(user_id, info, identifiers, index, count, width, height):
+    print "\nUser %i - info: %s (%i/%i)" % (user_id, info, index, count)
+
+    results = {}
+
+    for identifier in identifiers:
+        observations = db.observations.find({ "user_id" : user_id, "identifier": identifier }).sort([("id", 1), ("instant", 1)])
+
+        groups = split_observations_into_tests(observations, identifier)
+        count = 1
+
+        for observations in groups:
+            test_identifier = identifier
+
+            if count > 1:
+                test_identifier = "%s_%i" % (test_identifier, count)
+                print "%s %i" % (user_id, count)
+
+            if len(observations) > 0:
+                print "\t test: %s" % test_identifier
+                observation_list = list(observations)
+                results[test_identifier] = {
+                    "time_length": get_test_time_length(observation_list),
+                    "distance": get_test_distance(observation_list, width, height)
+                }
+
+            count = count + 1
+
+    return results
+
+def process_user_results():
+    users = db.users.find({ "finished" : True, "processed": False }).sort("id", 1).limit(PROCESS_IN_A_ROW)
+
+    while users.count() > 0:
+        print "COUNT %i" % users.count()
+
+        identifiers = db.observations.find().distinct("identifier")
+
+        index = 1
+        count = users.count()
+
+        for user in users:
+            user_id = user["id"]
+            info = user["info"]
+            width = user["width"]
+            height = user["height"]
+            tests = split_user_results_into_tests(user_id, info, identifiers, index, count, width, height)
+            user["results"] = tests
+            user["processed"] = True
+
+            db.users.update({ "id" : user_id }, { "$set": user }, upsert = False)
+
+            index = index + 1
+
+        users = db.users.find({ "finished" : True, "processed": False }).sort("id", 1).limit(PROCESS_IN_A_ROW)
+
+def decorate_users():
+    print "Cleaning previous user calculations"
+    clear_user_results()
+    print "Calculating finishing users"
+    set_finished_users()
+    print "Processing users"
+    process_user_results()
 
 def processData():
     return
@@ -250,15 +398,14 @@ if __name__ == "__main__":
     print "|                                      CIRCO                                   |"
     print "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
     print "  1. Download data"
-    print "  2. Insert data in MongoDB"
-    print "  3. Decorate users with answers"
-    print "  4. List audits"
-    print "  5. List tests"
-    print "  6. List elements"
-    print "  7. List questions"
-    print "  8. Get users that answered all questions"
-    print "  9. Get users that answered all questions (filtered by 'info')"
-    print " 10. Process data"
+    print "  2. Decorate users with answers"
+    print "  3. List audits"
+    print "  4. List tests"
+    print "  5. List elements"
+    print "  6. List questions"
+    print "  7. Get users that answered all questions"
+    print "  8. Get users that answered all questions (filtered by 'info')"
+    print "  9. Process data"
     print " x. Exit"
     print "________________________________________________________________________________"
 
@@ -268,24 +415,22 @@ if __name__ == "__main__":
         print
 
         if option == "1":
-            downloadData()
+            download_data()
         elif option == "2":
-            storeData()
+            decorate_users()
         elif option == "3":
-            decorateUsers()
-        elif option == "4":
             listAudits()
-        elif option == "5":
+        elif option == "4":
             listTests()
-        elif option == "6":
+        elif option == "5":
             listElements()
-        elif option == "7":
+        elif option == "6":
             listQuestions()
-        elif option == "8":
+        elif option == "7":
             listFullUsers()
-        elif option == "9":
+        elif option == "8":
             listFullUsersFilteredByInfo()
-        elif option == "10":
+        elif option == "9":
             processData()
         elif option == "x":
             print "¡Hasta luego amigo!"
