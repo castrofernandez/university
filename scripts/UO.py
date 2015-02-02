@@ -8,6 +8,9 @@ db = mongo_client['circo']
 # CSV
 import csv
 
+# JSON
+import simplejson
+
 def get_audit_tests(identifier):
     users = db.users.find({ "code" : identifier, "finished" : True }).sort("id", 1)
 
@@ -137,9 +140,9 @@ def check_answers(id_list, users_first, users_second):
 
     return valid_users
 
-def process_results(users):
+def process_results(users, academic_results):
     identifiers = []
-    headers = ["id_1", "id_2", "UO", "gender", "age_1", "age_2", "laterality"]
+    headers = ["id_1", "id_2", "UO", "gender", "age_1", "age_2", "laterality", "T1", "T2", "T3", "Practicas", "Control1", "Control2", "Teoria", "Seminario", "Nota"]
     rows = []
 
     # Identifiers
@@ -159,6 +162,8 @@ def process_results(users):
         headers.append("%s_distance_b" % identifier)
 
     for user in users:
+    	academic_results_user = academic_results["UO%s" % first["info"]]
+    
         first = user["first"]
         second = user["second"]
 
@@ -178,6 +183,17 @@ def process_results(users):
         row["age_1"] = first_questions["AGE_VALUE"]
         row["age_2"] = second_questions["AGE_VALUE"]
         row["laterality"] = first_questions["LATERALITY_VALUE"]
+        
+        # Academic results
+        row["T1"] = academic_results_user["T1"]
+        row["T2"] = academic_results_user["T2"]
+        row["T3"] = academic_results_user["T3"]
+        row["Practicas"] = academic_results_user["Practicas"]
+        row["Control1"] = academic_results_user["Control1"]
+        row["Control2"] = academic_results_user["Control2"]
+        row["Teoria"] = academic_results_user["Teoria"]
+        row["Seminario"] = academic_results_user["Seminario"]
+        row["Nota"] = academic_results_user["Nota"]
 
         for identifier in identifiers:
             result_1 = {}
@@ -273,6 +289,20 @@ def generate_image(name, width, height, observations):
 
     f.close()
 
+def get_academic_results(file):
+	json_data = open(file)
+	data = simplejson.load(json_data)
+	
+	results = {}
+	
+	for student in data:
+		UO = student["UO"]
+		results[UO] = student
+	
+	json_data.close()
+	
+	return results
+
 # FIRST ITERATION
 users_first = get_audit_tests("UO1")
 # SECOND ITERATION
@@ -293,8 +323,10 @@ print "Users that completed both iterations: %i" % len(intersection)
 # Check answers
 valid_users = check_answers(intersection, first_list, second_list)
 
+academic_results = get_academic_results("evaluacion.json")
+
 # Print results
-identifiers = process_results(valid_users)
+identifiers = process_results(valid_users, academic_results)
 
 # Print images
 #print_images(valid_users, identifiers)
