@@ -1,4 +1,4 @@
-xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior, auditoriaUsuario)
+xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior, auditoriaUsuario, inicio)
 {
 	var contexto = null;
 	var ancho = canvas.width;
@@ -8,7 +8,7 @@ xuegu.Partida = function(canvas, nivel, idioma, accionFinal, partidaAnterior, au
 
 	var graficos = {};
 
-	var registroAuditoria = new auditoria.Prueba(nivel.identificador);
+	var registroAuditoria = new auditoria.Prueba(nivel.identificador, inicio);
 	this.auditoria = auditoriaUsuario;
 	this.auditoriaPrueba = registroAuditoria;
 

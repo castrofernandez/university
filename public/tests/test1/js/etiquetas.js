@@ -46,7 +46,10 @@ internacionalizacion.etiquetas = {
 		zurdo: "ZURDO",
 		cual_es_tu_edad: "¿Cuál es tu edad?",
 		acertado: "¿He acertado?",
-		bravo: "¡BRAVO!"
+		bravo: "¡BRAVO!",
+		compartir_twitter: "Compartir en Twitter: nueva ventana",
+		compartir_facebook: "Compartir en Facebook: nueva ventana",
+		descubre_twitter: "Descubre tu destreza mental en www.circoneuronal.org"
 	},
 
 	en : {
@@ -96,6 +99,9 @@ internacionalizacion.etiquetas = {
 		zurdo: "left-handed",
 		cual_es_tu_edad: "How old are you?",
 		acertado: "Am I right?",
-		bravo: "BRAVO!"
+		bravo: "BRAVO!",
+		compartir_twitter: "Share on Twitter: new window",
+		compartir_facebook: "Share on Facebook: new window",
+		descubre_twitter: "Discover your mental skills in www.circoneuronal.org"
 	}
 };

@@ -60,14 +60,16 @@ function cargaCompletada() {
 }
 
 DomReady.ready(function() {
-                    var botonComenzar = document.getElementById("comenzar")
-
-                    if (botonComenzar)
-                    	botonComenzar.onclick = comenzar;
-
                     idioma = new internacionalizacion.Idioma(internacionalizacion.etiquetas, "en", false);
 
                     establecerEtiquetas();
+
+                    var botonComenzar = document.getElementById("comenzar")
+
+                    if (!botonComenzar)
+                      return;
+
+                    botonComenzar.onclick = comenzar;
 
                     var identificador = "PLAYED";
 
@@ -78,6 +80,7 @@ DomReady.ready(function() {
                       callback: function(info) {
                         if (info == "TRUE") {
                           botonComenzar.disabled = true;
+                          botonComenzar.className = "gracias"
                           botonComenzar.innerHTML = idioma.texto("gracias");
                         }
                       }
@@ -85,13 +88,56 @@ DomReady.ready(function() {
 });
 
 function establecerEtiquetas() {
+  var elementos = document.querySelectorAll("[data-label]");
+  var length = elementos.length;
+
+  for (var i = 0; i < length; i++) {
+    var elemento = elementos[i];
+    var label = elemento.getAttribute("data-label");
+
+    elemento.innerHTML = idioma.texto(label);
+  }
+
+  var elementos = document.querySelectorAll("[data-alt]");
+  var length = elementos.length;
+
+  for (var i = 0; i < length; i++) {
+    var elemento = elementos[i];
+    var alt = elemento.getAttribute("data-alt");
+
+    elemento.setAttribute("alt", idioma.texto(alt));
+  }
+
+  var elementos = document.querySelectorAll("[data-title]");
+  var length = elementos.length;
+
+  for (var i = 0; i < length; i++) {
+    var elemento = elementos[i];
+    var title = elemento.getAttribute("data-title");
+
+    elemento.setAttribute("title", idioma.texto(title));
+  }
+
+  var elementos = document.querySelectorAll("[data-twitter]");
+  var length = elementos.length;
+
+  for (var i = 0; i < length; i++) {
+    var elemento = elementos[i];
+    var href = elemento.getAttribute("href");
+
+    var text = idioma.texto("descubre_twitter")
+
+    elemento.setAttribute("href", href + "&text=" + text);
+  }
+
+  /*
 	esteblecerEtiqueta("presentacion-h", "presentacion");
 	esteblecerEtiqueta("titulo1", "titulo1");
 	esteblecerEtiqueta("titulo2", "titulo2");
 	esteblecerEtiqueta("descubre-h", "descubre");
 	esteblecerEtiqueta("comenzar", "comenzar");
 	esteblecerEtiqueta("creado", "creado");
-	esteblecerEtiqueta("gracias", "gracias");
+	esteblecerEtiqueta("gracias", "gracias");*/
 
 	var gratis = document.getElementById("img_gratis")
 
@@ -109,14 +155,12 @@ function establecerEtiquetas() {
 
 	document.title = idioma.texto("titulo");
 }
-
-function esteblecerEtiqueta(elemento, contenido) {
-	var elementoDOM = document.getElementById(elemento)
-
+/*
+function esteblecerEtiqueta(elementoDOM, contenido) {
 	if (elementoDOM)
 		elementoDOM.innerHTML = idioma.texto(contenido);
 }
-
+*/
 function comenzar()
 {
 	while (!LISTO_PARA_EJECUCION);
@@ -215,7 +259,7 @@ function iniciarCirco()
 																"nombre_prueba_1",
 																"instrucciones_numeros",
 																"img/instrucciones/numeros.png"),
-					new circo.juegos.Numeros(canvas),
+/*					new circo.juegos.Numeros(canvas),
 					new circo.intermedios.Puntuacion(canvas),
 
 					new circo.intermedios.Botones4(canvas),
@@ -240,7 +284,7 @@ function iniciarCirco()
 
 					new circo.intermedios.Botones4(canvas),
 					new circo.intermedios.Acrobatas(canvas),
-
+*/
 					/*
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_4",
 																"titulo_prueba_4",
@@ -249,17 +293,19 @@ function iniciarCirco()
 																"img/instrucciones/fuego.png"),
 
 					new circo.juegos.Fuego(canvas), */
-					new circo.intermedios.Resultado1(canvas),
+	/*				new circo.intermedios.Resultado1(canvas),
 					new circo.intermedios.Resultado2(canvas),
           new circo.intermedios.Resultado3(canvas),
-          new circo.intermedios.Resultado4(canvas),
-					new circo.intermedios.Fin(canvas)
+          new circo.intermedios.Resultado4(canvas) //,
+    */
+					//new circo.intermedios.Fin(canvas)
 				];
 
 	cambiarJuego();
 }
 
 var anterior = null;
+var instante_global = new Date();
 
 function cambiarJuego()
 {
@@ -297,7 +343,7 @@ function cambiarJuego()
 	{
 		var juego = secuencia[indice];
 
-		var partida = new xuegu.Partida(canvas, juego, idioma, cambiarJuego, anterior, auditoriaUsuario);
+		var partida = new xuegu.Partida(canvas, juego, idioma, cambiarJuego, anterior, auditoriaUsuario, instante_global);
 		partida.iniciar();
 
 		anterior = partida;
@@ -316,5 +362,7 @@ function cambiarJuego()
 
       }
     });
+
+    window.location.href = "compartir.html";
   }
 }

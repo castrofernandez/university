@@ -1,7 +1,7 @@
 if (!auditoria)
 	var auditoria = new Object();
 
-auditoria.Prueba = function(identificador)
+auditoria.Prueba = function(identificador, inicio)
 {
 	var data = this.data = new Object();
 
@@ -11,13 +11,18 @@ auditoria.Prueba = function(identificador)
 	var tiempo = new Date();
 	this.data.instant = tiempo;
 
-	this.instante = obtenerInstante
+	this.instante = function() {
+		return obtenerInstante(tiempo);
+	}
 
-	function obtenerInstante()
+	this.instante_global = function() {
+		return obtenerInstante(inicio);
+	}
+
+	function obtenerInstante(tiempo)
 	{
 		var ahora = new Date();
 		var dif = tiempo.getTime() - ahora.getTime();
-
 		return Math.abs(dif);
 	};
 

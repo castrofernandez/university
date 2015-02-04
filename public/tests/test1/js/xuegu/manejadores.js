@@ -133,6 +133,7 @@ xuegu.Manejadores = function(elemento, auditoria)
 					event: evento,
 					coordinate: elemento.coordenadaEnElemento ? elemento.coordenadaEnElemento(coordenada) : coordenada,
 					instant: auditoria.instante(),
+					instant_global: auditoria.instante_global(),
 					value: value
 				};
 

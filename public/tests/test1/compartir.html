@@ -11,6 +11,7 @@
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="css/estilo.css" media="screen  and (min-width: 1024px)" />
 		<link rel="stylesheet" type="text/css" href="css/movil.css" media="screen and (max-width: 1024px)" />
+		<script src="js/wesCountry.min.js"></script>
 		<script src="js/idioma.js"></script>
 		<script src="js/etiquetas.js"></script>
 		<script src="js/domready.js"></script>
@@ -35,9 +36,10 @@
 			<div id='contenido'>
 				<div id="inicio">
 					<header>
+						<!--
 						<div id='compartir'>
-							<a 
-								href='http://twitter.com/share?url=http://www.circoneuronal.org&text=Descubre tu destreza mental en www.circoneuronal.org' 
+							<a
+								href='http://twitter.com/share?url=http://www.circoneuronal.org&text=Descubre tu destreza mental en www.circoneuronal.org'
 								title='Compartir en Twitter: nueva ventana'>
 								<img src='img/twitter.png' alt='Compartir en Twitter' />
 							</a>
@@ -47,28 +49,32 @@
 								<img id='facebook' src='img/facebook.png' alt='Compartir en Facebook' />
 							</a>
 						</div>
+
 						<div id='presentacion'>
-							<h3 id='presentacion-h'>&nbsp;</h3>
+							<h3 id='presentacion-h' data-label="presentacion">&nbsp;</h3>
 						</div>
-						<h1 id="titulo1" class='izquierda'>&nbsp;</h1>
-						<h1 id="titulo2" class='derecha'>&nbsp;</h1> 
+						<h1 id="titulo1" class='izquierda' data-label="titulo1">&nbsp;</h1>
+						<h1 id="titulo2" class='derecha' data-label="titulo2">&nbsp;</h1>
 						<div id='descubre'>
-							<h2 id='descubre-h'>&nbsp;</h2>
+							<h2 id='descubre-h' data-label="descubre">&nbsp;</h2>
 						</div>
+					-->
 					</header>
-						<h3 id='gracias' class='gracias'></h3>
+					<section class="gracias-compartir">
+						<h3 id='gracias' class='gracias' data-label="gracias"></h3>
 						<div class="compartir-grande">
 							<a  class='a-izquierda'
-								href='http://twitter.com/share?url=http://www.circoneuronal.org&text=Descubre tu destreza mental en www.circoneuronal.org' 
-								title='Compartir en Twitter: nueva ventana'>
-								<img src='img/intermedios/fin/twitter.png' alt='Compartir en Twitter' />
+								href='http://twitter.com/share?url=http://www.circoneuronal.org'
+								title='Compartir en Twitter: nueva ventana' data-title="compartir_twitter" data-twitter="" target="_blank">
+								<img src='img/intermedios/fin/twitter.png' alt='Compartir en Twitter' data-alt="compartir_twitter" />
 							</a>
 							<a  class='a-derecha'
 								href='http://www.facebook.com/sharer.php?u=http://www.circoneuronal.org'
-								title='Compartir en Facebook: nueva ventana'>
-								<img id='facebook' src='img/intermedios/fin/facebook.png' alt='Compartir en Facebook' />
+								title='Compartir en Facebook: nueva ventana' data-title="compartir_facebook" target="_blank">
+								<img id='facebook' src='img/intermedios/fin/facebook.png' alt='Compartir en Facebook' data-alt="compartir_facebook" />
 							</a>
 						</div>
+					</section>
 					<br />
 				</div>
 				<div id="juego">
@@ -82,7 +88,7 @@
 					<img id='html-css' src='img/html-css.png' />
 					<div>
 						<div id='firma'>
-							<span id="creado">&nbsp;</span>
+							<span id="creado" data-label="creado">&nbsp;</span>
 							<br />
 							<a class='nombre' href='http://www.juancastro.es'>
 								<img id='nombre' src='img/nombre.png' alt='Juan Castro Fernández' />
@@ -91,22 +97,26 @@
 					</div>
 					<div id='licencia'>
 						<a id='commons' rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es_CO">
-							<img alt="Licencia Creative Commons" style="border-width:0" 
+							<img alt="Licencia Creative Commons" style="border-width:0"
 								src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" />
 						</a>
 						<div id="texto-licencia">
-							<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" 
-									property="dct:title" rel="dct:type">mineru.js</span> 
-							por <a xmlns:cc="http://creativecommons.org/ns#" 
-								href="http://www.juancastro.es" property="cc:attributionName" 
-								rel="cc:attributionURL">Juan Castro Fernández</a> 
-							se encuentra bajo una 
+							<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+									property="dct:title" rel="dct:type">mineru.js</span>
+							por <a xmlns:cc="http://creativecommons.org/ns#"
+								href="http://www.juancastro.es" property="cc:attributionName"
+								rel="cc:attributionURL">Juan Castro Fernández</a>
+							se encuentra bajo una
 							<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es_CO">
 							Licencia Creative Commons Atribución-NoComercial-CompartirIgual 3.0 Unported</a>.
-							Basada en una obra en 
-							<a xmlns:dct="http://purl.org/dc/terms/" href="mineru.juancastro.es" 
+							Basada en una obra en
+							<a xmlns:dct="http://purl.org/dc/terms/" href="mineru.juancastro.es"
 								rel="dct:source">mineru.juancastro.es</a>.
 						</div>
+					</div>
+					<div class="universidad">
+						<a href="http://www.ingenieriainformatica.uniovi.es"><img src="img/escuela.png" /></a>
+						<a href="http://www.uniovi.es"><img src="img/uniovi.png" /></a>
 					</div>
 				</footer>
 			</div>

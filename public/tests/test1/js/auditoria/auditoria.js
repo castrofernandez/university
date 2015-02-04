@@ -31,7 +31,7 @@ auditoria.Auditoria = function(canvas)
 	};
 
 	// UO
-	
+	/*
 	var uo = prompt("Introduce tu identificador universitario UO");
 
 	var check = /^([Uu][Oo])*([0-9]){2,8}$/g
@@ -43,7 +43,7 @@ auditoria.Auditoria = function(canvas)
 	uo = uo.toLowerCase().replace("uo", "");
 
 	code.info = uo
-	
+	*/
 	//
 
 	// Obtener id de usuario

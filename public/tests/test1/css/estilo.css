@@ -15,6 +15,10 @@ body {
 	margin-top: 0;
 }
 
+header {
+	overflow: hidden;
+}
+
 #marco {
 	width:700px;
 	margin:40px auto;
@@ -182,6 +186,10 @@ h3.gracias {
     font-family:'Conv_Carnevalee Freakshow',Helvetica,Arial;
 	font-size:1.8em;
 	letter-spacing: 0.3em;
+}
+
+#comenzar.gracias {
+	font-size: 1.2em;
 }
 
 #comenzar:hover {
@@ -370,4 +378,8 @@ div.compartir-grande a.a-derecha {
 
 .universidad img {
 	width: 100%;
+}
+
+section.gracias-compartir {
+	margin: 6em 0;
 }

@@ -375,9 +375,10 @@ app.post('/observations', function(req, res) {
     var sx = coordinate.sx ? coordinate.sx : -1;
     var sy = coordinate.sy ? coordinate.sy : -1;
     var instant = observation.instant ? observation.instant : -1;
+    var instant_global = observation.instant_global ? observation.instant_global : -1;
 
-    var query = connection.query('INSERT INTO observations (identifier, element, type, value, width, height, x, y, sx, sy, instant, user_id, audit_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [identifier, element, type, value, width, height, x, y, sx, sy, instant, user, audit], function(error, result){
+    var query = connection.query('INSERT INTO observations (identifier, element, type, value, width, height, x, y, sx, sy, instant, instant_global, user_id, audit_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [identifier, element, type, value, width, height, x, y, sx, sy, instant, instant_global, user, audit], function(error, result){
         if (error) {
           res.send("Error: " + error);
         } else {
