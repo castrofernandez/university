@@ -62,9 +62,22 @@ app.get('/', function(req, res){
   //res.render('index');
 
   var code = req.query.code;
-  code = code ? "?code=" + code : ""
+  var from_u = req.query.from_u;
+  var from_direct = req.query.from_direct;
+  
+  var parameters = code ? "?code=" + code : ""
+  
+  if (from_u) {
+  	var separator = parameters != "" ? "&" : "?";
+  	parameters += separator + "from_u=" + from_u;
+  }
+  
+  if (from_direct) {
+  	var separator = parameters != "" ? "&" : "?";
+  	parameters += separator + "from_direct=" + from_direct;
+  }
 
-  res.writeHead(301, { Location: '/tests/test1/' + code });
+  res.writeHead(301, { Location: '/tests/test1/' + parameters });
   res.end();
 });
 
@@ -80,8 +93,14 @@ app.get('/played/:identifier', function(req, res) {
   var identifier = req.params.identifier ? req.params.identifier : null;
 
   if (identifier) {
-    res.send(req.session[identifier] ? "TRUE" : "FALSE");
-    return;
+  	var id = req.session["user_id"];
+  	var played = req.session[identifier] ? true : false;
+    
+    res.send(JSON.stringify({
+                 id: id,
+                 played: played
+               }));
+	return;
   }
 
   res.send("FALSE");
@@ -94,7 +113,11 @@ app.post('/played', function(req, res) {
     req.session[identifier] = true;
   }
 
-  res.send("Thanks");
+  var id = req.session["user_id"];
+    
+	res.send(JSON.stringify({
+    	id: id
+	}));
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -509,6 +532,8 @@ function getUsers(user, callback) {
 */
 app.post('/users', function(req, res) {
   var code = req.body.code ? req.body.code : "UNKNOWN";
+  var from_u = req.body.from_u ? req.body.from_u : 0;
+  var from_direct = req.body.from_direct ? req.body.from_direct : 0;
   var info = req.body.info ? req.body.info : null;
   var ip = req.ip;
 
@@ -531,11 +556,12 @@ app.post('/users', function(req, res) {
 
   var user = -1;
 
-  var query = connection.query('INSERT INTO users (code, ip, useragent, acceptlanguage, width, height, info) VALUES (?, ?, ?, ?, ?, ?, ?)', [code, ip, useragent, acceptlanguage, width, height, info], function(error, result){
+  var query = connection.query('INSERT INTO users (code, ip, useragent, acceptlanguage, width, height, info, from_u, from_direct) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [code, ip, useragent, acceptlanguage, width, height, info, from_u, from_direct], function(error, result){
       if (error) {
         res.send("Error: " + error);
       } else {
         user = result.insertId;
+        req.session["user_id"] = user;
       }
     }
   );

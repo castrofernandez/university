@@ -57,6 +57,8 @@ sonido.play();
 
 function cargaCompletada() {
 	LISTO_PARA_EJECUCION = true;
+	
+	//establecerEnlacesRedesSociales();
 }
 
 DomReady.ready(function() {
@@ -66,25 +68,30 @@ DomReady.ready(function() {
 
                     var botonComenzar = document.getElementById("comenzar")
 
-                    if (!botonComenzar)
-                      return;
+                    if (botonComenzar)
+                    	botonComenzar.onclick = comenzar;
 
-                    botonComenzar.onclick = comenzar;
+                    	var identificador = "PLAYED";
 
-                    var identificador = "PLAYED";
-
-                    wesCountry.ajax.load({
-                      url: "/played/" + identificador,
-                      method: "GET",
-                      content_type: "application/json",
-                      callback: function(info) {
-                        if (info == "TRUE") {
-                          botonComenzar.disabled = true;
-                          botonComenzar.className = "gracias"
-                          botonComenzar.innerHTML = idioma.texto("gracias");
-                        }
-                      }
-                    });
+                    	wesCountry.ajax.load({
+                    	  url: "/played/" + identificador,
+                   	  	 method: "GET",
+                 	     content_type: "application/json",
+                 	     callback: function(info) {
+                    	  	info = JSON.parse(info);
+                      
+                      	  if (info.played) {
+                      	  	if (botonComenzar) {
+                      	      botonComenzar.disabled = true;
+                     	      botonComenzar.className = "gracias"
+                        	  botonComenzar.innerHTML = idioma.texto("gracias");
+                        	}
+                        	  
+                        	}
+                        	
+                        	establecerEnlacesRedesSociales(info.id);
+                      	}
+                    	});
 });
 
 function establecerEtiquetas() {
@@ -117,19 +124,7 @@ function establecerEtiquetas() {
 
     elemento.setAttribute("title", idioma.texto(title));
   }
-
-  var elementos = document.querySelectorAll("[data-twitter]");
-  var length = elementos.length;
-
-  for (var i = 0; i < length; i++) {
-    var elemento = elementos[i];
-    var href = elemento.getAttribute("href");
-
-    var text = idioma.texto("descubre_twitter")
-
-    elemento.setAttribute("href", href + "&text=" + text);
-  }
-
+  
   /*
 	esteblecerEtiqueta("presentacion-h", "presentacion");
 	esteblecerEtiqueta("titulo1", "titulo1");
@@ -161,6 +156,76 @@ function esteblecerEtiqueta(elementoDOM, contenido) {
 		elementoDOM.innerHTML = idioma.texto(contenido);
 }
 */
+
+function establecerEnlacesRedesSociales(from) {
+	// Enlaces a redes sociales
+  var parametros = getUrlParameters();
+  var code = parametros.parameters["code"];
+  
+  if (!from) {
+  	var from_u = parametros.parameters["from_u"];
+  	var from_direct = "0";
+  }
+  else {
+  	var from_u = from;
+  	var from_direct = "1";
+  }
+  
+  var parametros = code ? "?code=" + code : ""
+  
+  if (from_u) {
+  	var separator = parametros != "" ? "&" : "?";
+  	parametros += separator + "from_u=" + from_u;
+  }
+  
+  if (from_direct) {
+  	var separator = parametros != "" ? "&" : "?";
+  	parametros += separator + "from_direct=" + from_direct;
+  }
+
+  // Twitter
+  var elementos = document.querySelectorAll("[data-twitter]");
+  var length = elementos.length;
+
+  for (var i = 0; i < length; i++) {
+    var elemento = elementos[i];
+    var href = "http://twitter.com/share?url=" + encodeURIComponent("http://www.circoneuronal.org/" + parametros);
+    var text = idioma.texto("descubre_twitter")
+
+    elemento.setAttribute("href", href + "&text=" + text);
+  }
+  
+  // Facebook
+  var elementos = document.querySelectorAll("[data-facebook]");
+  var length = elementos.length;
+
+  for (var i = 0; i < length; i++) {
+    var elemento = elementos[i];
+    var href = "http://www.circoneuronal.org/" + parametros;
+
+    //elemento.setAttribute("href", href);
+    
+    elemento.onclick = function(e) {
+    	FB.ui({
+  			method: 'feed',
+  			link: href,
+  			caption: idioma.texto("descubre_twitter"),
+			}, function(response){});
+			
+			/*
+		FB.ui({
+ 		method: 'share_open_graph',
+  		action_type: 'og.likes',
+  		action_properties: JSON.stringify({
+      		object: href,
+  		})
+		}, function(response){});
+*/
+		return false;
+    }
+  }
+}
+
 function comenzar()
 {
 	while (!LISTO_PARA_EJECUCION);
@@ -259,7 +324,7 @@ function iniciarCirco()
 																"nombre_prueba_1",
 																"instrucciones_numeros",
 																"img/instrucciones/numeros.png"),
-/*					new circo.juegos.Numeros(canvas),
+					new circo.juegos.Numeros(canvas),
 					new circo.intermedios.Puntuacion(canvas),
 
 					new circo.intermedios.Botones4(canvas),
@@ -284,7 +349,7 @@ function iniciarCirco()
 
 					new circo.intermedios.Botones4(canvas),
 					new circo.intermedios.Acrobatas(canvas),
-*/
+
 					/*
 					new circo.intermedios.Instrucciones(canvas, "instrucciones_4",
 																"titulo_prueba_4",
@@ -293,11 +358,11 @@ function iniciarCirco()
 																"img/instrucciones/fuego.png"),
 
 					new circo.juegos.Fuego(canvas), */
-	/*				new circo.intermedios.Resultado1(canvas),
+					new circo.intermedios.Resultado1(canvas),
 					new circo.intermedios.Resultado2(canvas),
           new circo.intermedios.Resultado3(canvas),
           new circo.intermedios.Resultado4(canvas) //,
-    */
+    
 					//new circo.intermedios.Fin(canvas)
 				];
 
@@ -359,10 +424,48 @@ function cambiarJuego()
       method: "POST",
       content_type: "application/json",
       callback: function(info) {
-
+		info = JSON.parse(info);
+		var id = info.id;
+		var parametros = getUrlParameters();
+  		var code = parametros.parameters["code"];
+  		
+  		var parametros = "?from_u=" + id + "&from_direct=1";
+  		
+  		if (code) 
+  			parametros += "&code=" + code;
+		
+		window.location.href = "compartir.html" + parametros;
       }
     });
-
-    window.location.href = "compartir.html";
   }
 }
+
+function getUrlParameters() {
+    var parameters = {};
+
+    var url = document.URL;
+
+    var queryString = url.split('?');
+
+    var host = queryString[0];
+
+    if (queryString.length > 1) {
+      queryString = queryString[1];
+
+      queryString = queryString.split('&');
+
+      for (var i = 0; i < queryString.length; i++) {
+        var parameter = queryString[i].split("=");
+
+        var name = parameter[0];
+        var value = parameter[1] ? parameter[1] : "";
+
+        parameters[name] = value;
+      }
+    }
+
+    return {
+      host: host,
+      parameters: parameters
+    };
+  }

@@ -26,6 +26,8 @@ auditoria.Auditoria = function(canvas)
 	var parameters = getUrlParameters();
 	var code = {
 		code: parameters.parameters["code"],
+		from_u: parameters.parameters["from_u"],
+		from_direct: parameters.parameters["from_direct"],
 		width: this.data.canvas.ancho,
 		height: this.data.canvas.alto
 	};
@@ -88,4 +90,6 @@ auditoria.Auditoria = function(canvas)
       parameters: parameters
     };
   }
+  
+  auditoria.getUrlParameters = getUrlParameters;
 }

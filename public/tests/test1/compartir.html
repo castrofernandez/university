@@ -23,6 +23,23 @@
 		<script src="js/hide-address-bar.js"></script>
 	</head>
 	<body>
+	<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '389714881200008',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 		<div id='marco'>
 			<img id='celo_1' src='img/celo_1.png' />
 			<img id='celo_2' src='img/celo_2.png' />
@@ -70,7 +87,7 @@
 							</a>
 							<a  class='a-derecha'
 								href='http://www.facebook.com/sharer.php?u=http://www.circoneuronal.org'
-								title='Compartir en Facebook: nueva ventana' data-title="compartir_facebook" target="_blank">
+								title='Compartir en Facebook: nueva ventana' data-title="compartir_facebook" data-facebook="" target="_blank" onclick="javascript:void(0)">
 								<img id='facebook' src='img/intermedios/fin/facebook.png' alt='Compartir en Facebook' data-alt="compartir_facebook" />
 							</a>
 						</div>

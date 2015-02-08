@@ -49,7 +49,11 @@ internacionalizacion.etiquetas = {
 		bravo: "¡BRAVO!",
 		compartir_twitter: "Compartir en Twitter: nueva ventana",
 		compartir_facebook: "Compartir en Facebook: nueva ventana",
-		descubre_twitter: "Descubre tu destreza mental en www.circoneuronal.org"
+		descubre_twitter: "Descubre tu destreza mental",
+		cocodrilo: 'cocodrilo', 
+		veloz: 'veloz', 
+		perro: 'perro', 
+		kiwi: 'kiwi'
 	},
 
 	en : {
@@ -102,6 +106,10 @@ internacionalizacion.etiquetas = {
 		bravo: "BRAVO!",
 		compartir_twitter: "Share on Twitter: new window",
 		compartir_facebook: "Share on Facebook: new window",
-		descubre_twitter: "Discover your mental skills in www.circoneuronal.org"
+		descubre_twitter: "Discover your mental skills",
+		cocodrilo: 'crocodile', 
+		veloz: 'quick', 
+		perro: 'dog', 
+		kiwi: 'kiwi'
 	}
 };

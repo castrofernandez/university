@@ -47,6 +47,12 @@ circo.juegos.Palabras = function(canvas)
 		input = document.getElementById('canvas-input');
 		input.placeholder = partida.idioma.texto('escribe');
 		input.style.display = 'block';
+		
+		// Traducir palabras
+		var length = palabras.length;
+		
+		for (var i = 0; i < length; i++)
+			palabras[i] = partida.idioma.texto(palabras[i]);
 
 		//input.colision = function() { return true; };
 
