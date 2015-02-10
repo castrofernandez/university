@@ -423,7 +423,7 @@ function cambiarJuego()
       parameters: JSON.stringify(identificador),
       method: "POST",
       content_type: "application/json",
-      callback: function(info) {
+      callback: function(info) { console.log(info)
 		info = JSON.parse(info);
 		var id = info.id;
 		var parametros = getUrlParameters();
