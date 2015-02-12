@@ -213,7 +213,7 @@ footer {
 }
 
 #compartir {
-	
+	padding-top: 0.6em;
 }
 
 #compartir a {
@@ -221,7 +221,7 @@ footer {
 }
 
 #compartir img {
-	width: 2em;
+	height: 2em;
 }
 
 #facebook {
