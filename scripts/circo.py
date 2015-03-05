@@ -38,30 +38,35 @@ class Circo:
 
     def download_database(self, cursor, name):
         # Min and max MySQL ids
-        cursor.execute("SELECT MIN(id) AS min, MAX(id) AS max FROM %s" % name)
+        cursor.execute("SELECT MIN(id) AS min, MAX(id) AS max, COUNT(1) AS number FROM %s" % name)
 
         mysql_min = 0
         mysql_max = 0
+        mysql_number = 0
 
         for row in cursor:
            mysql_min = row[0]
            mysql_max = row[1]
+           mysql_number = row[2]
 
-        print "MySQL min id: %i, max id: %i" % (mysql_min, mysql_max)
+        print "MySQL min id: %i, max id: %i, total: %i" % (mysql_min, mysql_max, mysql_number)
 
         # Max MongoDB id
         mongodb_max = self.db[name].find_one(sort=[("id", -1)])
+        mongodb_number = self.db[name].count()
 
         if mongodb_max is None:
             mongodb_max = 0
         else:
             mongodb_max = mongodb_max["id"]
 
-        print "MongoDB max id: %i" % mongodb_max
+        print "MongoDB max id: %i, total: %i" % (mongodb_max, mongodb_number)
 
         minimum = max(mongodb_max, mysql_min)
 
         database_structure = None
+
+        records_to_download = mysql_max - minimum
 
         while minimum < mysql_max:
             maximum = minimum + self.DOWNLOAD_IN_A_ROW
@@ -73,7 +78,9 @@ class Circo:
 
             database_structure = self.download_database_records(cursor, name, database_structure, minimum, maximum)
 
-            minimum = minimum + self.DOWNLOAD_IN_A_ROW
+            minimum = minimum + self.DOWNLOAD_IN_A_ROW + 1
+
+        return "Downloaded %i records" % records_to_download
 
     ############################################################################
     #                              DOWNLOAD RECORDS
@@ -120,11 +127,13 @@ class Circo:
 
         self.download_database(cursor, "users")
         self.download_database(cursor, "audits")
-        self.download_database(cursor, "observations")
+        number = self.download_database(cursor, "observations")
 
         # Close MySQL connection
         cursor.close()
         conn.close()
+
+        return number
 
     ############################################################################
     #                                DECORATE USERS
@@ -399,7 +408,7 @@ class Circo:
 
     def processOption(self, option):
         if option == "1":
-            self.download_data()
+            print self.download_data()
         elif option == "2":
             self.decorate_users()
         elif option == "3":
