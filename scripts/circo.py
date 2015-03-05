@@ -27,6 +27,8 @@ class Circo:
         mongo_client = MongoClient('localhost', 27017)
         self.db = mongo_client['circo']
 
+        print "Objeto de la clase Circo creado, parámetro: '%s'" % str(option)
+
         if option is not None:
             self.processOption(option)
 
