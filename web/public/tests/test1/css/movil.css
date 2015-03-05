@@ -213,15 +213,7 @@ footer {
 }
 
 #compartir {
-	padding-top: 0.6em;
-}
-
-#compartir a {
-	text-decoration: none;
-}
-
-#compartir img {
-	height: 2em;
+	display: none;
 }
 
 #facebook {
