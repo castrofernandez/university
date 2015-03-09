@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Service Beans -->
+	<bean id="userManagerService"
+		class="com.danimeana.eiibus.business.impl.UserManagerServiceImpl" />
+	<bean id="cityManagerService"
+		class="com.danimeana.eiibus.business.impl.CityManagerServiceImpl" />
+	<bean id="tripManagerService"
+		class="com.danimeana.eiibus.business.impl.TripManagerServiceImpl" />
+	<bean id="busManagerService"
+		class="com.danimeana.eiibus.business.impl.BusManagerServiceImpl" />
+	<bean id="scheduleManagerService"
+		class="com.danimeana.eiibus.business.impl.ScheduleManagerServiceImpl" />
+	<bean id="extraManagerService"
+		class="com.danimeana.eiibus.business.impl.ExtraManagerServiceImpl" />
+	<bean id="reserveManagerService"
+		class="com.danimeana.eiibus.business.impl.ReserveManagerServiceImpl" />
+
+	<!-- Persistence Beans -->
+	<bean id="userDataService" class="com.danimeana.eiibus.persistence.impl.UserDAO" />
+	<bean id="cityDataService" class="com.danimeana.eiibus.persistence.impl.CityDAO" />
+	<bean id="tripDataService" class="com.danimeana.eiibus.persistence.impl.TripDAO" />
+	<bean id="busDataService" class="com.danimeana.eiibus.persistence.impl.BusDAO" />
+	<bean id="scheduleDataService" class="com.danimeana.eiibus.persistence.impl.ScheduleDAO" />
+	<bean id="extraDataService" class="com.danimeana.eiibus.persistence.impl.ExtraDAO" />
+	<bean id="reserveDataService" class="com.danimeana.eiibus.persistence.impl.ReserveDAO" />
+
+	
+</beans>

@@ -17,6 +17,9 @@ class Circo:
         self.MODEL_WIDTH = 600
         self.MODEL_HEIGHT = 700
 
+        # Selected audits
+        self.selected_audits = []
+
         # Read settings
         _json_data = open('settings.json')
         _settings = json.load(_json_data)
@@ -139,12 +142,28 @@ class Circo:
     #                                DECORATE USERS
     ############################################################################
 
-    def clear_user_results(self):
-        self.db.users.update({}, { "$unset": { "questions" : 1 } }, upsert = False, multi = True)
-        self.db.users.update({}, { "$unset": { "finished" : 1 } }, upsert = False, multi = True)
-        self.db.users.update({}, { "$unset": { "results" : 1 } }, upsert = False, multi = True)
+    def get_user_filter(self):
+        filter = {}
 
-        self.db.users.update({}, { "$set": { "processed" : False } }, upsert = False, multi = True)
+        if len(self.selected_audits) > 0:
+            options = []
+
+            for audit in self.selected_audits:
+                options.append({ "code": audit })
+
+            filter = {
+                "$or": options
+            }
+
+        return filter
+
+    def clear_user_results(self):
+        filter = self.get_user_filter()
+        self.db.users.update(filter, { "$unset": { "questions" : 1 } }, upsert = False, multi = True)
+        self.db.users.update(filter, { "$unset": { "finished" : 1 } }, upsert = False, multi = True)
+        self.db.users.update(filter, { "$unset": { "results" : 1 } }, upsert = False, multi = True)
+
+        self.db.users.update(filter, { "$set": { "processed" : False } }, upsert = False, multi = True)
 
     def set_finished_users(self):
         observations = self.db.observations.find({ "type": "answer" })
@@ -187,6 +206,74 @@ class Circo:
 
             self.db.users.update({ "id" : user_id }, { "$set": user }, upsert = False)
 
+    def get_test_results(self, test_identifier, observations, width, height):
+        # time
+        time_length = observations[-1]["instant"]
+
+        # distance
+        distance = 0
+        previous_x = -1
+        previous_y = -1
+
+        # clicks (numeros)
+        numeros_clicks = 0
+
+        # hits (topos)
+        topos_hits = 0
+
+        # key ups (palabras)
+        palabras_keyups = 0
+
+        for observation in observations:
+            type = observation["type"]
+
+            if test_identifier == "numeros" and type == "onclick":
+                numeros_clicks = numeros_clicks + 1
+
+            if test_identifier == "topos" and type == "check":
+                value = observation["value"]
+
+                if value == "HIT":
+                    topos_hits = topos_hits + 1
+
+            if test_identifier == "palabras" and type == "keyup":
+                palabras_keyups = palabras_keyups + 1
+
+            if type != "onmousemove":
+                continue
+
+            x = int(observation["sx"])
+            y = int(observation["sy"])
+
+            # Translate point to model coordinates
+            x = self.MODEL_WIDTH * x / width
+            y = self.MODEL_HEIGHT * x / height
+
+            if previous_x >= 0 and previous_y >= 0 and x >= 0 and y >= 0:
+                d = math.sqrt( math.pow(x - previous_x, 2) + math.pow(y - previous_y, 2) )
+                distance = distance + d
+
+            previous_x = x
+            previous_y = y
+
+        print distance
+
+        ret = {
+            "time_length": time_length,
+            "distance": round(distance)
+        }
+
+        if test_identifier == "numeros":
+            ret["clicks"] = numeros_clicks
+
+        if test_identifier == "topos":
+            ret["hits"] = topos_hits
+
+        if test_identifier == "palabras":
+            ret["key_ups"] = palabras_keyups
+
+        return ret
+    '''
     def get_test_time_length(self, observations):
         return observations[-1]["instant"]
 
@@ -217,7 +304,7 @@ class Circo:
 
         print distance
         return round(distance)
-
+    '''
     # Prevenir los casos de solapamiento
     def split_observations_into_tests(self, observations, identifier):
         if identifier != "botones4" and identifier != "puntuacion":
@@ -247,7 +334,7 @@ class Circo:
         results = {}
 
         for identifier in identifiers:
-            observations = self.db.observations.find({ "user_id" : user_id, "identifier": identifier }).sort([("id", 1), ("instant", 1)])
+            observations = self.db.observations.find({ "user_id" : user_id, "identifier": identifier }).sort([("instant_global", 1), ("id", 1), ("instant", 1)])
 
             groups = self.split_observations_into_tests(observations, identifier)
             count = 1
@@ -262,17 +349,30 @@ class Circo:
                 if len(observations) > 0:
                     print "\t test: %s" % test_identifier
                     observation_list = list(observations)
+                    '''
                     results[test_identifier] = {
                         "time_length": self.get_test_time_length(observation_list),
                         "distance": self.get_test_distance(observation_list, width, height)
                     }
+                    '''
+                    results[test_identifier] = self.get_test_results(test_identifier, observation_list, width, height)
 
                 count = count + 1
 
         return results
 
     def process_user_results(self):
-        users = self.db.users.find({ "finished" : True, "processed": False }).sort("id", 1).limit(self.PROCESS_IN_A_ROW)
+        filter = self.get_user_filter()
+
+        filter = {
+            "$and": [
+                filter,
+                { "finished": True },
+                { "processed": False }
+            ]
+        }
+
+        users = self.db.users.find(filter).sort("id", 1).limit(self.PROCESS_IN_A_ROW)
 
         while users.count() > 0:
             print "COUNT %i" % users.count()
@@ -295,11 +395,11 @@ class Circo:
 
                 index = index + 1
 
-            users = self.db.users.find({ "finished" : True, "processed": False }).sort("id", 1).limit(self.PROCESS_IN_A_ROW)
+            users = self.db.users.find(filter).sort("id", 1).limit(self.PROCESS_IN_A_ROW)
 
     def decorate_users(self):
-        print "Cleaning previous user calculations"
-        self.clear_user_results()
+        #print "Cleaning previous user calculations"
+        #self.clear_user_results()
         print "Calculating finishing users"
         self.set_finished_users()
         print "Processing users"
@@ -402,6 +502,16 @@ class Circo:
 
                 print "\t\t{0}: {1}".format(answer, count)
 
+    def set_selected_audits(self):
+        input = raw_input("Enter selected audits (comma separated): ")
+        self.selected_audits = input.split(",")
+
+        for audit in self.selected_audits:
+            audit = audit.strip(" ")
+
+    def get_selected_audits(self):
+        return str(self.selected_audits)
+
     ############################################################################
     #                                PROCESS OPTION
     ############################################################################
@@ -410,21 +520,25 @@ class Circo:
         if option == "1":
             print self.download_data()
         elif option == "2":
-            self.decorate_users()
+            self.set_selected_audits()
         elif option == "3":
-            self.listAudits()
+            self.decorate_users()
         elif option == "4":
-            self.listTests()
+            self.listAudits()
         elif option == "5":
-            self.listElements()
+            self.listTests()
         elif option == "6":
-            self.listQuestions()
+            self.listElements()
         elif option == "7":
-            self.listFullUsers()
+            self.listQuestions()
         elif option == "8":
-            self.listFullUsersFilteredByInfo()
+            self.listFullUsers()
         elif option == "9":
+            self.listFullUsersFilteredByInfo()
+        elif option == "10":
             self.processData()
+        elif option == "11":
+            self.clear_user_results()
         elif option == "x":
             print "¡Hasta luego amigo!"
             sys.exit([0])
@@ -433,19 +547,23 @@ class Circo:
 #                                      MAIN                                    #
 ################################################################################
 
-def printMenu():
+def printMenu(circo):
     print "________________________________________________________________________________"
     print "|                                      CIRCO                                   |"
     print "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
-    print "  1. Download data"
-    print "  2. Decorate users with answers"
-    print "  3. List audits"
-    print "  4. List tests"
-    print "  5. List elements"
-    print "  6. List questions"
-    print "  7. Get users that answered all questions"
-    print "  8. Get users that answered all questions (filtered by 'info')"
-    print "  9. Process data"
+    print " Selected audits: %s" % circo.get_selected_audits()
+    print "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+    print "  01. Download data"
+    print "  02. Enter selected audits"
+    print "  03. Decorate users with answers"
+    print "  04. List audits"
+    print "  05. List tests"
+    print "  06. List elements"
+    print "  07. List questions"
+    print "  08. Get users that answered all questions"
+    print "  09. Get users that answered all questions (filtered by 'info')"
+    print "  10. Process data"
+    print "  11. Clean user data"
     print " x. Exit"
     print "________________________________________________________________________________"
 
@@ -459,7 +577,7 @@ if __name__ == "__main__":
         circo.processOption(argument)
     else:
         while True:
-            printMenu()
+            printMenu(circo)
             print
             option = raw_input("Enter option: ")
             print

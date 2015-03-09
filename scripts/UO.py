@@ -161,9 +161,17 @@ def process_results(users, academic_results):
         headers.append("%s_distance_a" % identifier)
         headers.append("%s_distance_b" % identifier)
 
+    headers.append("numeros_clicks_a")
+    headers.append("numeros_clicks_b")
+    headers.append("topos_hits_a")
+    headers.append("topos_hits_b")
+    headers.append("palabras_key_ups_a")
+    headers.append("palabras_key_ups_b")
+
     for user in users:
+        print "User %s" % first["info"]
     	academic_results_user = academic_results["UO%s" % first["info"]]
-    
+
         first = user["first"]
         second = user["second"]
 
@@ -183,7 +191,7 @@ def process_results(users, academic_results):
         row["age_1"] = first_questions["AGE_VALUE"]
         row["age_2"] = second_questions["AGE_VALUE"]
         row["laterality"] = first_questions["LATERALITY_VALUE"]
-        
+
         # Academic results
         row["T1"] = academic_results_user["T1"]
         row["T2"] = academic_results_user["T2"]
@@ -194,6 +202,13 @@ def process_results(users, academic_results):
         row["Teoria"] = academic_results_user["Teoria"]
         row["Seminario"] = academic_results_user["Seminario"]
         row["Nota"] = academic_results_user["Nota"]
+
+        row["numeros_clicks_a"] = first_results["numeros"]["clicks"]
+        row["numeros_clicks_b"] = second_results["numeros"]["clicks"]
+        row["topos_hits_a"] = first_results["topos"]["hits"]
+        row["topos_hits_b"] = second_results["topos"]["hits"]
+        row["palabras_key_ups_a"] = first_results["palabras"]["key_ups"]
+        row["palabras_key_ups_b"] = second_results["palabras"]["key_ups"]
 
         for identifier in identifiers:
             result_1 = {}
@@ -292,15 +307,15 @@ def generate_image(name, width, height, observations):
 def get_academic_results(file):
 	json_data = open(file)
 	data = simplejson.load(json_data)
-	
+
 	results = {}
-	
+
 	for student in data:
 		UO = student["UO"]
 		results[UO] = student
-	
+
 	json_data.close()
-	
+
 	return results
 
 # FIRST ITERATION
@@ -323,7 +338,7 @@ print "Users that completed both iterations: %i" % len(intersection)
 # Check answers
 valid_users = check_answers(intersection, first_list, second_list)
 
-academic_results = get_academic_results("evaluacion.json")
+academic_results = get_academic_results("otros/evaluacion.json")
 
 # Print results
 identifiers = process_results(valid_users, academic_results)
