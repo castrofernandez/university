@@ -30,13 +30,11 @@ function startAudit(user_id) {
 		    s4() + '-' + s4() + s4() + s4();
 	})();
 	
-	console.log(hash)
-	
 	var count = 1;
 		
 	var observations = [];
 	
-	var events = ["dblclick", "change", "mousedown", "mouseup", "mousemove", "mouseover", "mouseout", "touchstart", "touchmove", "touchend", "keydown", "keyup", "keypress"];
+	var events = ["dblclick", "change", "input", "mousedown", "mouseup", "mousemove", "mouseover", "mouseout", "touchstart", "touchmove", "touchend", "keydown", "keyup", "keypress"];
 	var eventLength = events.length;
 	
 	function handleEvent (element, event, handler) {
@@ -85,12 +83,38 @@ function startAudit(user_id) {
 	    return { x: event.pageX - x, y: event.pageY - y };
 	}
 	
-	function registerObservation(element, event) {
+	function registerObservation(element, event, callback) {
 		var time = getTime();
 		
 		event = event ? event : window.event;
+console.log(event.type)		
+		var id = element.id;
 		
-		var id = element.id ? element.id : element.tagName;
+		if (!id) {
+			id = element.tagName;
+			
+			if (element.value) {
+				id += "_" + element.value;
+			}
+		}
+		
+		var value = element.value;
+		
+		var label = null;
+		
+		if (element.options) {
+			label = element.options[element.selectedIndex]
+			
+			if (label)
+				label = label.innerHTML;
+			
+			if (label && label.trim)
+				label = label.trim();
+		}
+		else if (element.getAttribute("data-label")) {
+			label = element.getAttribute("data-label");
+		}
+		
 		var innerCoordinates = getInnerCoordinates(element, event);
 		
 		var observation = {
@@ -105,7 +129,9 @@ function startAudit(user_id) {
 			"sy": event.pageY,
 			"instant": getTime(),
 			"type": event.type,
-			"value": element.value ? element.value : null,
+			"value": element.value,
+			"label": label,
+			"other_value": element.checked ? element.checked : null,
 			"user_id": user_id,
 			"count": count
 		};
@@ -120,7 +146,8 @@ function startAudit(user_id) {
 		    dataType: "jsonp",
 		    data: observation,
 		    success: function (response) {
-		        console.log(response);
+		        if (callback)
+		        	callback(response);
 		    }
 		});
 	}
@@ -132,14 +159,18 @@ function startAudit(user_id) {
 		var element = elements[i];
 		
 		handleEvent(element, "click", function(e) {
-			e.preventDefault();
-			
-			registerObservation(e);
-			
 			var href = this.getAttribute("href");
+			var callback = null;
 			
-			if (href)
-				window.location.href = href;
+			if (href) {
+				e.preventDefault();
+				
+				callback = function(response) {
+					window.location.href = href;
+				}
+			}
+			
+			registerObservation(this, e, callback);
 		});
 		
 		for (var j = 0; j < eventLength; j++) {

@@ -17,13 +17,13 @@
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 </head>
 
-<body>
+<body id="body-seats">
 	<jsp:include page="header.jsp" />
 	
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
+				<button type="button" class="navbar-toggle collapsed" data-audit="yes" id="seats-navbar"
 					data-toggle="collapse" data-target="#navbar-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
@@ -33,16 +33,16 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="index"><spring:message code="index.title" /></a></li>
+					<li><a href="index" data-audit="yes" id="seats-index"><spring:message code="index.title" /></a></li>
 					<li class="active"><a><spring:message code="reserve.title" /></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<c:choose>
 						<c:when test="${empty userName}">
-							<li><a href="login"><spring:message code="login.title" /></a></li>
+							<li><a href="login" data-audit="yes" id="seats-login"><spring:message code="login.title" /></a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="profile"><spring:message
+							<li><a href="profile" data-audit="yes" id="seats-profile"><spring:message
 										code="profile.title" /></a></li>
 						</c:otherwise>
 					</c:choose>
@@ -65,7 +65,7 @@
 					<c:set var="searchTitle">
 						<spring:message code="search.title" />
 					</c:set>
-					<input type="submit" class="link-submit" value="${searchTitle}" />
+					<input type="submit" class="link-submit" value="${searchTitle}" data-audit="yes" id="seats-search-submit" />
 				</form:form></li>
 			<li><form:form action="schedules" method="GET"
 					commandName="ReserveDTO" class="form" role="form">
@@ -83,7 +83,7 @@
 					<c:set var="schedulesTitle">
 						<spring:message code="schedules.title" />
 					</c:set>
-					<input type="submit" class="link-submit" value="${schedulesTitle}" />
+					<input type="submit" class="link-submit" value="${schedulesTitle}" data-audit="yes" id="seats-schedules-submit" />
 				</form:form></li>
 			<li class="active"><spring:message code="seats.title" /></li>
 		</ol>
@@ -126,22 +126,22 @@
 													<span class="hidden-lg hidden-md">
 														<button class="seat btn btn-seat-free btn-xs"
 															type="button" data-type="departure"
-															data-seat="${seat.id}">${prefix}${seat.id}</button>
+															data-seat="${seat.id}" data-audit="yes" id="seats-seat-xs-${seat.id}">${prefix}${seat.id}</button>
 													</span>
 													<span class="hidden-sm hidden-xs">
 														<button class="seat btn btn-seat-free" type="button"
-															data-type="departure" data-seat="${seat.id}">
+															data-type="departure" data-seat="${seat.id}" data-audit="yes" id="seats-seat-${seat.id}">
 															${prefix}${seat.id}</button>
 													</span>
 												</c:when>
 												<c:otherwise>
 													<span class="hidden-lg hidden-md">
 														<button class="btn btn-seat-no-free btn-xs" type="button"
-															disabled="disabled">${prefix}${seat.id}</button>
+															disabled="disabled" data-audit="yes" id="seats-seat-xs-disabled-${seat.id}">${prefix}${seat.id}</button>
 													</span>
 													<span class="hidden-sm hidden-xs">
 														<button class="btn btn-seat-no-free" type="button"
-															disabled="disabled">${prefix}${seat.id}</button>
+															disabled="disabled" data-audit="yes" id="seats-seat-disabled-${seat.id}">${prefix}${seat.id}</button>
 													</span>
 												</c:otherwise>
 											</c:choose>
@@ -175,22 +175,22 @@
 													<c:when test="${seat.free}">
 														<span class="hidden-lg hidden-md">
 															<button class="seat btn btn-seat-free btn-xs"
-																type="button" data-type="return" data-seat="${seat.id}">
+																type="button" data-type="return" data-seat="${seat.id}" data-audit="yes" id="seats-seat-ret-xs-${seat.id}">
 																${prefix}${seat.id}</button>
 														</span>
 														<span class="hidden-sm hidden-xs">
 															<button class="seat btn btn-seat-free" data-type="return"
-																type="button" data-seat="${seat.id}">${prefix}${seat.id}</button>
+																type="button" data-seat="${seat.id}" data-audit="yes" id="seats-seat-ret-${seat.id}">${prefix}${seat.id}</button>
 														</span>
 													</c:when>
 													<c:otherwise>
 														<span class="hidden-lg hidden-md">
 															<button class="btn btn-seat-no-free btn-xs" type="button"
-																disabled="disabled">${prefix}${seat.id}</button>
+																disabled="disabled" data-audit="yes" id="seats-seat-ret-xs-disabled-${seat.id}">${prefix}${seat.id}</button>
 														</span>
 														<span class="hidden-sm hidden-xs">
 															<button class="btn btn-seat-no-free" type="button"
-																disabled="disabled">${prefix}${seat.id}</button>
+																disabled="disabled" data-audit="yes" id="seats-seat-ret-disabled${seat.id}">${prefix}${seat.id}</button>
 														</span>
 													</c:otherwise>
 												</c:choose>
@@ -262,7 +262,7 @@
 							<c:forEach var="extra" items="${extras}">
 								<div class="checkbox">
 									<label> <form:checkbox path="extras"
-											value="${extra.type}" /> <spring:message
+											value="${extra.type}" data-audit="yes" id="seats-extra-${extra.type}" /> <spring:message
 											code="reserve.extra.${fn:toLowerCase(extra.type)}" />
 										(+${extra.price}&euro;)
 									</label>
@@ -312,13 +312,13 @@
 						<div class="col-xs-12">
 							<c:choose>
 								<c:when test="${empty user}">
-									<button type="submit" class="btn btn-custom pull-right"
+									<button type="submit" class="btn btn-custom pull-right" data-audit="yes" id="seats-submit-disabled"
 										disabled="disabled">
 										<spring:message code="summary.title" />
 									</button>
 								</c:when>
 								<c:otherwise>
-									<button id="summary-btn" type="submit"
+									<button id="summary-btn" type="submit" data-audit="yes"
 										class="btn btn-custom pull-right">
 										<spring:message code="summary.title" />
 									</button>

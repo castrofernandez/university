@@ -17,7 +17,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 </head>
 
-<body>
+<body id="body-error">
 	<jsp:include page="header.jsp" />
 
 	<nav class="navbar navbar-default" role="navigation">

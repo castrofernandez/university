@@ -16,13 +16,13 @@
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 </head>
 
-<body>
+<body id="body-schedules">
 	<jsp:include page="header.jsp" />
 
 	<nav class="no-print navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
+				<button type="button" class="navbar-toggle collapsed" data-audit="yes" id="schedules-navbar"
 					data-toggle="collapse" data-target="#navbar-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
@@ -32,16 +32,16 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="index"><spring:message code="index.title" /></a></li>
+					<li><a href="index" data-audit="yes" id="schedules-index"><spring:message code="index.title" /></a></li>
 					<li class="active"><a><spring:message code="reserve.title" /></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<c:choose>
 						<c:when test="${empty userName}">
-							<li><a href="login"><spring:message code="login.title" /></a></li>
+							<li><a href="login" data-audit="yes" id="schedules-login"><spring:message code="login.title" /></a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="profile"><spring:message
+							<li><a href="profile" data-audit="yes" id="schedules-profile"><spring:message
 										code="profile.title" /></a></li>
 						</c:otherwise>
 					</c:choose>
@@ -64,7 +64,7 @@
 					<c:set var="searchTitle">
 						<spring:message code="search.title" />
 					</c:set>
-					<input type="submit" class="link-submit" value="${searchTitle}" />
+					<input type="submit" class="link-submit" value="${searchTitle}" data-audit="yes" id="schedules-search-submit" />
 				</form:form></li>
 			<li class="active"><spring:message code="schedules.title" /></li>
 		</ol>
@@ -81,7 +81,7 @@
 		<c:if test="${not empty msgError}">
 			<div class="no-print alert alert-danger alert-dismissible"
 				role="alert">
-				<button type="button" class="close" data-dismiss="alert"
+				<button type="button" class="close" data-dismiss="alert" data-audit="yes" id="schedules-alert"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -98,7 +98,7 @@
 			</c:set>
 			<c:if test="${not empty departureScheduleErrors}">
 				<div class="alert alert-danger alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert"
+					<button type="button" class="close" data-dismiss="alert" data-audit="yes" id="schedules-alert-departure"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -134,7 +134,7 @@
 							varStatus="index">
 							<tr id="departure-${schedule.id}">
 								<td class="no-print"><form:radiobutton
-										path="departureSchedule" value="${schedule.id}" /></td>
+										path="departureSchedule" value="${schedule.id}" data-label="${schedule.origin}" data-audit="yes" /></td>
 								<td class="origin">${schedule.origin}</td>
 								<td class="destination">${schedule.destination}</td>
 								<td class="departure">${schedule.departure}</td>
@@ -160,7 +160,7 @@
 				</c:set>
 				<c:if test="${not empty returnScheduleErrors}">
 					<div class="alert alert-danger alert-dismissible" role="alert">
-						<button type="button" class="close" data-dismiss="alert"
+						<button type="button" class="close" data-dismiss="alert" data-audit="yes" id="schedules-alert-return"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -191,7 +191,7 @@
 								varStatus="index">
 								<tr id="return-${schedule.id}">
 									<td class="no-print"><form:radiobutton
-											path="returnSchedule" value="${schedule.id}" /></td>
+											path="returnSchedule" value="${schedule.id}" data-label="${schedule.origin}" data-audit="yes" /></td>
 									<td class="origin">${schedule.origin}</td>
 									<td class="destination">${schedule.destination}</td>
 									<td class="departure">${schedule.departure}</td>
@@ -212,13 +212,13 @@
 			</c:if>
 			<div class="no-print form-group row">
 				<div class="col-xs-6">
-					<button id="print" class="btn btn-custom" type="button">
+					<button id="print" class="btn btn-custom" type="button" data-audit="yes">
 						<span class="glyphicon glyphicon-print"></span>
 						<spring:message code="schedules.print.schedules" />
 					</button>
 				</div>
 				<div class="col-xs-6">
-					<button type="submit" class="btn btn-custom pull-right">
+					<button type="submit" class="btn btn-custom pull-right" data-audit="yes" id="schedules-submit">
 						<spring:message code="schedules.choose.seats" />
 					</button>
 				</div>

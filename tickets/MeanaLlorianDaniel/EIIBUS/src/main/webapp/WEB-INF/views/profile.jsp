@@ -16,14 +16,14 @@
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 </head>
 
-<body>
+<body id="body-profile">
 	<jsp:include page="header.jsp" />
 
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar-collapse">
+					data-toggle="collapse" data-target="#navbar-collapse" data-audit="yes" id="profile-navbar">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
@@ -32,8 +32,8 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="index"><spring:message code="index.title" /></a></li>
-					<li><a href="search"><spring:message code="search.title" /></a></li>
+					<li><a href="index" data-audit="yes" id="profile-index"><spring:message code="index.title" /></a></li>
+					<li><a href="search" data-audit="yes" id="profile-search"><spring:message code="search.title" /></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="active"><a><spring:message code="profile.title" /></a></li>
@@ -48,7 +48,7 @@
 		</ol>
 		<c:if test="${not empty msgSuccess}">
 			<div class="alert alert-success alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert"
+				<button type="button" class="close" data-dismiss="alert" data-audit="yes" id="profile-alert"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -74,14 +74,14 @@
 									<c:when test="${empty updateNameErrors}">
 										<div class="form-group col-sm-6">
 											<form:label path="name" class="control-label">${fieldName}</form:label>
-											<form:input path="name" type="text" class="form-control"
+											<form:input path="name" type="text" class="form-control" data-audit="yes" id="profile-name"
 												placeholder="${fieldName}" />
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="form-group col-sm-6 has-error">
 											<form:label path="name" class="control-label">${fieldName}</form:label>
-											<form:input path="name" type="text" class="form-control"
+											<form:input path="name" type="text" class="form-control" data-audit="yes" id="profile-name"
 												placeholder="${fieldName}" />
 											<p class="text-danger">${updateNameErrors}</p>
 										</div>
@@ -95,14 +95,14 @@
 									<c:when test="${empty updateLastnameErrors}">
 										<div class="form-group col-sm-6">
 											<form:label path="lastname" class="control-label">${fieldLastname}</form:label>
-											<form:input path="lastname" type="text" class="form-control"
+											<form:input path="lastname" type="text" class="form-control" data-audit="yes" id="profile-lastname"
 												placeholder="${fieldLastname}" />
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="form-group col-sm-6 has-error">
 											<form:label path="lastname" class="control-label">${fieldLastname}</form:label>
-											<form:input path="lastname" type="text" class="form-control"
+											<form:input path="lastname" type="text" class="form-control" data-audit="yes" id="profile-lastname"
 												placeholder="${loginLastname}" />
 											<p class="text-danger">${updateLastnameErrors}</p>
 										</div>
@@ -111,7 +111,7 @@
 							</div>
 							<div class="row">
 								<div class="form-group col-sm-6">
-									<form:label path="documentType">
+									<form:label path="documentType" data-audit="yes" id="profile-document-type">
 										<spring:message code="field.document.type" />
 									</form:label>
 									<form:select path="documentType" class="form-control">
@@ -135,14 +135,14 @@
 									<c:when test="${empty updateDocumentNumberErrors}">
 										<div class="form-group col-sm-6">
 											<form:label path="documentNumber" class="control-label">${fieldDocumentNumber}</form:label>
-											<form:input path="documentNumber" type="text"
+											<form:input path="documentNumber" type="text" data-audit="yes" id="profile-document"
 												class="form-control" placeholder="${fieldDocumentNumber}" />
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="form-group col-sm-6 has-error">
 											<form:label path="documentNumber" class="control-label">${fieldDocumentNumber}</form:label>
-											<form:input path="documentNumber" type="text"
+											<form:input path="documentNumber" type="text" data-audit="yes" id="profile-document"
 												class="form-control" placeholder="${fieldDocumentNumber}" />
 											<p class="text-danger">${updateDocumentNumberErrors}</p>
 										</div>
@@ -166,14 +166,14 @@
 									<c:when test="${empty updatePasswordErrors}">
 										<div class="form-group col-sm-6">
 											<form:label path="password" class="control-label">${fieldPasswordNew}</form:label>
-											<form:input path="password" type="password"
+											<form:input path="password" type="password" data-audit="yes" id="profile-password"
 												class="form-control" placeholder="${fieldPasswordNew}" />
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="form-group col-sm-6 has-error">
 											<form:label path="password" class="control-label">${fieldPasswordNew}</form:label>
-											<form:input path="password" type="password"
+											<form:input path="password" type="password" data-audit="yes" id="profile-password"
 												class="form-control" placeholder="${fieldPasswordNew}" />
 											<p class="text-danger">${updatePasswordErrors}</p>
 										</div>
@@ -190,7 +190,7 @@
 											<form:label path="confirmPassword" class="control-label">
 											${fieldPasswordConfirm}
 										</form:label>
-											<form:input path="confirmPassword" type="password"
+											<form:input path="confirmPassword" type="password" data-audit="yes" id="profile-password2"
 												class="form-control" placeholder="${fieldPasswordConfirm}" />
 										</div>
 									</c:when>
@@ -199,7 +199,7 @@
 											<form:label path="confirmPassword" class="control-label">
 												${fieldPasswordConfirm}
 											</form:label>
-											<form:input path="confirmPassword" type="password"
+											<form:input path="confirmPassword" type="password" data-audit="yes" id="profile-password2"
 												class="form-control" placeholder="${fieldPasswordConfirm}" />
 											<p class="text-danger">${updateConfirmPasswordErrors}</p>
 										</div>
@@ -215,14 +215,14 @@
 									<c:when test="${empty updatePasswordOldErrors}">
 										<div class="form-group col-sm-12">
 											<form:label path="oldPassword" class="control-label">${fieldPasswordOld}</form:label>
-											<form:input path="oldPassword" type="password"
+											<form:input path="oldPassword" type="password" data-audit="yes" id="profile-old-password"
 												class="form-control" placeholder="${fieldPasswordOld}" />
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="form-group col-sm-12 has-error">
 											<form:label path="oldPassword" class="control-label">${fieldPasswordOld}</form:label>
-											<form:input path="oldPassword" type="password"
+											<form:input path="oldPassword" type="password" data-audit="yes" id="profile-old-password"
 												class="form-control" placeholder="${fieldPasswordOld}" />
 											<p class="text-danger">${updatePasswordOldErrors}</p>
 										</div>
@@ -232,7 +232,7 @@
 							<div class="row">
 								<div class="form-group col-sm-12">
 									<spring:message code="profile.update" var="profileUpdate" />
-									<input type="submit" class="btn btn-custom"
+									<input type="submit" class="btn btn-custom" data-audit="yes" id="profile-submit"
 										value="${profileUpdate}" />
 								</div>
 							</div>
@@ -294,10 +294,10 @@
 								<div class="input-group search-reserves">
 									<spring:message code="field.identifier" var="fieldIdentifier" />
 									<input type="text" class="form-control" name="id"
-										id="identifier" placeholder="${fieldIdentifier}"> <span
+										 data-audit="yes" id="identifier" placeholder="${fieldIdentifier}"> <span
 										class="input-group-btn">
 										<button class="btn btn-custom" type="submit"
-											disabled="disabled" id="searchButton">
+											disabled="disabled"  data-audit="yes" id="searchButton">
 											<span class="glyphicon glyphicon-search"></span>
 											<spring:message code="profile.reserves.search" />
 										</button>
@@ -353,14 +353,14 @@
 											<form class="form form-inline" role="form" action="reserve"
 												method="get">
 												<input type="hidden" name="id" value="${reserve.id}" />
-												<button class="btn btn-custom btn-sm" type="submit">
+												<button class="btn btn-custom btn-sm" type="submit" data-audit="yes" id="profile-reserve">
 													<spring:message code="profile.reserves.more" />
 												</button>
 											</form>
 											<form class="form form-inline" role="form"
 												action="cancelReserve" method="post">
 												<input type="hidden" name="id" value="${reserve.id}" />
-												<button class="btn btn-red btn-sm" type="submit">
+												<button class="btn btn-red btn-sm" type="submit" data-audit="yes" id="profile-cancel">
 													<span class="glyphicon glyphicon-trash"></span>
 													<spring:message code="profile.reserves.cancel" />
 												</button>
@@ -418,7 +418,7 @@
 											<form class="form form-inline" role="form" action="reserve"
 												method="get">
 												<input type="hidden" name="id" value="${reserve.id}" />
-												<button class="btn btn-custom btn-sm" type="submit">
+												<button class="btn btn-custom btn-sm" type="submit" data-audit="yes" id="profile-reserve2">
 													<spring:message code="profile.reserves.more" />
 												</button>
 											</form>

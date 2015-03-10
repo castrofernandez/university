@@ -17,13 +17,13 @@
 	href="resources/css/bootstrap-datetimepicker.min.css">
 </head>
 
-<body>
+<body id="body-search">
 	<jsp:include page="header.jsp" />
 
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
+				<button type="button" class="navbar-toggle collapsed" data-audit="yes" id="search-navbar"
 					data-toggle="collapse" data-target="#navbar-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
@@ -33,16 +33,16 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="index"><spring:message code="index.title" /></a></li>
+					<li><a href="index" data-audit="yes" id="search-index"><spring:message code="index.title" /></a></li>
 					<li class="active"><a><spring:message code="reserve.title" /></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<c:choose>
 						<c:when test="${empty userName}">
-							<li><a href="login"><spring:message code="login.title" /></a></li>
+							<li><a href="login" data-audit="yes" id="search-login"><spring:message code="login.title" /></a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="profile"><spring:message
+							<li><a href="profile" data-audit="yes" id="search-profile"><spring:message
 										code="profile.title" /></a></li>
 						</c:otherwise>
 					</c:choose>
@@ -90,7 +90,7 @@
 							<form:label path="origin" class="control-label">
 								<spring:message code="field.origin" />
 							</form:label>
-							<form:select path="origin" class="form-control">
+							<form:select path="origin" class="form-control" data-audit="yes">
 								<c:forEach var="origin" items="${cities}">
 									<c:choose>
 										<c:when test="${origin.id == ReserveDTO.origin}">
@@ -126,12 +126,13 @@
 								<spring:message code="field.departure.date" />
 							</form:label>
 							<div class="input-group date" id="departureDateDiv">
-								<form:input type="text" class="form-control"
+								<form:input type="text" class="form-control" data-audit="yes" id="search-departure-date"
 									path="departureDate" />
 								<span class="input-group-addon"> <span
 									class="glyphicon glyphicon-calendar"></span>
 								</span>
 							</div>
+							<input type="hidden" id="search-departure-date-hidden" data-audit="yes" />
 							<c:if test="${not empty departureDateErrors}">
 								<p class="text-danger">${departureDateErrors}</p>
 							</c:if>
@@ -153,13 +154,13 @@
 							<form:label path="type" class="control-label">
 								<spring:message code="field.reserve.type" />
 							</form:label>
-							<br> <label class="radio-inline"><form:radiobutton
+							<br> <label class="radio-inline"><form:radiobutton data-audit="yes" id="search-type-one-way"
 									path="type" value="ONEWAY" /> <spring:message
 									code="field.reserve.type.oneway" /></label> <label
-								class="radio-inline"><form:radiobutton path="type"
+								class="radio-inline"><form:radiobutton path="type" data-audit="yes" id="search-type-return"
 									value="RETURN" /> <spring:message
 									code="field.reserve.type.return" /></label> <label
-								class="radio-inline"><form:radiobutton path="type"
+								class="radio-inline"><form:radiobutton path="type" data-audit="yes" id="search-type-open-return"
 									value="OPENRETURN" /> <spring:message
 									code="field.reserve.type.openreturn" /></label>
 							<c:if test="${not empty typeErrors}">
@@ -183,11 +184,11 @@
 							</form:label>
 							<c:choose>
 								<c:when test="${ReserveDTO.passengers > 0}">
-									<form:input type="number" class="form-control"
+									<form:input type="number" class="form-control" data-audit="yes" id="search-number"
 										path="passengers" value="${ReserveDTO.passengers}" />
 								</c:when>
 								<c:otherwise>
-									<form:input type="number" class="form-control"
+									<form:input type="number" class="form-control" data-audit="yes" id="search-number"
 										path="passengers" value="1" />
 								</c:otherwise>
 							</c:choose>
@@ -212,7 +213,7 @@
 							<form:label path="destination" class="control-label">
 								<spring:message code="field.destination" />
 							</form:label>
-							<form:select path="destination" class="form-control">
+							<form:select path="destination" class="form-control" data-audit="yes">
 							</form:select>
 							<c:if test="${not empty destinationErrors}">
 								<p class="text-danger">${destinationErrors}</p>
@@ -234,10 +235,11 @@
 								<spring:message code="field.return.date" />
 							</form:label>
 							<div class="input-group date" id="returnDateDiv">
-								<form:input type="text" class="form-control" path="returnDate" />
+								<form:input type="text" class="form-control" path="returnDate" data-audit="yes" id="search-return-date" />
 								<span class="input-group-addon"><span
 									class="glyphicon glyphicon-calendar"></span> </span>
 							</div>
+							<input type="hidden" id="search-return-date-hidden" data-audit="yes" />
 							<c:if test="${not empty returnDateErrors}">
 								<p class="text-danger">${returnDateErrors}</p>
 							</c:if>
@@ -245,7 +247,7 @@
 					</div>
 					<div class="row">
 						<div class="form-group col-sm-12">
-							<button type="submit" class="btn btn-custom pull-right">
+							<button type="submit" class="btn btn-custom pull-right" data-audit="yes" id="search-submit">
 								<span class="glyphicon glyphicon-search"></span>
 								<spring:message code="search.search" />
 							</button>
@@ -265,6 +267,16 @@
 		src="resources/js/bootstrap-datetimepicker.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			function fire(element, action) {
+				if ("createEvent" in document) {
+				    var evt = document.createEvent("HTMLEvents");
+				    evt.initEvent(action, false, true);
+				    element.dispatchEvent(evt);
+				}
+				else
+				    element.fireEvent("on" + action);
+			}
+			
 			var locale = "${pageContext.response.locale.language}"
 			if (locale != 'es')
 				locale = 'en'
@@ -284,7 +296,7 @@
 								cities.sort(function(a, b) {
 									return a.name.localeCompare(b.name)
 								})
-								console.log(cities)
+								
 								$("#destination").empty()
 								var destinationId = "${ReserveDTO.destination}"
 								$.each(cities, function(i, city) {
@@ -321,6 +333,10 @@
 					function(e) {
 						var dateReturn = $('#returnDateDiv').data(
 								'DateTimePicker').date
+						
+						$("#search-departure-date-hidden").val(e.date.format('DD/MM/YYYY'));
+						fire(document.getElementById("search-departure-date-hidden"), "change");
+							
 						if (dateReturn < e.date) {
 							$('#returnDateDiv').data('DateTimePicker').setDate(
 									e.date)
@@ -328,6 +344,14 @@
 						$('#returnDateDiv').data('DateTimePicker').setMinDate(
 								e.date)
 					})
+					
+			$('#returnDateDiv').on(
+					'dp.change',
+					function(e) {
+						$("#search-return-date-hidden").val(e.date.format('DD/MM/YYYY'));
+						fire(document.getElementById("search-return-date-hidden"), "change");
+					})
+					
 			$('#passengers').change(function() {
 				var value = $('#passengers').val()
 				if (value < 1)

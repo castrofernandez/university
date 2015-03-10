@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 </head>
 
-<body>
+<body id="body-index">
 	<jsp:include page="header.jsp" />
 
 	<nav class="navbar navbar-default" role="navigation">
@@ -27,7 +27,7 @@
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" data-audit="yes" id="index-navbar-brand"> <spring:message code="index.title" />
+				<a class="navbar-brand"> <spring:message code="index.title" />
 				</a>
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">

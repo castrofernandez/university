@@ -130,6 +130,8 @@ app.get('/observations', function(req, res) {
   var instant = req.param('instant');
   var type = req.param('type');
   var value = req.param('value');
+  var other_value = req.param('other_value');
+  var label = req.param('label');
   var user_id = req.param('user_id');
   var count = req.param("count");
   var test = req.param("test");
@@ -147,8 +149,8 @@ app.get('/observations', function(req, res) {
         console.log('Conexion correcta.');
      }
   });
-    var query = connection.query('INSERT INTO observations (identifier, element, type, value, width, height, x, y, sx, sy, instant, user_id, count, test) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [identifier, element, type, value, width, height, x, y, sx, sy, instant, user_id, count, test], function(error, result){
+    var query = connection.query('INSERT INTO observations (identifier, element, type, value, other_value, label, width, height, x, y, sx, sy, instant, user_id, count, test) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [identifier, element, type, value, other_value, label, width, height, x, y, sx, sy, instant, user_id, count, test], function(error, result){
         if (error) {
           res.jsonp({
         	"success": false,

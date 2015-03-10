@@ -25,14 +25,14 @@
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 </head>
 
-<body>
+<body id="body-summary">
 	<jsp:include page="header.jsp" />
 
 	<nav class="no-print navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar-collapse">
+					data-toggle="collapse" data-target="#navbar-collapse" data-audit="yes" id="summary-navbar">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
@@ -41,16 +41,16 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="index"><spring:message code="index.title" /></a></li>
+					<li><a href="index" data-audit="yes" id="summary-index"><spring:message code="index.title" /></a></li>
 					<li class="active"><a><spring:message code="reserve.title" /></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<c:choose>
 						<c:when test="${empty userName}">
-							<li><a href="login"><spring:message code="login.title" /></a></li>
+							<li><a href="login" data-audit="yes" id="summary-login"><spring:message code="login.title" /></a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="profile"><spring:message
+							<li><a href="profile" data-audit="yes" id="summary-profile"><spring:message
 										code="profile.title" /></a></li>
 						</c:otherwise>
 					</c:choose>
@@ -73,7 +73,7 @@
 					</strong>${reserveId}
 				</p>
 				<p>
-					<button type="button" id="print-confirmation"
+					<button type="button" id="print-confirmation" data-audit="yes"
 						class="no-print btn btn-custom btn-lg">
 						<span class="glyphicon glyphicon-print"></span>
 						<spring:message code="summary.print.confimation" />
@@ -95,7 +95,7 @@
 						<c:set var="searchTitle">
 							<spring:message code="search.title" />
 						</c:set>
-						<input type="submit" class="link-submit" value="${searchTitle}" />
+						<input type="submit" class="link-submit" value="${searchTitle}" data-audit="yes" id="summary-search-submit" />
 					</form:form></li>
 				<li><form:form action="schedules" method="GET"
 						commandName="ReserveDTO" class="form" role="form">
@@ -113,7 +113,7 @@
 						<c:set var="schedulesTitle">
 							<spring:message code="schedules.title" />
 						</c:set>
-						<input type="submit" class="link-submit" value="${schedulesTitle}" />
+						<input type="submit" class="link-submit" value="${schedulesTitle}" data-audit="yes" id="summary-schedules-submit" />
 					</form:form></li>
 				<li><form:form action="personalData" method="GET"
 						commandName="ReserveDTO" class="form" role="form">
@@ -138,7 +138,7 @@
 						<c:forEach var="returnSeat" items="${ReserveDTO.returnSeats}">
 							<form:hidden path="returnSeats" value="${returnSeat}" />
 						</c:forEach>
-						<input type="submit" class="link-submit" value="Datos personales" />
+						<input type="submit" class="link-submit" value="Datos personales" data-audit="yes" id="summary-personal-submit" />
 					</form:form></li>
 				<li class="active"><spring:message code="summary.title" /></li>
 			</ol>
@@ -302,7 +302,7 @@
 				<c:forEach var="returnSeat" items="${ReserveDTO.returnSeats}">
 					<form:hidden path="returnSeats" value="${returnSeat}" />
 				</c:forEach>
-				<button type="submit" class="no-print btn btn-custom pull-right">
+				<button type="submit" class="no-print btn btn-custom pull-right" data-audit="yes" id="summary-reserve">
 					<spring:message code="summary.confirm.reserve" />
 				</button>
 			</form:form>

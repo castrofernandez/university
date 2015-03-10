@@ -17,14 +17,14 @@
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 </head>
 
-<body>
+<body id="body-reserve">
 	<jsp:include page="header.jsp" />
 
 	<nav class="no-print navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar-collapse">
+					data-toggle="collapse" data-target="#navbar-collapse" data-audit="yes" id="reserve-navbar">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
@@ -33,8 +33,8 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="index"><spring:message code="index.title" /></a></li>
-					<li><a href="search"><spring:message code="search.title" /></a></li>
+					<li><a href="index" data-audit="yes" id="reserve-index"><spring:message code="index.title" /></a></li>
+					<li><a href="search" data-audit="yes" id="reserve-search"><spring:message code="search.title" /></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="active"><a><spring:message code="profile.title" /></a></li>
@@ -45,7 +45,7 @@
 
 	<div class="container">
 		<ol class="no-print breadcrumb">
-			<li><a href="profile"><spring:message code="profile.title" /></a></li>
+			<li><a href="profile" data-audit="yes" id="reserve-profile"><spring:message code="profile.title" /></a></li>
 			<li class="active">Reserva ${ReserveDTO.id}</li>
 		</ol>
 		<div class="panel panel-default">
@@ -174,12 +174,12 @@
 				role="form">
 				<input type="hidden" value="${ReserveDTO.id}" name="id" />
 				<div class="text-center">
-					<button class="btn btn-custom btn-lg" id="print" type="button">
+					<button class="btn btn-custom btn-lg" id="print" data-audit="yes" type="button">
 						<span class="glyphicon glyphicon-print"></span>
 						<spring:message code="reserve.print" />
 					</button>
 					<c:if test="${not ReserveDTO.old}">
-						<button class="btn btn-red btn-lg" type="submit">
+						<button class="btn btn-red btn-lg" type="submit" data-audit="yes" id="reserve-submit">
 							<span class="glyphicon glyphicon-trash"></span>
 							<spring:message code="reserve.cancel" />
 						</button>

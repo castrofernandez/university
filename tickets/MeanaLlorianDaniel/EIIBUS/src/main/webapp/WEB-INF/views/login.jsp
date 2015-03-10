@@ -15,14 +15,14 @@
 <link rel="stylesheet" type="text/css" href="resources/css/style.css">
 </head>
 
-<body>
+<body id="body-login">
 	<jsp:include page="header.jsp" />
 
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar-collapse">
+					data-toggle="collapse" data-target="#navbar-collapse" data-audit="yes" id="login-navbar">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
@@ -31,8 +31,8 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="index"><spring:message code="index.title" /></a></li>
-					<li><a href="search"><spring:message code="search.title" /></a></li>
+					<li><a href="index" data-audit="yes" id="login-index"><spring:message code="index.title" /></a></li>
+					<li><a href="search" data-audit="yes" id="login-search"><spring:message code="search.title" /></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="active"><a><spring:message code="login.title" /></a></li>
@@ -63,7 +63,7 @@
 										<form:label path="email"
 											class="col-md-3 col-sm-4 control-label">${fieldEmail}</form:label>
 										<div class="col-md-9 col-sm-8">
-											<form:input path="email" type="email" class="form-control"
+											<form:input path="email" type="email" class="form-control"  data-audit="yes" id="login-login-email"
 												placeholder="${fieldEmail}" />
 										</div>
 									</div>
@@ -73,7 +73,7 @@
 										<form:label path="email"
 											class="col-md-3 col-sm-4 control-label">${fieldEmail}</form:label>
 										<div class="col-md-9 col-sm-8">
-											<form:input path="email" type="email" class="form-control"
+											<form:input path="email" type="email" class="form-control"  data-audit="yes" id="login-login-email"
 												placeholder="${fieldEmail}" />
 											<p class="text-danger">${loginEmailErrors}</p>
 										</div>
@@ -92,7 +92,7 @@
 											${fieldPassword}
 										</form:label>
 										<div class="col-md-9 col-sm-8">
-											<form:input path="password" type="password"
+											<form:input path="password" type="password"  data-audit="yes" id="login-login-password"
 												class="form-control" placeholder="${fieldPassword}" />
 										</div>
 									</div>
@@ -104,7 +104,7 @@
 											${fieldPassword}
 										</form:label>
 										<div class="col-md-9 col-sm-8">
-											<form:input path="password" type="password"
+											<form:input path="password" type="password"  data-audit="yes" id="login-login-password"
 												class="form-control" placeholder="${fieldPassword}" />
 											<p class="text-danger">${loginPasswordErrors}</p>
 										</div>
@@ -114,7 +114,7 @@
 							<div class="form-group">
 								<div class="col-md-offset-3 col-md-9 col-sm-offset-4 col-sm-8">
 									<spring:message code="login.login" var="loginLogin" />
-									<input type="submit" class="btn btn-custom"
+									<input type="submit" class="btn btn-custom"  data-audit="yes" id="login-login-submit"
 										value="${loginLogin}" />
 								</div>
 							</div>
@@ -140,14 +140,14 @@
 								<c:when test="${empty registerNameErrors}">
 									<div class="form-group col-md-6">
 										<form:label path="name" class="control-label">${fieldName}</form:label>
-										<form:input path="name" type="text" class="form-control"
+										<form:input path="name" type="text" class="form-control"  data-audit="yes" id="login-register-name"
 											placeholder="${fieldName}" />
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div class="form-group col-md-6 has-error">
 										<form:label path="name" class="control-label">${fieldName}</form:label>
-										<form:input path="name" type="text" class="form-control"
+										<form:input path="name" type="text" class="form-control" data-audit="yes" id="login-register-name"
 											placeholder="${fieldName}" />
 										<p class="text-danger">${registerNameErrors}</p>
 									</div>
@@ -161,14 +161,14 @@
 								<c:when test="${empty registerLastnameErrors}">
 									<div class="form-group col-md-6">
 										<form:label path="lastname" class="control-label">${fieldLastname}</form:label>
-										<form:input path="lastname" type="text" class="form-control"
+										<form:input path="lastname" type="text" class="form-control" data-audit="yes" id="login-register-lastname"
 											placeholder="${fieldLastname}" />
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div class="form-group col-md-6 has-error">
 										<form:label path="lastname" class="control-label">${fieldLastname}</form:label>
-										<form:input path="lastname" type="text" class="form-control"
+										<form:input path="lastname" type="text" class="form-control" data-audit="yes" id="login-register-lastname"
 											placeholder="${fieldLastname}" />
 										<p class="text-danger">${registerLastnameErrors}</p>
 									</div>
@@ -178,7 +178,7 @@
 								<form:label path="documentType">
 									<spring:message code="field.document.type" />
 								</form:label>
-								<form:select path="documentType" class="form-control">
+								<form:select path="documentType" class="form-control" data-audit="yes" id="login-register-document-type">
 									<form:option value="DNI">
 										<spring:message code="field.document.dni" />
 									</form:option>
@@ -199,14 +199,14 @@
 								<c:when test="${empty registerDocumentNumberErrors}">
 									<div class="form-group col-md-6">
 										<form:label path="documentNumber" class="control-label">${fieldDocumentNumber}</form:label>
-										<form:input path="documentNumber" type="text"
+										<form:input path="documentNumber" type="text" data-audit="yes" id="login-register-document"
 											class="form-control" placeholder="${fieldDocumentNumber}" />
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div class="form-group col-md-6 has-error">
 										<form:label path="documentNumber" class="control-label">${fieldDocumentNumber}</form:label>
-										<form:input path="documentNumber" type="text"
+										<form:input path="documentNumber" type="text" data-audit="yes" id="login-register-document"
 											class="form-control" placeholder="${fieldDocumentNumber}" />
 										<p class="text-danger">${registerDocumentNumberErrors}</p>
 									</div>
@@ -220,14 +220,14 @@
 								<c:when test="${empty registerEmailErrors}">
 									<div class="form-group col-md-12">
 										<form:label path="email" class="control-label">${fieldEmail}</form:label>
-										<form:input path="email" type="email" class="form-control"
+										<form:input path="email" type="email" class="form-control" data-audit="yes" id="login-register-email"
 											placeholder="${fieldEmail}" />
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div class="form-group col-md-12 has-error">
 										<form:label path="email" class="control-label">${fieldEmail}</form:label>
-										<form:input path="email" type="email" class="form-control"
+										<form:input path="email" type="email" class="form-control" data-audit="yes" id="login-register-email"
 											placeholder="${fieldEmail}" />
 										<p class="text-danger">${registerEmailErrors}</p>
 									</div>
@@ -241,14 +241,14 @@
 								<c:when test="${empty registerPasswordErrors}">
 									<div class="form-group col-md-6">
 										<form:label path="password" class="control-label">${fieldPassword}</form:label>
-										<form:input path="password" type="password"
+										<form:input path="password" type="password" data-audit="yes" id="login-register-password"
 											class="form-control" placeholder="${fieldPassword}" />
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div class="form-group col-md-6 has-error">
 										<form:label path="password" class="control-label">${fieldPassword}</form:label>
-										<form:input path="password" type="password"
+										<form:input path="password" type="password" data-audit="yes" id="login-register-password"
 											class="form-control" placeholder="${fieldPassword}" />
 										<p class="text-danger">${registerPasswordErrors}</p>
 									</div>
@@ -265,7 +265,7 @@
 										<form:label path="confirmPassword" class="control-label">
 											${fieldPasswordConfirm}
 										</form:label>
-										<form:input path="confirmPassword" type="password"
+										<form:input path="confirmPassword" type="password" data-audit="yes" id="login-register-password2"
 											class="form-control" placeholder="${fieldPasswordConfirm}" />
 									</div>
 								</c:when>
@@ -274,7 +274,7 @@
 										<form:label path="confirmPassword" class="control-label">
 											${fieldPasswordConfirm}
 										</form:label>
-										<form:input path="confirmPassword" type="password"
+										<form:input path="confirmPassword" type="password" data-audit="yes" id="login-register-password2"
 											class="form-control" placeholder="${fieldPasswordConfirm}" />
 										<p class="text-danger">${registerConfirmPasswordErrors}</p>
 									</div>
@@ -286,7 +286,7 @@
 								</span>
 								<spring:message code="login.registration.complete"
 									var="loginRegistrationComplete" />
-								<input type="submit" class="btn btn-custom"
+								<input type="submit" class="btn btn-custom" data-audit="yes" id="login-register-submit"
 									value="${loginRegistrationComplete}" />
 							</div>
 						</form:form>
