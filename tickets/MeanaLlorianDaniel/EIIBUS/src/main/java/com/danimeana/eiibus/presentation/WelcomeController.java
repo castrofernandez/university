@@ -75,15 +75,15 @@ public class WelcomeController {
 	@RequestMapping(value = "init")
 	public String init() {
 		// # Cities
-		City oviedo = new City("Oviedo");
+		City oviedo = new City("OVIEDO");
 		cityManagerService.saveCity(oviedo);
-		City gijon = new City("Gijón");
+		City gijon = new City("GIJON");
 		cityManagerService.saveCity(gijon);
-		City aviles = new City("Avilés");
+		City aviles = new City("AVILES");
 		cityManagerService.saveCity(aviles);
-		City pola = new City("Pola de Siero");
+		City pola = new City("POLA DE SIERO");
 		cityManagerService.saveCity(pola);
-		City navia = new City("Navia");
+		City navia = new City("NAVIA");
 		cityManagerService.saveCity(navia);
 
 		// # Trips
