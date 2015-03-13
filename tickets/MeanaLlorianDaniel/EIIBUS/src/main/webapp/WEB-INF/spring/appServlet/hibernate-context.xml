@@ -11,9 +11,9 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="mysql://127.0.0.1:3306" />
-		<!-- <property name="url" value="mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/" /> -->
-		<property name="username" value="adminsDMBix9" />
+		<property name="url" value="jdbc:mysql://juancastro.es:3306/juancast_tickets" />
+		<!-- <property name="url" value="jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/tickets" /> -->
+		<property name="username" value="juancast_tickets" />
 		<property name="password" value="8P9UBkKwtVHx" />
 	</bean>
 
