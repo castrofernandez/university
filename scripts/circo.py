@@ -539,6 +539,8 @@ class Circo:
             self.processData()
         elif option == "11":
             self.clear_user_results()
+        elif option == "12":
+            self.set_finished_users()
         elif option == "x":
             print "¡Hasta luego amigo!"
             sys.exit([0])
@@ -564,6 +566,7 @@ def printMenu(circo):
     print "  09. Get users that answered all questions (filtered by 'info')"
     print "  10. Process data"
     print "  11. Clean user data"
+    print "  12. Set finishing users"
     print " x. Exit"
     print "________________________________________________________________________________"
 
