@@ -25,6 +25,8 @@ public class SessionsInterceptor extends HandlerInterceptorAdapter {
 			sessions.add(session.getId());
 		context.setAttribute("sessions", sessions);
 		request.setAttribute("sessions", sessions.size());
+
+		request.setAttribute("sessionid", session.getId());
 		return true;
 	}
 

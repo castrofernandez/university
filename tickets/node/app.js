@@ -55,8 +55,10 @@ function getDBConnection() {
 }
 
 app.get('/users', function(req, res) {
-  var info = req.param('info');
+  var info = req.param('info') ? req.param('info') : '';
   var ip = req.ip;
+  
+  var sessionid = req.param('session');
 
   var useragent = req.headers['user-agent'] ? req.headers['user-agent'] : "UNKNOWN";
   var acceptlanguage = req.headers['accept-language'] ? req.headers['accept-language'] : "UNKNOWN";
@@ -71,7 +73,8 @@ app.get('/users', function(req, res) {
      	console.log(error)
         res.jsonp({
         "success": false,
-        "error": error
+        "error": error,
+        "session": sessionid
         });
      }else{
         console.log('Conexion correcta.');
@@ -80,34 +83,38 @@ app.get('/users', function(req, res) {
 
   var user = -1;
   
-  var queryStr = "SELECT id FROM users WHERE info = '" + info + "'";
+  var queryStr = "SELECT id FROM users WHERE session = '" + sessionid + "'";
 
   var query = connection.query(queryStr, function(error, result){
         if (error) {
            res.jsonp({
         	"success": false,
-        	"error": error
+        	"error": error,
+        	"session": sessionid
         	});
         } else {
         	if (result && result.length && result.length > 0) {
 				res.jsonp({
         			"success": true,
-        			"id": result[0].id
+        			"id": result[0].id,
+        			"session": sessionid
         		});
         	}
         	else {
-        		var query = connection.query('INSERT INTO users (ip, useragent, acceptlanguage, width, height, info) VALUES (?, ?, ?, ?, ?, ?)', [ip, useragent, acceptlanguage, width, height, info], function(error, result){
+        		var query = connection.query('INSERT INTO users (ip, useragent, acceptlanguage, width, height, info, session) VALUES (?, ?, ?, ?, ?, ?, ?)', [ip, useragent, acceptlanguage, width, height, info, sessionid], function(error, result){
 					  if (error) {
 						res.jsonp({
 						"success": false,
-						"error": error
+						"error": error,
+						"session": sessionid
 						});
 					  } else {
 						user = result.insertId;
 						req.session["user_id"] = user;
 						res.jsonp({
 						"success": true,
-						"id": user
+						"id": user,
+						"session": sessionid
 						});
 					  }
 					}

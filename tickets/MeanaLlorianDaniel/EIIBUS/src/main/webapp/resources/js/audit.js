@@ -1,8 +1,13 @@
 var user = document.getElementById("user-id");
+var session_id = document.getElementById("session-id");
 
-if (user && user.value) {
-	user = user.value;
-	
+if (user) {
+	user = user.value ? user.value : "";
+}
+
+if (session_id && session_id.value) {
+	session_id = session_id.value;
+
 	$.ajax({
 	    url: "http://bus.circoneuronal.org/users",
 	    jsonp: "callback",
@@ -10,7 +15,8 @@ if (user && user.value) {
 	    data: {
 	        width: window.innerWidth,
 	        height: window.innerHeight,
-	        info: user
+	        info: user,
+	        session: session_id
 	    },
 	    success: function (response) {
 	        if (response.success)

@@ -1,2 +1,4 @@
 DB_backups/*
 scripts/data/*
+
+.DS_Store
