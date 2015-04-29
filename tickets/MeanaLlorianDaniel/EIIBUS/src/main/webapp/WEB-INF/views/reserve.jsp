@@ -178,6 +178,7 @@
 						<span class="glyphicon glyphicon-print"></span>
 						<spring:message code="reserve.print" />
 					</button>
+					
 					<c:if test="${not ReserveDTO.old}">
 						<button class="btn btn-red btn-lg" type="submit" data-audit="yes" id="reserve-submit">
 							<span class="glyphicon glyphicon-trash"></span>

@@ -451,3 +451,39 @@ table.prices>tfoot {
 	font-weight: bold;
 	font-size: 1.5em;
 }
+
+button.large {
+	min-width: 250px;
+}
+
+.question {
+	color: #000;
+	margin-bottom: 2em;
+}
+
+.answer {
+
+}
+
+.questions {
+	overflow: hidden;
+	list-style: none;
+}
+
+.questions li {
+	overflow: hidden;
+	background-color: #eee;
+	margin-bottom: 3em;
+	padding: 2em 1em;
+}
+
+.star {
+	font-size: 2em;
+	margin: 0 1em;
+	color: #bbb;
+	cursor: pointer;
+}
+
+.star[status='active'] {
+	color: #ffbf00;
+}

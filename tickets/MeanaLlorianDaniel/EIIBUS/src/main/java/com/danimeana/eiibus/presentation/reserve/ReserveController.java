@@ -261,6 +261,12 @@ public class ReserveController {
 		model.addAttribute("reserveId", reserve.getId());
 		return "summary";
 	}
+	
+	@RequestMapping(value = "survey", method = RequestMethod.POST)
+	private String survey(@ModelAttribute("ReserveDTO") ReserveDTO reserveDTO, BindingResult result,
+			HttpSession session, Model model) {
+		return "survey";
+	}
 
 	private void loadSchedulesData(ReserveDTO reserveDTO, Model model) {
 		List<Schedule> departureSchedules = scheduleManagerService

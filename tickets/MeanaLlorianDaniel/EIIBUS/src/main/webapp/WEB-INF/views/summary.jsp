@@ -74,10 +74,20 @@
 				</p>
 				<p>
 					<button type="button" id="print-confirmation" data-audit="yes"
-						class="no-print btn btn-custom btn-lg">
+						class="no-print btn btn-custom btn-lg large">
 						<span class="glyphicon glyphicon-print"></span>
 						<spring:message code="summary.print.confimation" />
 					</button>
+				</p>
+				<p>
+					<form action="survey" method="post" class="form form-inline" role="form">
+					<div class="text-center">
+						<button class="btn btn-success btn-lg large" id="survey" data-audit="yes" type="submit">
+							<span class="glyphicon glyphicon-pencil"></span>
+							<spring:message code="survey.link" />
+						</button>
+					</div>
+			</form>
 				</p>
 			</div>
 		</c:if>
