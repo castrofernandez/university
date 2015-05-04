@@ -16,18 +16,22 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private DocumentType documentType;
 	private String documentNumber;
+	private String gender;
+	private int age;
+	private String laterality;
 
 	public User() {
 	}
 
 	public User(String email, String password, String name, String lastname, DocumentType documentType,
-			String documentNumber) {
+			String documentNumber, String gender) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.lastname = lastname;
 		this.documentType = documentType;
 		this.documentNumber = documentNumber;
+		this.gender = gender;
 	}
 
 	public String getEmail() {
@@ -77,11 +81,36 @@ public class User {
 	public void setDocumentNumber(String documentNumber) {
 		this.documentNumber = documentNumber;
 	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public int getAge() {
+		return age;
+	}
+	
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+	public String getLaterality() {
+		return laterality;
+	}
+	
+	public void setLaterality(String laterality) {
+		this.laterality = laterality;
+	}
 
 	@Override
 	public String toString() {
 		return "User [email=" + email + ", password=" + password + ", name=" + name + ", lastname=" + lastname
-				+ ", documentType=" + documentType + ", documentNumber=" + documentNumber + "]";
+				+ ", documentType=" + documentType + ", documentNumber=" + documentNumber 
+				+ ", gender=" + gender + ", age=" + age + ", laterality=" + laterality + "]";
 	}
 
 	@Override

@@ -12,6 +12,9 @@ public class UserDTO {
 	private String email;
 	private String password;
 	private String confirmPassword;
+	private String gender;
+	private int age;
+	private String laterality;
 
 	public String getName() {
 		return name;
@@ -68,6 +71,30 @@ public class UserDTO {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public int getAge() {
+		return age;
+	}
+	
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+	public String getLaterality() {
+		return laterality;
+	}
+	
+	public void setLaterality(String laterality) {
+		this.laterality = laterality;
+	}
 
 	@Override
 	public String toString() {
@@ -84,6 +111,9 @@ public class UserDTO {
 		user.setPassword(password);
 		user.setDocumentType(documentType);
 		user.setDocumentNumber(documentNumber);
+		user.setGender(gender);
+		user.setAge(age);
+		user.setLaterality(laterality);
 		return user;
 	}
 

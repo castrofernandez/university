@@ -22,12 +22,19 @@ public class UserValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		UserDTO userDTO = (UserDTO) target;
+
 		if (userDTO.getName() == null || userDTO.getName().isEmpty())
 			errors.rejectValue("name", "errors.name.required");
 		if (userDTO.getLastname() == null || userDTO.getLastname().isEmpty())
 			errors.rejectValue("lastname", "errors.lastname.required");
 		if (userDTO.getDocumentNumber() == null || userDTO.getDocumentNumber().isEmpty())
 			errors.rejectValue("documentNumber", "errors.document.number.required");
+		if (userDTO.getAge() == 0)
+			errors.rejectValue("age", "errors.age.required");
+		if (userDTO.getGender() == null || userDTO.getGender().isEmpty())
+			errors.rejectValue("gender", "errors.gender.required");
+		if (userDTO.getLaterality() == null || userDTO.getLaterality().isEmpty())
+			errors.rejectValue("laterality", "errors.laterality.required");
 		else {
 			DocumentType documentType = userDTO.getDocumentType();
 			boolean correct = false;

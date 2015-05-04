@@ -280,6 +280,66 @@
 									</div>
 								</c:otherwise>
 							</c:choose>
+							
+							<div class="form-group col-md-12">
+								<form:label path="name" class="control-label"><spring:message code="field.gender" /></form:label>
+								<div>
+									<c:choose>
+									     <c:when test="${gender == 'MAN'}">
+									      	<form:radiobutton path="gender" value="MAN" checked="checked" /><label class="lblActive"><spring:message code="field.gender.man" /></label> 
+											<form:radiobutton path="gender" value="WOMAN"/><label class="lblActive"><spring:message code="field.gender.woman" /></label>
+									    </c:when>
+									    <c:otherwise>
+									      	<form:radiobutton path="gender" value="MAN"/><label class="lblActive"><spring:message code="field.gender.man" /></label> 
+											<form:radiobutton path="gender" value="WOMAN" checked="checked" /><label class="lblActive"><spring:message code="field.gender.woman" /></label>
+									   </c:otherwise>
+									</c:choose> 
+								</div>
+							</div>
+							
+							<c:set var="registerAgeErrors">
+								<form:errors path="age" />
+							</c:set>
+							<spring:message code="field.age"
+								var="fieldAge" />
+							<c:choose>
+								<c:when test="${empty registerAgeErrors}">
+									<div class="form-group col-md-6">
+										<form:label path="age" class="control-label">
+											<spring:message code="field.age" />
+										</form:label>
+										<form:input path="age" type="number" data-audit="yes" id="login-register-age"
+											class="form-control" placeholder="${fieldAge}" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="form-group col-md-6 has-error">
+										<form:label path="age" class="control-label">
+											<spring:message code="field.age" />
+										</form:label>
+										<form:input path="age" type="number" data-audit="yes" id="login-register-age"
+											class="form-control" placeholder="${fieldPasswordConfirm}" />
+										<p class="text-danger">${registerAgeErrors}</p>
+									</div>
+								</c:otherwise>
+							</c:choose>
+							
+							<div class="form-group col-md-12">
+								<form:label path="laterality" class="control-label"><spring:message code="field.laterality" /></form:label>
+								<div>
+									<c:choose>
+									     <c:when test="${laterality == 'RIGHT'}">
+									      	<form:radiobutton path="laterality" value="RIGHT" checked="checked" /><label class="lblActive"><spring:message code="field.laterality.right" /></label> 
+											<form:radiobutton path="laterality" value="LEFT"/><label class="lblActive"><spring:message code="field.laterality.left" /></label>
+									    </c:when>
+									    <c:otherwise>
+									      	<form:radiobutton path="laterality" value="RIGHT"/><label class="lblActive"><spring:message code="field.laterality.right" /></label> 
+											<form:radiobutton path="laterality" value="LEFT" checked="checked" /><label class="lblActive"><spring:message code="field.laterality.left" /></label>
+									   </c:otherwise>
+									</c:choose> 
+								</div>
+							</div>
+							
 							<div class="form-group col-md-12">
 								<span class="help-block"> <spring:message
 										code="field.fields.required" />
