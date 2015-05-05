@@ -55,6 +55,18 @@
 			<p class="icon">
 				<span class="glyphicon glyphicon-pencil"></span> <spring:message code="survey.title" />
 			</p>
+			
+			<form:form action="save_survey" method="POST"
+					commandName="SurveyDTO" class="form" role="form">
+				<form:hidden path="email" value="${SurveyDTO.email}" />
+				<form:hidden path="answer1" value="${SurveyDTO.answer1}" />
+					
+				<c:set var="surveySubmit">
+					<spring:message code="survey.submit" />
+				</c:set>
+				<input type="submit" class="link-submit" value="${surveySubmit}" data-audit="yes" id="survey-submit" />
+			</form:form>
+			
 			<ul class="questions">
 				<li>
 					<div class="question"><spring:message code="survey.q1" /></div>

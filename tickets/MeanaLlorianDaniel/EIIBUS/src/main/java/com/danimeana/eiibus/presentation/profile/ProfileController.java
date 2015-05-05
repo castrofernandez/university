@@ -29,6 +29,7 @@ import com.danimeana.eiibus.model.User;
 import com.danimeana.eiibus.presentation.profile.dto.ReserveDTO;
 import com.danimeana.eiibus.presentation.profile.dto.UserDTO;
 import com.danimeana.eiibus.presentation.profile.validator.UserValidator;
+import com.danimeana.eiibus.presentation.survey.dto.SurveyDTO;
 
 @Controller
 public class ProfileController {
@@ -81,6 +82,9 @@ public class ProfileController {
 		model.addAttribute("userName", user.getName());
 		model.addAttribute("UserDTO", UserDTO.getUserDTO(user));
 		model.addAttribute("msgSuccess", "profile.update.msg.success");
+		
+		model.addAttribute("SurveyDTO", SurveyDTO.createSurveyDTO(user));
+		
 		loadData(session, model);
 		return "profile";
 	}

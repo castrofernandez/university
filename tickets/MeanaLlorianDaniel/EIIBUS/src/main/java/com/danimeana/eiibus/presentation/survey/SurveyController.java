@@ -1,6 +1,5 @@
 package com.danimeana.eiibus.presentation.survey;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.danimeana.eiibus.business.UserManagerService;
-import com.danimeana.eiibus.presentation.login.dto.UserDTO;
+import com.danimeana.eiibus.business.SurveyManagerService;
+import com.danimeana.eiibus.presentation.survey.dto.SurveyDTO;
 
 /**
  * Handles requests for the application home page.
@@ -22,17 +21,19 @@ import com.danimeana.eiibus.presentation.login.dto.UserDTO;
 public class SurveyController {
 
 	@Autowired
-	private UserManagerService userManagerService;
+	private SurveyManagerService surveyManagerService;
 
-	@RequestMapping(value = { "login", "register" }, method = RequestMethod.GET)
-	public String index(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "survey")
+	public String index(@ModelAttribute("SurveyDTO") SurveyDTO surveyDTO, Model model) {
 		return "survey";
 	}
 
-	@RequestMapping(value = "save", method = RequestMethod.POST)
-	public String register(@Valid @ModelAttribute("UserDTO") UserDTO userDTO, BindingResult result, Model model,
+	@RequestMapping(value = "save_survey", method = RequestMethod.POST)
+	public String register(@Valid @ModelAttribute("SurveyDTO") SurveyDTO surveyDTO, BindingResult result, Model model,
 			HttpSession session) {
-		userManagerService.addUser(userDTO.createUser());
+
+		surveyManagerService.addSurvey(surveyDTO.createSurvey());
+	
 		return "redirect:index";
 	}
 }

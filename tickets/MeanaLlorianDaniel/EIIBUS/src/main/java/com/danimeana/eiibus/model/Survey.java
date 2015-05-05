@@ -8,8 +8,7 @@ public class Survey {
 
 	@Id
 	private String email;
-	private String question;
-	private String answer;
+	private String answer1;
 
 	public String getEmail() {
 		return email;
@@ -19,33 +18,28 @@ public class Survey {
 		this.email = email;
 	}
 
-	public String getQuestion() {
-		return question;
+	public String getAnswer1() {
+		return answer1;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public void setAnswer1(String answer1) {
+		this.answer1 = answer1;
 	}
 
 	public Survey() {
 	}
 
 	@Override
+	public String toString() {
+		return "Survey [email=" + email + ", answer1=" + answer1 + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((answer == null) ? 0 : answer.hashCode());
+		result = prime * result + ((answer1 == null) ? 0 : answer1.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result
-				+ ((question == null) ? 0 : question.hashCode());
 		return result;
 	}
 
@@ -58,27 +52,16 @@ public class Survey {
 		if (getClass() != obj.getClass())
 			return false;
 		Survey other = (Survey) obj;
-		if (answer == null) {
-			if (other.answer != null)
+		if (answer1 == null) {
+			if (other.answer1 != null)
 				return false;
-		} else if (!answer.equals(other.answer))
+		} else if (!answer1.equals(other.answer1))
 			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (question == null) {
-			if (other.question != null)
-				return false;
-		} else if (!question.equals(other.question))
-			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Survey [email=" + email + ", question=" + question
-				+ ", answer=" + answer + "]";
 	}
 }
