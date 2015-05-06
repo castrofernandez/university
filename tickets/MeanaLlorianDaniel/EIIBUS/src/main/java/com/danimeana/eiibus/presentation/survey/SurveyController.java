@@ -32,7 +32,7 @@ public class SurveyController {
 	public String register(@Valid @ModelAttribute("SurveyDTO") SurveyDTO surveyDTO, BindingResult result, Model model,
 			HttpSession session) {
 
-		surveyManagerService.addSurvey(surveyDTO.createSurvey());
+		surveyManagerService.addSurvey(surveyDTO.createSurvey(session));
 	
 		return "redirect:index";
 	}

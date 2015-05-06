@@ -142,6 +142,9 @@ app.get('/observations', function(req, res) {
   var user_id = req.param('user_id');
   var count = req.param("count");
   var test = req.param("test");
+  
+  var form = req.param("form");
+  var email = req.param("email");
 
   var connection = getDBConnection();
 
@@ -156,8 +159,8 @@ app.get('/observations', function(req, res) {
         console.log('Conexion correcta.');
      }
   });
-    var query = connection.query('INSERT INTO observations (identifier, element, type, value, other_value, label, width, height, x, y, sx, sy, instant, user_id, count, test) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [identifier, element, type, value, other_value, label, width, height, x, y, sx, sy, instant, user_id, count, test], function(error, result){
+    var query = connection.query('INSERT INTO observations (identifier, element, type, value, other_value, label, width, height, x, y, sx, sy, instant, user_id, count, test, form, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [identifier, element, type, value, other_value, label, width, height, x, y, sx, sy, instant, user_id, count, test, form, email], function(error, result){
         if (error) {
           res.jsonp({
         	"success": false,

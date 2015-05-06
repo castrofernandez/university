@@ -1,6 +1,8 @@
 var user = document.getElementById("user-id");
 var session_id = document.getElementById("session-id");
 
+var form_id = document.body.id;
+
 if (user) {
 	user = user.value ? user.value : "";
 }
@@ -122,7 +124,7 @@ console.log(event.type)
 		}
 		
 		var innerCoordinates = getInnerCoordinates(element, event);
-		
+
 		var observation = {
 			"identifier": document.URL,
 			"test": hash,
@@ -139,7 +141,9 @@ console.log(event.type)
 			"label": label,
 			"other_value": element.checked ? element.checked : null,
 			"user_id": user_id,
-			"count": count
+			"count": count,
+			"form": form_id,
+			"email": user
 		};
 
 		observations.push(observation);
