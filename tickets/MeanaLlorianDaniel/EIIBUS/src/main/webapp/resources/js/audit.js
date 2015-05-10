@@ -143,7 +143,8 @@ console.log(event.type)
 			"user_id": user_id,
 			"count": count,
 			"form": form_id,
-			"email": user
+			"email": user,
+			"session": session_id
 		};
 
 		observations.push(observation);

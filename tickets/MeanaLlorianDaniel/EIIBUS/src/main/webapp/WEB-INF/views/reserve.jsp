@@ -42,11 +42,13 @@
 			</div>
 		</div>
 	</nav>
+	
+	<jsp:include page="description.jsp" />
 
 	<div class="container">
 		<ol class="no-print breadcrumb">
 			<li><a href="profile" data-audit="yes" id="reserve-profile"><spring:message code="profile.title" /></a></li>
-			<li class="active">Reserva ${ReserveDTO.id}</li>
+			<li class="active"><spring:message code="summary.reserve" /> ${ReserveDTO.id}</li>
 		</ol>
 		<div class="panel panel-default">
 			<div class="panel-heading">

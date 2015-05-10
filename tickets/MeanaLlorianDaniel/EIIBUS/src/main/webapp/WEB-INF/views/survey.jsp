@@ -28,7 +28,7 @@
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand"><spring:message code="error.title" /></a>
+				<a class="navbar-brand"><spring:message code="survey.title" /></a>
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
@@ -55,11 +55,18 @@
 			<p class="icon">
 				<span class="glyphicon glyphicon-pencil"></span> <spring:message code="survey.title" />
 			</p>
+			<p class="description">
+				<spring:message code="survey.description" />
+			</p>
+			<br />
 			
 			<form:form action="save_survey" method="POST"
 					commandName="SurveyDTO" class="form" role="form">
 				<form:hidden path="email" value="${SurveyDTO.email}" />
-					
+				
+				<p class="descripcion">
+					<spring:message code="survey.subtitle1" />
+				</p>
 				<ul class="questions">
 					<li>
 						<div class="question"><spring:message code="survey.q1" /></div>
@@ -86,6 +93,11 @@
 						<form:hidden path="answer5" id="answer5" value="${SurveyDTO.answer5}" />
 						<div class="answer" data-answer="answer5"></div>
 					</li>
+				</ul>
+				<p class="descripcion">
+					<spring:message code="survey.subtitle2" />
+				</p>
+				<ul class="questions">
 					<li>
 						<div class="question"><spring:message code="survey.q6" /></div>
 						<form:hidden path="answer6" id="answer6" value="${SurveyDTO.answer6}" />
@@ -111,7 +123,11 @@
 						<form:hidden path="answer10" id="answer10" value="${SurveyDTO.answer10}" />
 						<div class="answer" data-answer="answer10"></div>
 					</li>
-					
+				</ul>
+				<p class="descripcion">
+					<spring:message code="survey.subtitle3" />
+				</p>
+				<ul class="questions">
 					<li>
 						<div class="question"><spring:message code="survey.q11" /></div>
 						<form:hidden path="answer11" id="answer11" value="${SurveyDTO.answer11}" />
@@ -127,6 +143,11 @@
 						<form:hidden path="answer13" id="answer13" value="${SurveyDTO.answer13}" />
 						<div class="answer" data-answer="answer13"></div>
 					</li>
+				</ul>
+				<p class="descripcion">
+					<spring:message code="survey.subtitle4" />
+				</p>
+				<ul class="questions">
 					<li>
 						<div class="question"><spring:message code="survey.q14" /></div>
 						<form:hidden path="answer14" id="answer14" value="${SurveyDTO.answer14}" />
@@ -142,11 +163,21 @@
 						<form:hidden path="answer16" id="answer16" value="${SurveyDTO.answer16}" />
 						<div class="answer" data-answer="answer16"></div>
 					</li>
+				</ul>
+				<p class="descripcion">
+					<spring:message code="survey.subtitle5" />
+				</p>
+				<ul class="questions">
 					<li>
 						<div class="question"><spring:message code="survey.q17" /></div>
 						<form:hidden path="answer17" id="answer17" value="${SurveyDTO.answer17}" />
 						<div class="answer" data-answer="answer17"></div>
 					</li>
+				</ul>
+				<p class="descripcion">
+					<spring:message code="survey.subtitle6" />
+				</p>
+				<ul class="questions">
 					<li>
 						<div class="question"><spring:message code="survey.q18" /></div>
 						<form:hidden path="answer18" id="answer18" value="${SurveyDTO.answer18}" />
@@ -200,60 +231,15 @@
 					</li>
 				</ul>
 			
-				<c:set var="surveySubmit">
-					<spring:message code="survey.submit" />
-				</c:set>
-				<input type="submit" class="link-submit" value="${surveySubmit}" data-audit="yes" id="survey-submit" />
+				<button class="btn btn-primary btn-lg large" id="survey" data-audit="yes" type="submit" id="survey-submit">
+						<span class="glyphicon glyphicon-share-alt"></span>
+						<spring:message code="survey.submit" />
+				</button>
 			</form:form>
 		</div>
 	</div>
 
 	<jsp:include page="footer.jsp" />
+	<script type="text/javascript" src="resources/js/survey.js"></script>
 </body>
-	<script>
-		var answers = document.querySelectorAll(".answer");
-		var length = answers.length;
-		
-		for (var i = 0; i < length; i++) {
-			var answer = answers[i];
-			var parent = answer.getAttribute("data-answer");
-			
-			document.getElementById(parent).value = 1;
-			
-			for (var j = 0; j < 7; j++) {
-				var star = document.createElement("span");
-				star.className = "glyphicon glyphicon-star star";
-				star.value = j + 1;
-				star.answer = parent;
-				
-				if (j === 0)
-					star.setAttribute("status", "active");
-				
-				answer.appendChild(star);
-				
-				star.onclick = function(event) {
-					var previous = this.previousSibling;
-					var next = this.nextSibling;
-					
-					while (previous) {
-						previous.setAttribute("status", "active");
-						previous = previous.previousSibling;
-					}
-					
-					this.setAttribute("status", "active");
-					
-					while (next) {
-						next.setAttribute("status", "inactive");
-						next = next.nextSibling;
-					}
-					
-					// Set value
-					var value = this.value;
-					var answer = this.answer;
-				
-					document.getElementById(answer).value = value;
-				}
-			}
-		}
-	</script>
 </html>

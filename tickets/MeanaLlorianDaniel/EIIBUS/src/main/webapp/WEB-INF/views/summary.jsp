@@ -58,6 +58,8 @@
 			</div>
 		</div>
 	</nav>
+	
+	<jsp:include page="description.jsp" />
 
 	<div class="container">
 		<c:if test="${not empty reserveId}">
@@ -87,7 +89,7 @@
 							<spring:message code="survey.link" />
 						</button>
 					</div>
-			</form>
+					</form>
 				</p>
 			</div>
 		</c:if>

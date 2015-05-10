@@ -13,3 +13,14 @@
 <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="resources/js/audit.js"></script>
+
+
+<script>
+	$('#accordion').on('hidden.bs.collapse', function () {
+		document.getElementById('task-arrow').className = 'glyphicon glyphicon-chevron-down task-arrow';
+	})
+	
+	$('#accordion').on('shown.bs.collapse', function () {
+		document.getElementById('task-arrow').className = 'glyphicon glyphicon-chevron-up task-arrow';
+	})
+</script>

@@ -10,6 +10,7 @@ public class Survey {
 	private String id;
 
 	private String email;
+	private String session;
 	private String answer1;
 	private String answer2;
 	private String answer3;
@@ -269,6 +270,14 @@ public class Survey {
 
 	public void setAnswer1(String answer1) {
 		this.answer1 = answer1;
+	}
+
+	public String getSession() {
+		return session;
+	}
+
+	public void setSession(String session) {
+		this.session = session;
 	}
 
 	public Survey() {

@@ -279,6 +279,7 @@ public class SurveyDTO {
 		String email = loadUserData(session);
 		
 		survey.setEmail(email);
+		survey.setSession(session.getId());
 		survey.setAnswer1(answer1);
 		survey.setAnswer2(answer2);
 		survey.setAnswer3(answer3);

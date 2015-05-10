@@ -49,6 +49,8 @@
 			</div>
 		</div>
 	</nav>
+	
+	<jsp:include page="description.jsp" />
 
 	<div class="container">
 		<ol class="no-print breadcrumb">

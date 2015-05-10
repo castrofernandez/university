@@ -40,6 +40,8 @@
 			</div>
 		</div>
 	</nav>
+	
+	<jsp:include page="description.jsp" />
 
 	<div class="container">
 		<div class="row">

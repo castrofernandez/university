@@ -133,7 +133,7 @@ public class WelcomeController {
 		extraManagerService.saveExtra(insurance);
 
 		// # User
-		User user = new User("uo219171@uniovi.es", "12341234", "Daniel", "Meana", DocumentType.DNI, "53509030J");
+		User user = new User("uo219171@uniovi.es", "12341234", "Daniel", "Meana", DocumentType.DNI, "53509030J", "MAN");
 		userManagerService.addUser(user);
 		
 		return "redirect:index";

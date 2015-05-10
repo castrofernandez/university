@@ -42,6 +42,8 @@
 		</div>
 	</nav>
 
+	<jsp:include page="description.jsp" />
+
 	<div class="container">
 		<ol class="breadcrumb">
 			<li class="active"><spring:message code="profile.title" /></li>

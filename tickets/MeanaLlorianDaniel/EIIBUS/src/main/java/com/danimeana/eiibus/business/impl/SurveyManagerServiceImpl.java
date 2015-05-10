@@ -19,7 +19,7 @@ public class SurveyManagerServiceImpl implements SurveyManagerService {
 
 	@Override
 	public void addSurvey(Survey survey) {
-		survey.setId(RandomStringUtils.randomAlphanumeric(8)); System.out.println(survey);
+		survey.setId(RandomStringUtils.randomAlphanumeric(8));
 		surveyDataService.add(survey);
 	}
 }
