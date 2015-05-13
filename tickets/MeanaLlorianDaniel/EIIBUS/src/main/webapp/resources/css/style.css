@@ -111,6 +111,15 @@ div.description {
 	margin-top: 1em;
 }
 
+.score-description {
+	font-size: 1.2em !important;
+	color: #888;
+}
+
+.score-description span.glyphicon {
+	color: #ffbf00;
+}
+
 .img-bus {
 	height: 15em;
 	display: block;
@@ -458,7 +467,8 @@ button.large {
 
 .question {
 	color: #000;
-	margin-bottom: 2em;
+	margin: 0 auto 2em auto;
+	width: 70%;
 }
 
 .answer {
@@ -475,6 +485,18 @@ button.large {
 	background-color: #eee;
 	margin-bottom: 3em;
 	padding: 2em 1em;
+	position: relative;
+}
+
+.questions .number {
+	position: absolute;
+	display: inline-block;
+	width: 1em;
+	text-align: right;
+	left: 0.5em;
+	top: 0.25em;
+	font-size: 5em;
+	color: #999;
 }
 
 .star {

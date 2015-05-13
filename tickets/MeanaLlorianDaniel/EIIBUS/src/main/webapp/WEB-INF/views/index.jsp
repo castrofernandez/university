@@ -38,6 +38,7 @@
 			    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
 			    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
 			    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+			    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
 			  </ol>
 			
 			  <!-- Wrapper for slides -->
@@ -58,6 +59,10 @@
 			      <img src="resources/img/captures/four.png" alt="">
 			      <div class="carousel-caption"></div>
 			    </div>
+			    <div class="item">
+			      <img src="resources/img/captures/five.png" alt="">
+			      <div class="carousel-caption"></div>
+			    </div>
 			  </div>
 			
 			  <!-- Controls -->
@@ -73,7 +78,19 @@
 			
 			<br />
 			<p class="description">
-				<spring:message code="index.description.survey" />
+				<spring:message code="index.description.survey2" />
+			</p>
+			<p class="score-description">
+				<span class="glyphicon glyphicon-star" aria-hidden="true"></span> = <spring:message code="survey.score.lowest" />
+			</p>
+			<p class="score-description">
+				<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-star" aria-hidden="true"></span> = <spring:message code="survey.score.highest" />
 			</p>
 			
 			<form:form action="start" method="POST"
@@ -82,36 +99,43 @@
 					
 				<ul class="questions">
 					<li>
+						<span class="number">1</span>
 						<div class="question"><spring:message code="presurvey.q1" /></div>
 						<form:hidden path="answer1" id="answer1" value="${StartSurveyDTO.answer1}" />
 						<div class="answer" data-answer="answer1"></div>
 					</li>
 					<li>
+						<span class="number">2</span>
 						<div class="question"><spring:message code="presurvey.q2" /></div>
 						<form:hidden path="answer2" id="answer2" value="${StartSurveyDTO.answer2}" />
 						<div class="answer" data-answer="answer2"></div>
 					</li>
-					<li>
+					<li>	
+						<span class="number">3</span>
 						<div class="question"><spring:message code="presurvey.q3" /></div>
 						<form:hidden path="answer3" id="answer3" value="${StartSurveyDTO.answer3}" />
 						<div class="answer" data-answer="answer3"></div>
 					</li>
 					<li>
+						<span class="number">4</span>
 						<div class="question"><spring:message code="presurvey.q4" /></div>
 						<form:hidden path="answer4" id="answer4" value="${StartSurveyDTO.answer4}" />
 						<div class="answer" data-answer="answer4"></div>
 					</li>
 					<li>
+						<span class="number">5</span>
 						<div class="question"><spring:message code="presurvey.q5" /></div>
 						<form:hidden path="answer5" id="answer5" value="${StartSurveyDTO.answer5}" />
 						<div class="answer" data-answer="answer5"></div>
 					</li>
 					<li>
+						<span class="number">6</span>
 						<div class="question"><spring:message code="presurvey.q6" /></div>
 						<form:hidden path="answer6" id="answer6" value="${StartSurveyDTO.answer6}" />
 						<div class="answer" data-answer="answer6"></div>
 					</li>
 					<li>
+						<span class="number">7</span>
 						<div class="question"><spring:message code="presurvey.q7" /></div>
 						<form:hidden path="answer7" id="answer7" value="${StartSurveyDTO.answer7}" />
 						<div class="answer" data-answer="answer7"></div>
