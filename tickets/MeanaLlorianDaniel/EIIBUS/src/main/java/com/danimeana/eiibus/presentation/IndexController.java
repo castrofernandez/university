@@ -29,8 +29,23 @@ public class IndexController {
 */
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	public String index(@ModelAttribute("StartSurveyDTO") StartSurveyDTO startSurveyDTO, Model model, HttpSession session, HttpServletRequest request) {
+		String startSurvey = (String) session.getAttribute("startSurvey");
+		
+		if (startSurvey == "done")
+			return "start";
+		
 		String code = request.getParameter("code");
 		session.setAttribute("code", code);
+	
+		return "index";
+	}
+	
+	@RequestMapping(value = "start", method = RequestMethod.GET)
+	public String start(@ModelAttribute("StartSurveyDTO") StartSurveyDTO startSurveyDTO, Model model, HttpSession session, HttpServletRequest request) {
+		String startSurvey = (String) session.getAttribute("startSurvey");
+		
+		if (startSurvey == "done")
+			return "start";
 	
 		return "index";
 	}
@@ -42,6 +57,8 @@ public class IndexController {
 		surveyManagerService.addSurvey(startSurveyDTO.createSurvey(session));
 		
 		session.removeAttribute("ReserveDTO");
+		
+		session.setAttribute("startSurvey", "done");
 		
 		return "start";
 	}
