@@ -1,5 +1,7 @@
 package com.danimeana.eiibus.persistence.impl;
 
+import java.sql.Timestamp;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,6 +18,9 @@ public class SurveyDAO implements SurveyDataService {
 
 	@Override
 	public void add(Survey survey) {
+		java.util.Date date = new java.util.Date();
+		survey.setTime(new Timestamp(date.getTime()));
+		
 		em.persist(survey);
 	}
 }

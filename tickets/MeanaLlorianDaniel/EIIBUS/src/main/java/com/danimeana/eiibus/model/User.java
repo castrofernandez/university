@@ -1,5 +1,7 @@
 package com.danimeana.eiibus.model;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,6 +21,16 @@ public class User {
 	private String gender;
 	private int age;
 	private String laterality;
+	
+	private Timestamp time;
+
+	public Timestamp getTime() {
+		return time;
+	}
+
+	public void setTime(Timestamp time) {
+		this.time = time;
+	}
 
 	public User() {
 	}

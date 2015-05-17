@@ -1,5 +1,6 @@
 package com.danimeana.eiibus.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
@@ -37,6 +38,16 @@ public class Reserve {
 	private ReserveType type;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Extra> extras;
+	
+	private Timestamp time;
+
+	public Timestamp getTime() {
+		return time;
+	}
+
+	public void setTime(Timestamp time) {
+		this.time = time;
+	}
 
 	public Reserve() {
 	}

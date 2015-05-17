@@ -1,5 +1,6 @@
 package com.danimeana.eiibus.persistence.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,9 @@ public class ReserveDAO implements ReserveDataService {
 
 	@Override
 	public Reserve save(Reserve reserve) {
+		java.util.Date date = new java.util.Date();
+		reserve.setTime(new Timestamp(date.getTime()));
+		
 		em.persist(reserve);
 		return reserve;
 	}

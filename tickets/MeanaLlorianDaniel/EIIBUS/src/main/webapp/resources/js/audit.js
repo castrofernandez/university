@@ -1,10 +1,16 @@
 var user = document.getElementById("user-id");
 var session_id = document.getElementById("session-id");
 
+var code = document.getElementById("code");
+
 var form_id = document.body.id;
 
 if (user) {
 	user = user.value ? user.value : "";
+}
+
+if (code) {
+	code = code.value ? code.value : "";
 }
 
 if (session_id && session_id.value) {
@@ -144,7 +150,8 @@ console.log(event.type)
 			"count": count,
 			"form": form_id,
 			"email": user,
-			"session": session_id
+			"session": session_id,
+			"code": code
 		};
 
 		observations.push(observation);

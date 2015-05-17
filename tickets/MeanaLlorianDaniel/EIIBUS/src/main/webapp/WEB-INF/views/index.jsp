@@ -140,6 +140,25 @@
 						<form:hidden path="answer7" id="answer7" value="${StartSurveyDTO.answer7}" />
 						<div class="answer" data-answer="answer7"></div>
 					</li>
+					
+					<li>
+						<span class="number">8</span>
+						<div class="question"><spring:message code="presurvey.q8" /></div>
+						<form:hidden path="answer8" id="answer8" value="${StartSurveyDTO.answer8}" />
+						<div class="answer" data-answer="answer8"></div>
+					</li>
+					<li>
+						<span class="number">9</span>
+						<div class="question"><spring:message code="presurvey.q9" /></div>
+						<form:hidden path="answer9" id="answer9" value="${StartSurveyDTO.answer9}" />
+						<div class="answer" data-answer="answer9"></div>
+					</li>
+					<li>
+						<span class="number">10</span>
+						<div class="question"><spring:message code="presurvey.q10" /></div>
+						<form:hidden path="answer10" id="answer10" value="${StartSurveyDTO.answer10}" />
+						<div class="answer" data-answer="answer10"></div>
+					</li>
 				</ul>
 			
 				<button class="btn btn-primary btn-lg large" id="survey" data-audit="yes" type="submit" id="survey-submit">

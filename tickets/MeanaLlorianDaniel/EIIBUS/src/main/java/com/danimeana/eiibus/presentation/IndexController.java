@@ -1,5 +1,6 @@
 package com.danimeana.eiibus.presentation;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -26,8 +27,11 @@ public class IndexController {
 		return "index";
 	}
 */
-	@RequestMapping(value = "index")
-	public String index(@ModelAttribute("StartSurveyDTO") StartSurveyDTO startSurveyDTO, Model model) {
+	@RequestMapping(value = "index", method = RequestMethod.GET)
+	public String index(@ModelAttribute("StartSurveyDTO") StartSurveyDTO startSurveyDTO, Model model, HttpSession session, HttpServletRequest request) {
+		String code = request.getParameter("code");
+		session.setAttribute("code", code);
+	
 		return "index";
 	}
 

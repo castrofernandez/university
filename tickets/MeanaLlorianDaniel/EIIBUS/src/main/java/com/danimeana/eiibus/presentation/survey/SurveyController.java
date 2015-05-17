@@ -34,6 +34,6 @@ public class SurveyController {
 
 		surveyManagerService.addSurvey(surveyDTO.createSurvey(session));
 	
-		return "redirect:index";
+		return "thanks";
 	}
 }

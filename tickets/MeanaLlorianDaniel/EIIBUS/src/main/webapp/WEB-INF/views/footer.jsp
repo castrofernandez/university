@@ -7,6 +7,7 @@
 	<p class="visits-count">${sessions}</p>
 	<input type="hidden" id="user-id" value="${userEmail}" />
 	<input type="hidden" id="session-id" value="${sessionid}" />
+	<input type="hidden" id="code" value="${code}" />
 </footer>
 
 <script type="text/javascript" src="resources/js/jquery-2.1.1.min.js"></script>

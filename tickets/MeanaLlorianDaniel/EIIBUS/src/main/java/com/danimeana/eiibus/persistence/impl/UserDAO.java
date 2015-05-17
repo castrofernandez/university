@@ -1,5 +1,7 @@
 package com.danimeana.eiibus.persistence.impl;
 
+import java.sql.Timestamp;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,6 +18,9 @@ public class UserDAO implements UserDataService {
 
 	@Override
 	public void add(User user) {
+		java.util.Date date = new java.util.Date();
+		user.setTime(new Timestamp(date.getTime()));
+		
 		em.persist(user);
 	}
 

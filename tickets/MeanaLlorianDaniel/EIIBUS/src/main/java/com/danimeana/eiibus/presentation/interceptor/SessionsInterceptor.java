@@ -27,6 +27,9 @@ public class SessionsInterceptor extends HandlerInterceptorAdapter {
 		request.setAttribute("sessions", sessions.size());
 
 		request.setAttribute("sessionid", session.getId());
+		
+		request.setAttribute("code", session.getAttribute("code"));
+		
 		return true;
 	}
 

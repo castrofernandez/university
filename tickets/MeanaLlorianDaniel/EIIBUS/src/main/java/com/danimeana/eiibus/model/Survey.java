@@ -1,5 +1,7 @@
 package com.danimeana.eiibus.model;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -39,6 +41,16 @@ public class Survey {
 	private String answer26;
 	private String answer27;
 	
+	private Timestamp time;
+	
+	public Timestamp getTime() {
+		return time;
+	}
+
+	public void setTime(Timestamp time) {
+		this.time = time;
+	}
+
 	public String getAnswer2() {
 		return answer2;
 	}
