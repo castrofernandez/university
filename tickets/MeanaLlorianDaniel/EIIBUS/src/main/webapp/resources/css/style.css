@@ -488,6 +488,10 @@ button.large {
 	position: relative;
 }
 
+.questions li.incorrect {
+	background-color: #f2dede;
+}
+
 .questions .number {
 	position: absolute;
 	display: inline-block;
@@ -508,6 +512,17 @@ button.large {
 
 .star[status='active'] {
 	color: #ffbf00;
+}
+
+.survey-alert {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	z-index: 5000;
+	font-size: 1.5em;
+	display: none;
 }
 
 /* Task */

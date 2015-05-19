@@ -40,7 +40,16 @@ public class Survey {
 	private String answer25;
 	private String answer26;
 	private String answer27;
+	private String answer28;
 	
+	public String getAnswer28() {
+		return answer28;
+	}
+
+	public void setAnswer28(String answer28) {
+		this.answer28 = answer28;
+	}
+
 	private Timestamp time;
 	
 	public Timestamp getTime() {

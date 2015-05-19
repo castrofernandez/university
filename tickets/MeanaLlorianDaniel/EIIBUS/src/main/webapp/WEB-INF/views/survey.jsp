@@ -72,8 +72,12 @@
 			</p>
 			<br />
 			
+			<div class="alert alert-danger survey-alert" role="alert" id="survey-incomplete">
+				<spring:message code="survey.incomplete" />
+			</div>
+			
 			<form:form action="save_survey" method="POST"
-					commandName="SurveyDTO" class="form" role="form">
+					commandName="SurveyDTO" class="form" role="form" id="survey-form">
 				<form:hidden path="email" value="${SurveyDTO.email}" />
 				
 				<p class="descripcion">
@@ -202,17 +206,17 @@
 						<form:hidden path="answer17" id="answer17" value="${SurveyDTO.answer17}" />
 						<div class="answer" data-answer="answer17"></div>
 					</li>
-				</ul>
-				<p class="descripcion">
-					<spring:message code="survey.subtitle6" />
-				</p>
-				<ul class="questions">
 					<li>
 						<span class="number">18</span>
 						<div class="question"><spring:message code="survey.q18" /></div>
 						<form:hidden path="answer18" id="answer18" value="${SurveyDTO.answer18}" />
 						<div class="answer" data-answer="answer18"></div>
 					</li>
+				</ul>
+				<p class="descripcion">
+					<spring:message code="survey.subtitle6" />
+				</p>
+				<ul class="questions">
 					<li>
 						<span class="number">19</span>
 						<div class="question"><spring:message code="survey.q19" /></div>
@@ -267,6 +271,12 @@
 						<div class="question"><spring:message code="survey.q27" /></div>
 						<form:hidden path="answer27" id="answer27" value="${SurveyDTO.answer27}" />
 						<div class="answer" data-answer="answer27"></div>
+					</li>
+					<li>
+						<span class="number">28</span>
+						<div class="question"><spring:message code="survey.q28" /></div>
+						<form:hidden path="answer28" id="answer28" value="${SurveyDTO.answer28}" />
+						<div class="answer" data-answer="answer28"></div>
 					</li>
 				</ul>
 			

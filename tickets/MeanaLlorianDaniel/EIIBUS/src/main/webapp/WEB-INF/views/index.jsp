@@ -93,8 +93,12 @@
 				<span class="glyphicon glyphicon-star" aria-hidden="true"></span> = <spring:message code="survey.score.highest" />
 			</p>
 			
+			<div class="alert alert-danger survey-alert" role="alert" id="survey-incomplete">
+				<spring:message code="survey.incomplete" />
+			</div>
+			
 			<form:form action="start" method="POST"
-					commandName="StartSurveyDTO" class="form" role="form">
+					commandName="StartSurveyDTO" class="form" role="form" id="survey-form">
 				<form:hidden path="email" value="${StartSurveyDTO.email}" />
 					
 				<ul class="questions">

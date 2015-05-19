@@ -37,7 +37,16 @@ public class SurveyDTO {
 	private String answer25;
 	private String answer26;
 	private String answer27;
+	private String answer28;
 	
+	public String getAnswer28() {
+		return answer28;
+	}
+
+	public void setAnswer28(String answer28) {
+		this.answer28 = answer28;
+	}
+
 	public String getAnswer2() {
 		return answer2;
 	}
@@ -307,6 +316,7 @@ public class SurveyDTO {
 		survey.setAnswer25(answer25);
 		survey.setAnswer26(answer26);
 		survey.setAnswer27(answer27);
+		survey.setAnswer28(answer28);
 		
 		return survey;
 	}

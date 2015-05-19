@@ -5,7 +5,9 @@ for (var i = 0; i < length; i++) {
 	var answer = answers[i];
 	var parent = answer.getAttribute("data-answer");
 	
-	document.getElementById(parent).value = 1;
+	var p = document.getElementById(parent)
+	p.value = 0;
+	p.setAttribute("data-input-hidden", true);
 	
 	for (var j = 0; j < 7; j++) {
 		var star = document.createElement("span");
@@ -13,8 +15,8 @@ for (var i = 0; i < length; i++) {
 		star.value = j + 1;
 		star.answer = parent;
 		
-		if (j === 0)
-			star.setAttribute("status", "active");
+		//if (j === 0)
+		//	star.setAttribute("status", "active");
 		
 		answer.appendChild(star);
 		
@@ -41,4 +43,25 @@ for (var i = 0; i < length; i++) {
 			document.getElementById(answer).value = value;
 		}
 	}
+}
+
+document.getElementById("survey-form").onsubmit = function() {
+	var inputs = document.querySelectorAll("[data-input-hidden]");
+	var length = inputs.length;
+
+	var count = 0;
+	
+	for (var i = 0; i < length; i++) {
+		var input = inputs[i];
+		var value = input.value;
+	
+		if (value === "0")
+			count++;
+		
+		input.parentNode.className = value === "0" ? 'incorrect' : 'correct';
+	}
+	
+	document.getElementById("survey-incomplete").style.display = count > 0 ? 'block' : 'none';
+
+	return count === 0;
 }
