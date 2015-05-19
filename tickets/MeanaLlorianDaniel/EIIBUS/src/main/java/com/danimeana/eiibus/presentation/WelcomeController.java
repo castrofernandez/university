@@ -76,33 +76,33 @@ public class WelcomeController {
 	@RequestMapping(value = "init")
 	public String init() {
 		// # Cities
-		City oviedo = new City("OVIEDO");
-		cityManagerService.saveCity(oviedo);
-		City gijon = new City("GIJON");
-		cityManagerService.saveCity(gijon);
-		City aviles = new City("AVILES");
-		cityManagerService.saveCity(aviles);
-		City pola = new City("POLA DE SIERO");
-		cityManagerService.saveCity(pola);
-		City navia = new City("NAVIA");
-		cityManagerService.saveCity(navia);
+		City paris = new City("PARIS");
+		cityManagerService.saveCity(paris);
+		City berlin = new City("BERLIN");
+		cityManagerService.saveCity(berlin);
+		City dublin = new City("DUBLIN");
+		cityManagerService.saveCity(dublin);
+		City oslo = new City("OSLO");
+		cityManagerService.saveCity(oslo);
+		City amsterdam = new City("AMSTERDAM");
+		cityManagerService.saveCity(amsterdam);
 
 		// # Trips
-		Trip oviedoGijon = new Trip(oviedo, gijon);
+		Trip oviedoGijon = new Trip(paris, berlin);
 		tripManagerService.saveTrip(oviedoGijon);
-		Trip gijonOviedo = new Trip(gijon, oviedo);
+		Trip gijonOviedo = new Trip(berlin, paris);
 		tripManagerService.saveTrip(gijonOviedo);
-		Trip oviedoAviles = new Trip(oviedo, aviles);
+		Trip oviedoAviles = new Trip(paris, dublin);
 		tripManagerService.saveTrip(oviedoAviles);
-		Trip avilesOviedo = new Trip(aviles, oviedo);
+		Trip avilesOviedo = new Trip(dublin, paris);
 		tripManagerService.saveTrip(avilesOviedo);
-		Trip oviedoPola = new Trip(oviedo, pola);
+		Trip oviedoPola = new Trip(paris, oslo);
 		tripManagerService.saveTrip(oviedoPola);
-		Trip polaOviedo = new Trip(pola, oviedo);
+		Trip polaOviedo = new Trip(oslo, paris);
 		tripManagerService.saveTrip(polaOviedo);
-		Trip oviedoNavia = new Trip(oviedo, navia);
+		Trip oviedoNavia = new Trip(paris, amsterdam);
 		tripManagerService.saveTrip(oviedoNavia);
-		Trip naviaOviedo = new Trip(navia, oviedo);
+		Trip naviaOviedo = new Trip(amsterdam, paris);
 		tripManagerService.saveTrip(naviaOviedo);
 
 		// # Buses

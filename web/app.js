@@ -65,6 +65,8 @@ app.get('/', function(req, res){
   var from_u = req.query.from_u;
   var from_direct = req.query.from_direct;
   
+  var tickets = req.query.tickets;
+  
   var parameters = code ? "?code=" + code : ""
   
   if (from_u) {
@@ -75,6 +77,11 @@ app.get('/', function(req, res){
   if (from_direct) {
   	var separator = parameters != "" ? "&" : "?";
   	parameters += separator + "from_direct=" + from_direct;
+  }
+  
+  if (tickets) {
+  	var separator = parameters != "" ? "&" : "?";
+  	parameters += separator + "tickets=" + tickets;
   }
 
   res.writeHead(301, { Location: '/tests/test1/' + parameters });

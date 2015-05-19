@@ -10,7 +10,7 @@ if (user) {
 }
 
 if (code) {
-	code = code.value ? code.value : "";
+	code = code.value ? code.value : ""; console.log(code)
 }
 
 if (session_id && session_id.value) {

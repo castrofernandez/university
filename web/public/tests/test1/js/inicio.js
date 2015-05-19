@@ -224,6 +224,13 @@ function establecerEnlacesRedesSociales(from) {
 		return false;
     }
   }
+  
+  // Tickets
+  var t = document.getElementById("tickets");
+  
+  if (t) {
+  	tickets.href = "http://tickets-juancastro.rhcloud.com/index?code=" + code;
+  }
 }
 
 function comenzar()
@@ -429,12 +436,19 @@ function cambiarJuego()
 		var parametros = getUrlParameters();
   		var code = parametros.parameters["code"];
   		
+  		var tickets = parametros.parameters["tickets"];
+  		
   		var parametros = "?from_u=" + id + "&from_direct=1";
   		
   		if (code) 
   			parametros += "&code=" + code;
+  			
+  		var pagina = "compartir.html";
+  			
+  		if (tickets) 
+  			pagina = "compartir_t.html";
 		
-		window.location.href = "compartir.html" + parametros;
+		window.location.href = pagina + parametros;
       }
     });
   }

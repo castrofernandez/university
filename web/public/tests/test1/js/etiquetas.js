@@ -53,7 +53,8 @@ internacionalizacion.etiquetas = {
 		cocodrilo: 'cocodrilo', 
 		veloz: 'veloz', 
 		perro: 'perro', 
-		kiwi: 'kiwi'
+		kiwi: 'kiwi',
+		tickets: 'Pulsa para ejecutar la siguiente prueba'
 	},
 
 	en : {
@@ -110,6 +111,7 @@ internacionalizacion.etiquetas = {
 		cocodrilo: 'crocodile', 
 		veloz: 'quick', 
 		perro: 'dog', 
-		kiwi: 'kiwi'
+		kiwi: 'kiwi',
+		tickets: 'Press to continue to the next test'
 	}
 };
