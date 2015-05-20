@@ -195,11 +195,11 @@ public class ReserveController {
 		model.addAttribute("departureSchedule", departureScheduleDTO);
 		reserve.setDepartureSchedule(departureSchedule);
 
-		if (!validSeatReserved(reserveDTO.getDepartureSeats(), departureSchedule,
+		/*if (!validSeatReserved(reserveDTO.getDepartureSeats(), departureSchedule,
 				DateTimeUtil.getDateFromString(reserveDTO.getDepartureDate()))) {
 			model.addAttribute("error", "errors.reserve.seat.not.free");
 			return "error";
-		}
+		}*/
 		List<Integer> departureSeats = new ArrayList<Integer>(reserveDTO.getDepartureSeats());
 		Collections.sort(departureSeats);
 
@@ -220,11 +220,11 @@ public class ReserveController {
 			model.addAttribute("returnSchedule", returnScheduleDTO);
 			reserve.setReturnSchedule(returnSchedule);
 
-			if (!validSeatReserved(reserveDTO.getReturnSeats(), returnSchedule,
+			/*if (!validSeatReserved(reserveDTO.getReturnSeats(), returnSchedule,
 					DateTimeUtil.getDateFromString(reserveDTO.getReturnDate()))) {
 				model.addAttribute("error", "errors.reserve.seat.not.free");
 				return "error";
-			}
+			}*/
 			List<Integer> returnSeats = new ArrayList<Integer>(reserveDTO.getReturnSeats());
 			Collections.sort(returnSeats);
 			model.addAttribute("returnSeats", returnSeats);
@@ -311,14 +311,16 @@ public class ReserveController {
 		model.addAttribute("user", loadUserData(session, model));
 
 		Schedule departureSchedule = scheduleManagerService.getScheduleById(reserveDTO.getDepartureSchedule());
-		List<Integer> departureSeatsReserved = reserveManagerService.getSeatsReservedByDateAndSchedule(
-				DateTimeUtil.getDateFromString(reserveDTO.getDepartureDate()), departureSchedule);
+		//List<Integer> departureSeatsReserved = reserveManagerService.getSeatsReservedByDateAndSchedule(
+		//		DateTimeUtil.getDateFromString(reserveDTO.getDepartureDate()), departureSchedule);
+		List<Integer> departureSeatsReserved = new ArrayList<Integer>();
 		model.addAttribute("departureSeats",
 				getSeatsMatrix(departureSeatsReserved, departureSchedule.getBus().getSeats()));
 		if (reserveDTO.getType() == ReserveType.RETURN) {
 			Schedule returnSchedule = scheduleManagerService.getScheduleById(reserveDTO.getReturnSchedule());
-			List<Integer> returnSeatsReserved = reserveManagerService.getSeatsReservedByDateAndSchedule(
-					DateTimeUtil.getDateFromString(reserveDTO.getReturnDate()), returnSchedule);
+			//List<Integer> returnSeatsReserved = reserveManagerService.getSeatsReservedByDateAndSchedule(
+			//		DateTimeUtil.getDateFromString(reserveDTO.getReturnDate()), returnSchedule);
+			List<Integer> returnSeatsReserved = new ArrayList<Integer>();
 			model.addAttribute("returnSeats", getSeatsMatrix(returnSeatsReserved, returnSchedule.getBus().getSeats()));
 		}
 		List<Extra> extras = extraManagerService.getExtrasOrderByPrice();
@@ -423,11 +425,11 @@ public class ReserveController {
 	}
 
 	private boolean validSeatReserved(Collection<Integer> seatsReserved, Schedule schedule, Date date) {
-		List<Integer> seatsAlreadyReserved = reserveManagerService.getSeatsReservedByDateAndSchedule(date, schedule);
+		/*List<Integer> seatsAlreadyReserved = reserveManagerService.getSeatsReservedByDateAndSchedule(date, schedule);
 		for (Integer i : seatsReserved) {
 			if (seatsAlreadyReserved.contains(i))
 				return false;
-		}
+		}*/
 		return true;
 	}
 
