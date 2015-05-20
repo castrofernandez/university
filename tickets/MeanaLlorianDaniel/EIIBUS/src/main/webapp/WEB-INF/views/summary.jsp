@@ -82,7 +82,7 @@
 					</button>
 				</p>
 				<p>
-					<form action="survey" method="post" class="form form-inline" role="form">
+					<form action="survey" method="get" class="form form-inline" role="form">
 					<div class="text-center">
 						<button class="btn btn-success btn-lg large" id="survey" data-audit="yes" type="submit">
 							<span class="glyphicon glyphicon-pencil"></span>
