@@ -33,6 +33,32 @@ if (session_id && session_id.value) {
 	});
 }
 
+var forms = document.querySelectorAll('form');
+var form_length = forms.length;
+
+for (var i = 0; i < form_length; i++) {
+	form = forms[i];
+	
+	form.onsubmit = function() {
+		
+		if (!this.delay) {
+			this.delay = true;
+			
+			function f(form) {
+				setTimeout(function() { 
+					form.submit();
+				}, 2000);
+			}
+		
+			f(this);
+			
+			return false;
+		}
+		
+		return true;
+	}
+}
+
 function startAudit(user_id) {
 	var hash = (function() {
 		function s4() {

@@ -127,7 +127,7 @@
 							<form:label path="departureDate" class="control-label">
 								<spring:message code="field.departure.date" />
 							</form:label>
-							<div class="input-group date" id="departureDateDiv">
+							<div class="input-group date" id="departureDateDiv" data-audit="yes">
 								<form:input type="text" class="form-control" data-audit="yes" id="search-departure-date"
 									path="departureDate" />
 								<span class="input-group-addon"> <span
@@ -236,7 +236,7 @@
 							<form:label path="returnDate" class="control-label">
 								<spring:message code="field.return.date" />
 							</form:label>
-							<div class="input-group date" id="returnDateDiv">
+							<div class="input-group date" id="returnDateDiv" data-audit="yes">
 								<form:input type="text" class="form-control" path="returnDate" data-audit="yes" id="search-return-date" />
 								<span class="input-group-addon"><span
 									class="glyphicon glyphicon-calendar"></span> </span>
@@ -259,7 +259,7 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<jsp:include page="footer.jsp" />
 
 	<script type="text/javascript" src="resources/js/moment.js"></script>
@@ -369,6 +369,7 @@
 			$("#origin").change()
 		})
 	</script>
+
 </body>
 
 </html>
