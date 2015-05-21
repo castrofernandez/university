@@ -88,8 +88,9 @@ function startAudit(user_id) {
 	
 	function getTime() {
 		var now = new Date();
-		var diff = start.getTime() - now.getTime();
-		return Math.abs(diff);
+		//var diff = start.getTime() - now.getTime();
+		//return Math.abs(diff);
+		return now.getTime();
 	}
 	
 	function getNumericStyleProperty(style, prop) {

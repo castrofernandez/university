@@ -105,62 +105,62 @@
 					<li>
 						<span class="number">1</span>
 						<div class="question"><spring:message code="presurvey.q1" /></div>
-						<form:hidden path="answer1" id="answer1" value="${StartSurveyDTO.answer1}" />
+						<form:hidden path="answer1" id="answer1" value="${StartSurveyDTO.answer1}" data-audit="yes" />
 						<div class="answer" data-answer="answer1"></div>
 					</li>
 					<li>
 						<span class="number">2</span>
 						<div class="question"><spring:message code="presurvey.q2" /></div>
-						<form:hidden path="answer2" id="answer2" value="${StartSurveyDTO.answer2}" />
+						<form:hidden path="answer2" id="answer2" value="${StartSurveyDTO.answer2}" data-audit="yes" />
 						<div class="answer" data-answer="answer2"></div>
 					</li>
 					<li>	
 						<span class="number">3</span>
 						<div class="question"><spring:message code="presurvey.q3" /></div>
-						<form:hidden path="answer3" id="answer3" value="${StartSurveyDTO.answer3}" />
+						<form:hidden path="answer3" id="answer3" value="${StartSurveyDTO.answer3}" data-audit="yes" />
 						<div class="answer" data-answer="answer3"></div>
 					</li>
 					<li>
 						<span class="number">4</span>
 						<div class="question"><spring:message code="presurvey.q4" /></div>
-						<form:hidden path="answer4" id="answer4" value="${StartSurveyDTO.answer4}" />
+						<form:hidden path="answer4" id="answer4" value="${StartSurveyDTO.answer4}" data-audit="yes" />
 						<div class="answer" data-answer="answer4"></div>
 					</li>
 					<li>
 						<span class="number">5</span>
 						<div class="question"><spring:message code="presurvey.q5" /></div>
-						<form:hidden path="answer5" id="answer5" value="${StartSurveyDTO.answer5}" />
+						<form:hidden path="answer5" id="answer5" value="${StartSurveyDTO.answer5}" data-audit="yes" />
 						<div class="answer" data-answer="answer5"></div>
 					</li>
 					<li>
 						<span class="number">6</span>
 						<div class="question"><spring:message code="presurvey.q6" /></div>
-						<form:hidden path="answer6" id="answer6" value="${StartSurveyDTO.answer6}" />
+						<form:hidden path="answer6" id="answer6" value="${StartSurveyDTO.answer6}" data-audit="yes" />
 						<div class="answer" data-answer="answer6"></div>
 					</li>
 					<li>
 						<span class="number">7</span>
 						<div class="question"><spring:message code="presurvey.q7" /></div>
-						<form:hidden path="answer7" id="answer7" value="${StartSurveyDTO.answer7}" />
+						<form:hidden path="answer7" id="answer7" value="${StartSurveyDTO.answer7}" data-audit="yes" />
 						<div class="answer" data-answer="answer7"></div>
 					</li>
 					
 					<li>
 						<span class="number">8</span>
 						<div class="question"><spring:message code="presurvey.q8" /></div>
-						<form:hidden path="answer8" id="answer8" value="${StartSurveyDTO.answer8}" />
+						<form:hidden path="answer8" id="answer8" value="${StartSurveyDTO.answer8}" data-audit="yes" />
 						<div class="answer" data-answer="answer8"></div>
 					</li>
 					<li>
 						<span class="number">9</span>
 						<div class="question"><spring:message code="presurvey.q9" /></div>
-						<form:hidden path="answer9" id="answer9" value="${StartSurveyDTO.answer9}" />
+						<form:hidden path="answer9" id="answer9" value="${StartSurveyDTO.answer9}" data-audit="yes" />
 						<div class="answer" data-answer="answer9"></div>
 					</li>
 					<li>
 						<span class="number">10</span>
 						<div class="question"><spring:message code="presurvey.q10" /></div>
-						<form:hidden path="answer10" id="answer10" value="${StartSurveyDTO.answer10}" />
+						<form:hidden path="answer10" id="answer10" value="${StartSurveyDTO.answer10}" data-audit="yes" />
 						<div class="answer" data-answer="answer10"></div>
 					</li>
 				</ul>
