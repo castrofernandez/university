@@ -130,6 +130,10 @@ function startAudit(user_id) {
 		event = event ? event : window.event;
 console.log(event.type)		
 		var id = element.id;
+
+		if (!id) {
+			id = element.tagName + ' ' + element.className;
+		}
 		
 		if (!id) {
 			id = element.tagName;
@@ -229,4 +233,17 @@ console.log(event.type)
 	handleEvent(document.body, "mousemove", function(e) {
 		registerObservation(this, e);
 	});
+	
+	//
+	
+	var others = document.querySelectorAll('span.input-group-addon, .bootstrap-datetimepicker-widget');
+	var others_length = others.length;
+	
+	for (var i = 0; i < others_length; i++) {
+		var other = others[i];
+		
+		handleEvent(other, "click", function(e) {
+			registerObservation(this, e);
+		});
+	}
 }
