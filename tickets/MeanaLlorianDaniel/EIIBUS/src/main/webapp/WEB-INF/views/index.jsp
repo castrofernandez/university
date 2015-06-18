@@ -44,23 +44,23 @@
 			  <!-- Wrapper for slides -->
 			  <div class="carousel-inner" role="listbox">
 			    <div class="item active">
-			      <img src="resources/img/captures/one.png" alt="">
+			      <img src="resources/img/captures/${pageContext.response.locale.language}/one.png" alt="">
 			      <div class="carousel-caption"></div>
 			    </div>
 			    <div class="item">
-			      <img src="resources/img/captures/two.png" alt="">
+			      <img src="resources/img/captures/${pageContext.response.locale.language}/two.png" alt="">
 			      <div class="carousel-caption"></div>
 			    </div>
 			    <div class="item">
-			      <img src="resources/img/captures/three.png" alt="">
+			      <img src="resources/img/captures/${pageContext.response.locale.language}/three.png" alt="">
 			      <div class="carousel-caption"></div>
 			    </div>
 			    <div class="item">
-			      <img src="resources/img/captures/four.png" alt="">
+			      <img src="resources/img/captures/${pageContext.response.locale.language}/four.png" alt="">
 			      <div class="carousel-caption"></div>
 			    </div>
 			    <div class="item">
-			      <img src="resources/img/captures/five.png" alt="">
+			      <img src="resources/img/captures/${pageContext.response.locale.language}/five.png" alt="">
 			      <div class="carousel-caption"></div>
 			    </div>
 			  </div>
