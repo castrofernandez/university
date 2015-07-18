@@ -398,8 +398,8 @@ class Circo:
             users = self.db.users.find(filter).sort("id", 1).limit(self.PROCESS_IN_A_ROW)
 
     def decorate_users(self):
-        #print "Cleaning previous user calculations"
-        #self.clear_user_results()
+        print "Cleaning previous user calculations"
+        self.clear_user_results()
         print "Calculating finishing users"
         self.set_finished_users()
         print "Processing users"

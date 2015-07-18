@@ -1,0 +1,11 @@
+﻿SELECT StartSurvey.answer1 AS s1, StartSurvey.answer2 AS s2, StartSurvey.answer3 AS s3, StartSurvey.answer4 AS s4, StartSurvey.answer5 AS s5, StartSurvey.answer6 AS s6, StartSurvey.answer7 AS s7,
+StartSurvey.answer8 AS s8, StartSurvey.answer9 AS s9, StartSurvey.answer10 AS s10, StartSurvey.time AS stime,
+Survey.answer1 AS e1, Survey.answer2 AS e2, Survey.answer3 AS e3, Survey.answer4 AS e4, Survey.answer5 AS e5, Survey.answer6 AS e6, Survey.answer7 AS e7, 
+Survey.answer8 AS e8, Survey.answer9 AS e9, Survey.answer10 AS e10, Survey.answer11 AS e11, Survey.answer12 AS e12, Survey.answer13 AS e13, Survey.answer14 AS e14,
+Survey.answer15 AS e15, Survey.answer16 AS e16, Survey.answer17 AS e17, Survey.answer18 AS e18, Survey.answer19 AS e19, Survey.answer20 AS e20,
+Survey.answer21 AS e21, Survey.answer22 AS e22, Survey.answer23 AS e23, Survey.answer24 AS e24, Survey.answer25 AS e25, Survey.answer26 AS e26,
+Survey.answer27 AS e27, Survey.answer28 AS e28, Survey.time AS etime, Survey.email AS email
+FROM Survey
+LEFT JOIN StartSurvey ON Survey.session = StartSurvey.session
+WHERE Survey.email != ''
+ORDER BY email
