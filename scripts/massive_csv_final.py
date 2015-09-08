@@ -2,6 +2,7 @@
 
 import urllib
 import json
+import os.path
 
 from pymongo import MongoClient
 
@@ -43,7 +44,7 @@ def incrementCount(label, obj):
         
 # Headers
 
-headers = ["id", "code", "first_language", "ip", "region", "gender", "age", "laterality"]
+headers = ["id", "code", "first_language", "ip", "region", "gender", "age", "laterality", "numeros_errors", "topos_errors", "palabras_errors"]
 headers_tests = []
 user_list = []
 
@@ -60,6 +61,14 @@ for user in users:
 				headers.append(header)
 
 rows = []
+ip_list = {}
+
+if os.path.isfile('regions.json'):
+	with open('regions.json') as data_file:
+		ip_list = json.load(data_file)
+
+es_length = len("cocodrilovelozperrokiwi")
+en_length = len("crocodilequickdogkiwi")
 
 for user in user_list:
     first_language = user["acceptlanguage"].split(",")[0]
@@ -74,9 +83,24 @@ for user in user_list:
     		value = results[test][indicator]
     		
     		user_results[header] = value
+    		
+    # Errores
+    numeros_clicks = user_results["numeros_clicks"] if "numeros_clicks" in user_results else float("inf")
+    topos_hits = user_results["topos_hits"] if "topos_hits" in user_results else 0
+    palabras_key_ups = user_results["palabras_key_ups"] if "palabras_key_ups" in user_results else float("inf")
+    
+    numeros_errors = numeros_clicks - 20 # 20 is the total (optimum)
+    topos_errors = 12 - topos_hits # 12 times that moles go up
+    
+    str_length = es_length if first_language == "es" else en_length
+    palabras_errors = palabras_key_ups - str_length
     
     row = {}
     rows.append(row)
+    
+    row["numeros_errors"] = numeros_errors
+    row["topos_errors"] = topos_errors
+    row["palabras_errors"] = palabras_errors
     
     for header in headers_tests:
     	value = user_results[header] if header in user_results else "-"
@@ -91,7 +115,12 @@ for user in user_list:
     LATERALITY_VALUE = questions["LATERALITY_VALUE"]
 
     region = "-"
-    #region = getRegion(ip)
+    
+    if ip in ip_list:
+    	region = ip_list[ip]
+    else:
+    	region = getRegion(ip)
+    	ip_list[ip] = region
     
     row["id"] = id
     row["code"] = code
@@ -111,3 +140,8 @@ with open('circo_errores.csv', 'w') as csvfile:
 	
 	for row in rows:
 		writer.writerow(row)
+
+# Store regions
+
+with open('regions.json', 'w') as outfile:
+	json.dump(ip_list, outfile)
