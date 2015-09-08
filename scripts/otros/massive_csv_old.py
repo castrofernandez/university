@@ -47,18 +47,19 @@ def process_results(users):
 
     # Headers
     for identifier in identifiers:
-        headers.append("%s_time" % identifier)
-        headers.append("%s_distance" % identifier)
+        headers.append("%s_time_a" % identifier)
+        headers.append("%s_time_b" % identifier)
+        headers.append("%s_distance_a" % identifier)
+        headers.append("%s_distance_b" % identifier)
 
-    headers.append("numeros_clicks")
-    headers.append("topos_hits")
-    headers.append("palabras_key_ups")
+    headers.append("numeros_clicks_a")
+    headers.append("numeros_clicks_b")
+    headers.append("topos_hits_a")
+    headers.append("topos_hits_b")
+    headers.append("palabras_key_ups_a")
+    headers.append("palabras_key_ups_b")
 
     for user in users:
-        firstLanguage = user["acceptlanguage"].split(",")[0]
-        firstLanguage = firstLanguage.split("-")[0]
-        print firstLanguage
-        continue
         print "User %s" % first["info"]
     	academic_results_user = academic_results["UO%s" % first["info"]]
 
@@ -157,6 +158,45 @@ def print_images(users, identifiers):
             generate_image("%s_%s_b" % (UO, identifier), width_2, height_2, observations_2)
 
         count = count + 1
+
+def generate_image(name, width, height, observations):
+    f = open("imgs/%s.svg" % name, 'w')
+
+    points = ""
+
+    for observation in observations:
+        type = observation["type"]
+
+        if type != "onmousemove":
+            continue
+
+        x = int(observation["sx"])
+        y = int(observation["sy"])
+
+        if x >= 0 and y >= 0:
+            points = points + "%i,%i " % (x, y)
+
+    f.write("<svg width='%s' height='%s' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>\n" % (width, height))
+    f.write("<g>\n")
+    f.write("<polyline fill='none' stroke='red' points='%s' />" % points)
+    f.write("</g>\n")
+    f.write("</svg>\n")
+
+    f.close()
+
+def get_academic_results(file):
+	json_data = open(file)
+	data = simplejson.load(json_data)
+
+	results = {}
+
+	for student in data:
+		UO = student["UO"]
+		results[UO] = student
+
+	json_data.close()
+
+	return results
 
 users = get_audit_tests("UO1")
 

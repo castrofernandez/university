@@ -32,6 +32,23 @@ ages_int = {
 	"61>" : 0
 }
 lateralities = {}
+region_ips = {}
+
+def getRegion(ip):
+    if ip not in region_ips:
+        #region = urllib.urlopen('http://ipinfo.io/%s/json' % ip).read()
+        #region = json.loads(region)
+        region = urllib.urlopen('https://freegeoip.net/json/%s' % ip).read()
+        region = json.loads(region)
+
+        if "country_code" in region:
+            region = region["country_code"]
+        else:
+            region = "-"
+            
+        region_ips[ip] = region
+    
+    return region_ips[ip]
 
 def incrementCount(label, obj):
     if label in obj:
@@ -53,13 +70,7 @@ for user in users:
 
     print ip
 
-    region = urllib.urlopen('http://ipinfo.io/%s/json' % ip).read()
-    region = json.loads(region)
-
-    if "country" in region:
-        region = region["country"]
-    else:
-        region = "-"
+    region = getRegion(ip)
 
     print region
 
