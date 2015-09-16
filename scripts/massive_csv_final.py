@@ -3,6 +3,7 @@
 import urllib
 import json
 import os.path
+import collections
 
 from pymongo import MongoClient
 
@@ -47,6 +48,10 @@ def incrementCount(label, obj):
 headers = ["id", "code", "first_language", "ip", "region", "gender", "age", "laterality", "numeros_errors", "topos_errors", "palabras_errors"]
 headers_tests = []
 user_list = []
+
+numeros_error_list = {}
+topos_error_list = {}
+palabras_error_list = {}
 
 for user in users:
 	user_list.append(user)
@@ -94,6 +99,22 @@ for user in user_list:
     
     str_length = es_length if first_language == "es" else en_length
     palabras_errors = palabras_key_ups - str_length
+    
+    # Almacenar errores
+    if not numeros_clicks in numeros_error_list:
+    	numeros_error_list[numeros_clicks] = 0
+    	
+    numeros_error_list[numeros_clicks] = numeros_error_list[numeros_clicks] + 1
+    
+    if not topos_errors in topos_error_list:
+    	topos_error_list[topos_errors] = 0
+    	
+    topos_error_list[topos_errors] = topos_error_list[topos_errors] + 1
+    
+    if not palabras_errors in palabras_error_list:
+    	palabras_error_list[palabras_errors] = 0
+    	
+    palabras_error_list[palabras_errors] = palabras_error_list[palabras_errors] + 1
     
     row = {}
     rows.append(row)
@@ -145,3 +166,20 @@ with open('circo_errores.csv', 'w') as csvfile:
 
 with open('regions.json', 'w') as outfile:
 	json.dump(ip_list, outfile)
+	
+# Print error statistics
+
+print "Números\n"
+ordered = collections.OrderedDict(sorted(numeros_error_list.items()))
+for k, v in ordered.iteritems(): 
+	print "%s: %s" % (k, v)
+
+print "\nTopos\n"
+ordered = collections.OrderedDict(sorted(topos_error_list.items()))
+for k, v in ordered.iteritems(): 
+	print "%s: %s" % (k, v)
+
+print "\nPalabras\n"
+ordered = collections.OrderedDict(sorted(palabras_error_list.items()))
+for k, v in ordered.iteritems(): 
+	print "%s: %s" % (k, v)
