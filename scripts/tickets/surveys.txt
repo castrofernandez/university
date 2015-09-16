@@ -4,7 +4,7 @@ Survey.answer1 AS e1, Survey.answer2 AS e2, Survey.answer3 AS e3, Survey.answer4
 Survey.answer8 AS e8, Survey.answer9 AS e9, Survey.answer10 AS e10, Survey.answer11 AS e11, Survey.answer12 AS e12, Survey.answer13 AS e13, Survey.answer14 AS e14,
 Survey.answer15 AS e15, Survey.answer16 AS e16, Survey.answer17 AS e17, Survey.answer18 AS e18, Survey.answer19 AS e19, Survey.answer20 AS e20,
 Survey.answer21 AS e21, Survey.answer22 AS e22, Survey.answer23 AS e23, Survey.answer24 AS e24, Survey.answer25 AS e25, Survey.answer26 AS e26,
-Survey.answer27 AS e27, Survey.answer28 AS e28, Survey.time AS etime, Survey.email AS email
+Survey.answer27 AS e27, Survey.answer28 AS e28, Survey.time AS etime, Survey.email AS email, Survey.session AS session
 FROM Survey
 LEFT JOIN StartSurvey ON Survey.session = StartSurvey.session
 WHERE Survey.email != ''

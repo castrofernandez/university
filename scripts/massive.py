@@ -50,11 +50,27 @@ def getRegion(ip):
     
     return region_ips[ip]
 
+ip_regions = {}
+
 def incrementCount(label, obj):
     if label in obj:
         obj[label] = obj[label] + 1
     else:
         obj[label] = 1
+        
+def getRegion(ip):
+    if ip not in ip_regions:
+        region = urllib.urlopen('http://ipinfo.io/%s/json' % ip).read()
+        region = json.loads(region)
+
+        if "country" in region:
+            region = region["country"]
+        else:
+            region = "-"
+
+        ip_regions[ip] = region
+
+	return ip_regions[ip]
 
 for user in users:
     code = user["code"]
