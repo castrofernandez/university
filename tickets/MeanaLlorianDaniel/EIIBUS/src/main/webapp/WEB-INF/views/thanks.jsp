@@ -58,6 +58,8 @@
 			<p class="title">
 				<spring:message code="thanks.title" />
 			</p>
+			<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//tickets-juancastro.rhcloud.com"><img src="resources/img/facebook.png" alt=""> <spring:message code="share.facebook" /></a>
+			<a class="twitter" href="https://twitter.com/home?status=http%3A//tickets-juancastro.rhcloud.com"><img src="resources/img/twitter.png" alt=""> <spring:message code="share.twitter" /></a>
 		</div>
 	</div>
 

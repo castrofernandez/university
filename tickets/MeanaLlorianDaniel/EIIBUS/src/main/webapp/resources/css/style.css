@@ -542,3 +542,21 @@ button.large {
 	background-color: #f0ad4e !important;
 	padding: 0;
 }
+
+.facebook {
+	margin-right: 1em;
+	margin-top: 3em;
+	font-size: 1.5em;
+	display: inline-block;
+} 
+
+.twitter {
+	margin-left: 1em;
+	margin-top: 3em;
+	font-size: 1.5em;
+	display: inline-block;
+}
+
+.facebook img, .twitter img {
+	margin-right: 0.5em;
+}
